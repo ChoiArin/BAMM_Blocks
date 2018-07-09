@@ -13,7 +13,7 @@ scratch-blocks에서는 구글에 만든 Blockly를 기반으로 하였으니, a
 
 package.json에서는 ```python2 build.py```와 같은 명령어로 파이썬2를 실행합니다.
 
-Python2를 설치하신 뒤 환경변수 설정으로 python2로 실행하게 하시면 됩니다.
+Python2를 설치하신 뒤 환경변수 설정을 통하여 python2로 실행하게 하시면 됩니다.
 
 http://http2.tistory.com/19 해당 링크를 참고하여 환경변수를 설정하세요.
 
