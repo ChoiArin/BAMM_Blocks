@@ -1,24 +1,51 @@
-# scratch-blocks
-#### Scratch Blocks is a library for building creative computing interfaces.
-[![Build Status](https://travis-ci.org/LLK/scratch-blocks.svg?branch=develop)](https://travis-ci.org/LLK/scratch-blocks)
-[![Dependency Status](https://david-dm.org/LLK/scratch-blocks.svg)](https://david-dm.org/LLK/scratch-blocks)
-[![devDependency Status](https://david-dm.org/LLK/scratch-blocks/dev-status.svg)](https://david-dm.org/LLK/scratch-blocks#info=devDependencies)
+# BBAM_Blocks
+### BBAM 블록 구현
+## 소개
+scratch-blocks를 기반으로 하여 BBAM에 들어가는 블록 코딩을 개발합니다.
 
-![](https://cloud.githubusercontent.com/assets/747641/15227351/c37c09da-1854-11e6-8dc7-9a298f2b1f01.jpg)
+## API
+scratch-blocks에서는 구글에 만든 Blockly를 기반으로 하였으니, api 레퍼런스는 Blockly의 것을 참고하라고 합니다.
 
-## Introduction
-Scratch Blocks is a fork of Google's [Blockly](https://github.com/google/blockly) project that provides a design specification and codebase for building creative computing interfaces. Together with the [Scratch Virtual Machine (VM)](https://github.com/LLK/scratch-vm) this codebase allows for the rapid design and development of visual programming interfaces.
+지금까지 소스코드를 비교해본 결과 Blockly에서 많이 달라졌으나 비슷한 부분이 많으니 [Blockly 레퍼런스](https://developers.google.com/blockly/reference/overview)를 참고해주세요.
 
-*This project is in active development and should be considered a "developer preview" at this time.*
+## 설치 방법
+첫 번째로는 Python2를 설치하셔야 합니다. 
 
-## Two Types of Blocks
+package.json에서는 ```python2 build.py```와 같은 명령어로 파이썬2를 실행합니다.
 
-![](https://cloud.githubusercontent.com/assets/747641/15255731/dad4d028-190b-11e6-9c16-8df7445adc96.png)
+Python2를 설치하신 뒤 환경변수 설정으로 python2로 실행하게 하시면 됩니다.
 
-Scratch Blocks brings together two different programming "grammars" that the Scratch Team has designed and continued to refine over the past decade. The standard [Scratch](https://scratch.mit.edu) grammar uses blocks that snap together vertically, much like LEGO bricks. For our [ScratchJr](https://scratchjr.org) software, intended for younger children, we developed blocks that are labelled with icons rather than words, and snap together horizontally rather than vertically. We have found that the horizontal grammar is not only friendlier for beginning programmers but also better suited for devices with small screens.
+http://http2.tistory.com/19 해당 링크를 참고하여 환경변수를 설정하세요.
 
-## Documentation
-The "getting started" guide including [FAQ](https://scratch.mit.edu/developers#faq) and [design documentation](https://github.com/LLK/scratch-blocks/wiki/Design) can be found in the [wiki](https://github.com/LLK/scratch-blocks/wiki).
+그 뒤에는 리포를 git으로 가져오시거나 직접 다운하셔서 scratch-blocks-develop/build.py를 열어주세요.
 
-## Donate
-We provide [Scratch](https://scratch.mit.edu) free of charge, and want to keep it that way! Please consider making a [donation](https://secure.donationpay.org/scratchfoundation/) to support our continued engineering, design, community, and resource development efforts. Donations of any size are appreciated. Thank you!
+51, 52번째 줄의 코드를 다음과 같이 변경해줍니다.
+```
+CLOSURE_DIR_NPM = "node_modules/.bin"
+CLOSURE_ROOT_NPM = os.path.join("node_modules/.bin")
+```
+그런 뒤 설치를 해주시면 됩니다.
+
+```
+npm install
+```
+ 그리고 다시 build.py를 열어주셔서 다시 고쳐줍니다.
+```
+CLOSURE_DIR_NPM = "node_modules"
+CLOSURE_ROOT_NPM = os.path.join("node_modules")
+```
+그리고 또다시 인스톨을 합니다.
+```
+npm install
+```
+어쩌다 발견한 거지만 이렇게 하면 오류가 뜨지 않고 완벽하게 설치가 되는 것을 확인했습니다.
+
+그러면 이제 scratch-blocks-develop/tests/vertical_playground.html를 열어 잘 작동되는지 확인해주세요.
+
+## 관련 링크
+
+[Blockly 레퍼런스](https://developers.google.com/blockly/reference/overview)
+
+[Blockly github](https://github.com/google/blockly)
+
+[scratch-blocks github](https://github.com/LLK/scratch-blocks)
