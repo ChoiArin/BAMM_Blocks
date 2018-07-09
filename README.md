@@ -34,7 +34,7 @@ npm install
 CLOSURE_DIR_NPM = "node_modules"
 CLOSURE_ROOT_NPM = os.path.join("node_modules")
 ```
-그리고 또다시 인스톨을 합니다.
+그리고 또다시 설치를 합니다.
 ```
 npm install
 ```
