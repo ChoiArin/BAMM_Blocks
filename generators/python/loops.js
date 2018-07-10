@@ -55,7 +55,7 @@ Blockly.Python['control_repeat'] = function(block) {
 
 Blockly.Python['controls_repeat'] = Blockly.Python['controls_repeat_ext'];
 
-Blockly.Python['controls_whileUntil'] = function(block) {
+Blockly.Python['control_repeat_until'] = function(block) {
   // Do while/until loop.
   var until = block.getFieldValue('MODE') == 'UNTIL';
   var argument0 = Blockly.Python.valueToCode(block, 'BOOL',
