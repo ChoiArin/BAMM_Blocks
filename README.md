@@ -1,7 +1,7 @@
 # BBAM_Blocks
 ### BBAM 블록 구현
 ## 소개
-scratch-blocks를 기반으로 하여 BBAM에 들어가는 블록 코딩을 개발ed합니다.
+scratch-blocks를 기반으로 하여 BBAM에 들어가는 블록 코딩을 개발 합니다.
 
 ## API
 scratch-blocks에서는 구글에 만든 Blockly를 기반으로 하였으니, api 레퍼런스는 Blockly의 것을 참고하라고 합니다.
