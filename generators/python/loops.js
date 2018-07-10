@@ -29,7 +29,7 @@ goog.provide('Blockly.Python.loops');
 goog.require('Blockly.Python');
 
 
-Blockly.Python['controls_repeat_ext'] = function(block) {
+Blockly.Python['control_repeat'] = function(block) {
   // Repeat n times.
   if (block.getField('TIMES')) {
     // Internal number.
