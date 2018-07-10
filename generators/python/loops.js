@@ -70,6 +70,14 @@ Blockly.Python['control_repeat_until'] = function(block) {
   return 'while ' + argument0 + ':\n' + branch;
 };
 
+Blockly.Python['control_forever'] = function(block) {
+  // Infinite loop.
+  var branch = Blockly.Python.statementToCode(block, 'DO');
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+      Blockly.Python.PASS;
+  return 'while True:\n' + branch;
+};
+
 Blockly.Python['controls_for'] = function(block) {
   // For loop.
   var variable0 = Blockly.Python.variableDB_.getName(
