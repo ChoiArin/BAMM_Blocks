@@ -46,14 +46,14 @@ Blockly.Python['control_if'] = function(block) {
   var ok;
 
   if (block.getInput('ELSE')) {
-    branchCode = Blockly.Python.statementToCode(block, 'ELSE') ||
+    branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK2') ||
         Blockly.Python.PASS;
     code += 'else:\n' + branchCode;
   }
   return code;
 };
 
-Blockly.Python['controls_ifelse'] = Blockly.Python['controls_if'];
+Blockly.Python['control_if_else'] = Blockly.Python['control_if'];
 
 Blockly.Python['logic_compare'] = function(block) {
   // Comparison operator.
