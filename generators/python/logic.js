@@ -43,8 +43,6 @@ Blockly.Python['control_if'] = function(block) {
     ++n;
   } while (block.getInput('IF' + n));
 
-  var ok;
-
   if (block.getInput('ELSE')) {
     branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK2') ||
         Blockly.Python.PASS;
