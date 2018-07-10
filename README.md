@@ -9,6 +9,7 @@ scratch-blocks에서는 구글에 만든 Blockly를 기반으로 하였으니, a
 지금까지 소스코드를 비교해본 결과 Blockly에서 많이 달라졌으나 비슷한 부분이 많으니 [Blockly 레퍼런스](https://developers.google.com/blockly/reference/overview)를 참고해주세요.
 
 ## 설치 방법
+
 #### 1. BBAM_blocks 다운
 
 BBAM_Blocks 리포를 git으로 가져오시거나 직접 다운받아주세요.
