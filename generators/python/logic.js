@@ -42,9 +42,6 @@ Blockly.Python['control_if'] = function(block) {
 
     ++n;
   } while (block.getInput('IF' + n));
-  
-  var c = 0;
-  c += 2;
 
   if (block.getInput('ELSE')) {
     branchCode = Blockly.Python.statementToCode(block, 'ELSE') ||
