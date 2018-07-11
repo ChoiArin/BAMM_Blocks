@@ -29,11 +29,26 @@ goog.provide('Blockly.Python.lists');
 goog.require('Blockly.Python');
 
 
-Blockly.Python['lists_create_empty'] = function(block) {
+Blockly.Python['data_listcontents'] = function(block) {
   // Create an empty list.
-  return ['[]', Blockly.Python.ORDER_ATOMIC];
-};
-
+  var code = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+      Blockly.Variables.NAME_TYPE);
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};  
+Blockly.Python['data_addtolist'] = function(block){
+    var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+    Blockly.Variables.NAME_TYPE);
+    if (block.getField('ITEM')) {
+      var thing = String(block.getFieldValue('ITEM'));
+    }
+    else{
+      var thing = Blockly.Python.valueToCode(block, 'ITEM',
+      Blockly.Python.ORDER_NONE) || '0';
+    }
+    var code = list + '.append' + '(' + thing + ')';
+    return code;
+}
+/*
 Blockly.Python['lists_create_with'] = function(block) {
   // Create a list with any number of elements of any type.
   var elements = new Array(block.itemCount_);
@@ -44,7 +59,7 @@ Blockly.Python['lists_create_with'] = function(block) {
   var code = '[' + elements.join(', ') + ']';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
-
+*/
 Blockly.Python['lists_repeat'] = function(block) {
   // Create a list with one element repeated.
   var item = Blockly.Python.valueToCode(block, 'ITEM',
@@ -55,10 +70,10 @@ Blockly.Python['lists_repeat'] = function(block) {
   return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
 };
 
-Blockly.Python['lists_length'] = function(block) {
+Blockly.Python['data_lengthoflist'] = function(block) {
   // String or array length.
-  var list = Blockly.Python.valueToCode(block, 'VALUE',
-      Blockly.Python.ORDER_NONE) || '[]';
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+      Blockly.Variables.NAME_TYPE);
   return ['len(' + list + ')', Blockly.Python.ORDER_FUNCTION_CALL];
 };
 

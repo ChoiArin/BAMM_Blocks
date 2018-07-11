@@ -166,7 +166,13 @@ Blockly.Python.init = function(workspace) {
   var variables = workspace.getAllVariables();
   for (var i = 0; i < variables.length; i++) {
     defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
-        Blockly.Variables.NAME_TYPE) + ' = None';
+        Blockly.Variables.NAME_TYPE);
+    if(variables[i].type === 'list'){
+      defvars[i] += ' = []';
+    }
+    else{
+      defvars[i] += ' = None';
+    }
   }
 
   // Add developer variables (not created or named by the user).
