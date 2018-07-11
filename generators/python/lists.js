@@ -29,9 +29,11 @@ goog.provide('Blockly.Python.lists');
 goog.require('Blockly.Python');
 
 
-Blockly.Python['lists_create_empty'] = function(block) {
+Blockly.Python['data_listcontents'] = function(block) {
   // Create an empty list.
-  return ['[]', Blockly.Python.ORDER_ATOMIC];
+  var code = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+      Blockly.Variables.NAME_TYPE);
+  return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python['lists_create_with'] = function(block) {
@@ -55,10 +57,10 @@ Blockly.Python['lists_repeat'] = function(block) {
   return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
 };
 
-Blockly.Python['lists_length'] = function(block) {
+Blockly.Python['data_lengthoflist'] = function(block) {
   // String or array length.
-  var list = Blockly.Python.valueToCode(block, 'VALUE',
-      Blockly.Python.ORDER_NONE) || '[]';
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+      Blockly.Variables.NAME_TYPE);
   return ['len(' + list + ')', Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
