@@ -447,7 +447,7 @@ Blockly.Python['math_constrain'] = function(block) {
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Python['math_random_int'] = function(block) {
+Blockly.Python['operator_random'] = function(block) {
   // Random integer between [X] and [Y].
   Blockly.Python.definitions_['import_random'] = 'import random';
   var argument0 = Blockly.Python.valueToCode(block, 'FROM',
