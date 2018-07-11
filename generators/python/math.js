@@ -32,7 +32,7 @@ goog.require('Blockly.Python');
 // If any new block imports any library, add that library name here.
 Blockly.Python.addReservedWords('math,random,Number');
 
-Blockly.Python['math_whole_number'] = function(block) {
+Blockly.Python['math_number'] = function(block) {
   // Numeric value.
   var code = parseFloat(block.getFieldValue('NUM'));
   var order;
@@ -47,6 +47,83 @@ Blockly.Python['math_whole_number'] = function(block) {
             Blockly.Python.ORDER_ATOMIC;
   }
   return [code, order];
+};
+
+Blockly.Python['math_whole_number'] = Blockly.Python['math_number'];
+
+Blockly.Python['operator_add'] = function(block) {
+  // Basic arithmetic operators(add).
+  var operator = ' + ';
+  var order = Blockly.Python.ORDER_ADDITIVE;
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
+};
+
+Blockly.Python['operator_subtract'] = function(block) {
+  // Basic arithmetic operators(subsract).
+  var operator = ' - ';
+  var order = Blockly.Python.ORDER_ADDITIVE;
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
+};
+
+Blockly.Python['operator_multiply'] = function(block) {
+  // Basic arithmetic operators(multiply).
+  var operator = ' * ';
+  var order = Blockly.Python.ORDER_MULTIPLICATIVE;
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
+};
+
+Blockly.Python['operator_divide'] = function(block) {
+  // Basic arithmetic operators(divide).
+  var operator = ' / ';
+  var order = Blockly.Python.ORDER_MULTIPLICATIVE;
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
+};
+
+Blockly.Python['operator_mod'] = function(block) {
+  // Basic arithmetic operators(mod).
+  var operator = ' mod ';
+  var order = Blockly.Python.ORDER_MULTIPLICATIVE;
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
 };
 
 Blockly.Python['math_arithmetic'] = function(block) {
