@@ -323,8 +323,21 @@ Blockly.Python['math_change'] = function(block) {
       ', Number) else 0) + ' + argument0 + '\n';
 };
 
-// Rounding functions have a single operand.
-Blockly.Python['math_round'] = Blockly.Python['math_single'];
+Blockly.Python['operator_round'] = function(block) {
+  // Round
+  var operator = 'ROUND';
+  var code;
+  var arg;
+  Blockly.Python.definitions_['import_math'] = 'import math';
+  arg = Blockly.Python.valueToCode(block, 'NUM',
+      Blockly.Python.ORDER_NONE) || '0';
+  code = 'round(' + arg + ')';
+  if (code) {
+    return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+  }
+  return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+};
+
 // Trigonometry functions have a single operand.
 Blockly.Python['math_trig'] = Blockly.Python['math_single'];
 
