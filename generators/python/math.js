@@ -367,8 +367,8 @@ Blockly.Python['operator_mathop'] = function(block) {
     case 'ceiling':
       code = 'math.ceil(' + arg + ')';
       break;
-    case 'ABS':
-      code = 'math.fabs(' + arg + ')';
+    case 'abs':
+      code = 'abs(' + arg + ')';
       break;
     case 'ROOT':
       code = 'math.sqrt(' + arg + ')';
