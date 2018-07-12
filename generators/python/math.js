@@ -379,10 +379,10 @@ Blockly.Python['operator_mathop'] = function(block) {
     case 'log':
       code = 'math.log10(' + arg + ')';
       break;
-    case 'EXP':
+    case 'e ^':
       code = 'math.exp(' + arg + ')';
       break;
-    case 'POW10':
+    case '10 ^':
       code = 'math.pow(10,' + arg + ')';
       break;
     case 'ROUND':
