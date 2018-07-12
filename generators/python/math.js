@@ -410,13 +410,13 @@ Blockly.Python['operator_mathop'] = function(block) {
   // Second, handle cases which generate values that may need parentheses
   // wrapping the code.
   switch (operator) {
-    case 'ASIN':
+    case 'asin':
       code = 'math.asin(' + arg + ') / math.pi * 180';
       break;
-    case 'ACOS':
+    case 'acos':
       code = 'math.acos(' + arg + ') / math.pi * 180';
       break;
-    case 'ATAN':
+    case 'atan':
       code = 'math.atan(' + arg + ') / math.pi * 180';
       break;
     default:
