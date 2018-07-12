@@ -373,10 +373,10 @@ Blockly.Python['operator_mathop'] = function(block) {
     case 'sqrt':
       code = 'math.sqrt(' + arg + ')';
       break;
-    case 'LN':
+    case 'ln':
       code = 'math.log(' + arg + ')';
       break;
-    case 'LOG10':
+    case 'log':
       code = 'math.log10(' + arg + ')';
       break;
     case 'EXP':
