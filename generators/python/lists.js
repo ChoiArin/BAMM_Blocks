@@ -162,6 +162,16 @@ Blockly.Python['data_replaceitemoflist'] = function(block) {
   return list + '[' + at + '] = ' + value + '\n';
 };
 
+Blockly.Python['data_itemnumoflist'] = function(block) {
+  // Set element at index.
+  // Note: Until February 2013 this block did not have MODE or WHERE inputs.
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+    Blockly.Variables.NAME_TYPE);
+  var value = Blockly.Python.valueToCode(block, 'ITEM',
+    Blockly.Python.ORDER_NONE) || 'None';
+  return list + '.index(' + value + ')\n';
+};
+
 Blockly.Python['lists_sort'] = function(block) {
   // Block for sorting a list.
   var list = (Blockly.Python.valueToCode(block, 'LIST',
