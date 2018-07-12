@@ -351,7 +351,7 @@ Blockly.Python['operator_mathop'] = function(block) {
     return ['-' + code, Blockly.Python.ORDER_UNARY_SIGN];
   }
   Blockly.Python.definitions_['import_math'] = 'import math';
-  if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
+  if (operator == 'sin' || operator == 'cos' || operator == 'tan') {
     arg = Blockly.Python.valueToCode(block, 'NUM',
         Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
   } else {
@@ -394,13 +394,13 @@ Blockly.Python['operator_mathop'] = function(block) {
     case 'ROUNDDOWN':
       code = 'math.floor(' + arg + ')';
       break;
-    case 'SIN':
+    case 'sin':
       code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
       break;
-    case 'COS':
+    case 'cos':
       code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
       break;
-    case 'TAN':
+    case 'tan':
       code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
       break;
   }
