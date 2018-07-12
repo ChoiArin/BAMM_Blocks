@@ -50,6 +50,7 @@ Blockly.Python['math_number'] = function(block) {
 };
 
 Blockly.Python['math_whole_number'] = Blockly.Python['math_number'];
+Blockly.Python['math_integer'] = Blockly.Python['math_number'];
 
 Blockly.Python['operator_add'] = function(block) {
   // Basic arithmetic operators(add).

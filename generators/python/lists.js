@@ -34,7 +34,8 @@ Blockly.Python['data_listcontents'] = function(block) {
   var code = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
       Blockly.Variables.NAME_TYPE);
   return [code, Blockly.Python.ORDER_ATOMIC];
-};  
+};
+
 Blockly.Python['data_addtolist'] = function(block){
     var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
     Blockly.Variables.NAME_TYPE);
@@ -45,8 +46,21 @@ Blockly.Python['data_addtolist'] = function(block){
       var thing = Blockly.Python.valueToCode(block, 'ITEM',
       Blockly.Python.ORDER_NONE) || '0';
     }
-    var code = list + '.append' + '(' + thing + ')';
+    var code = list + '.append' + '(' + thing + ')\n';
     return code;
+};
+Blockly.Python['data_deleteoflist'] = function(block){
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+  Blockly.Variables.NAME_TYPE);
+  if (block.getField('INDEX')) {
+    var thing = String(parseInt(block.getFieldValue('INDEX'), 10));
+  }
+  else{
+    var thing = Blockly.Python.valueToCode(block, 'INDEX',
+    Blockly.Python.ORDER_NONE) || '0';
+  } 
+  var code = 'del ' + list + '[' + thing + ']\n';
+  return code;
 }
 /*
 Blockly.Python['lists_create_with'] = function(block) {
@@ -201,7 +215,18 @@ Blockly.Python['lists_getIndex'] = function(block) {
   throw 'Unhandled combination (lists_getIndex).';
 };
 
-Blockly.Python['lists_setIndex'] = function(block) {
+Blockly.Python['data_insertatlist'] = function(block) {
+  // Set element at index.
+  // Note: Until February 2013 this block did not have MODE or WHERE inputs.
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+    Blockly.Variables.NAME_TYPE);
+  var value = Blockly.Python.valueToCode(block, 'ITEM',
+      Blockly.Python.ORDER_NONE) || 'None';
+  var at = Blockly.Python.getAdjustedInt(block, 'INDEX');
+  return list + '.insert(' + at + ', ' + value + ')\n';
+};
+
+Blockly.Python['data_replaceitemoflist'] = function(block) {
   // Set element at index.
   // Note: Until February 2013 this block did not have MODE or WHERE inputs.
   var list = Blockly.Python.valueToCode(block, 'LIST',
@@ -271,7 +296,6 @@ Blockly.Python['lists_setIndex'] = function(block) {
   }
   throw 'Unhandled combination (lists_setIndex).';
 };
-
 Blockly.Python['lists_getSublist'] = function(block) {
   // Get sublist.
   var list = Blockly.Python.valueToCode(block, 'LIST',
