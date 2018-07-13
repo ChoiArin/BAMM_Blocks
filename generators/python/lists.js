@@ -74,7 +74,15 @@ Blockly.Python['lists_repeat'] = function(block) {
   var code = '[' + item + '] * ' + times;
   return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
 };
-
+Blockly.Python['data_listcontainsitem'] = function(block) {
+  // Block for reversing a list.
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+  Blockly.Variables.NAME_TYPE);
+  var thing = Blockly.Python.valueToCode(block, 'ITEM',
+  Blockly.Python.ORDER_NONE) || '0';
+  var code = list + ' in ' + thing;
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+};
 Blockly.Python['data_lengthoflist'] = function(block) {
   // String or array length.
   var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
