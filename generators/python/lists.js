@@ -65,74 +65,21 @@ Blockly.Python['lists_create_with'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 */
-Blockly.Python['lists_repeat'] = function(block) {
-  // Create a list with one element repeated.
-  var item = Blockly.Python.valueToCode(block, 'ITEM',
-      Blockly.Python.ORDER_NONE) || 'None';
-  var times = Blockly.Python.valueToCode(block, 'NUM',
-      Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
-  var code = '[' + item + '] * ' + times;
-  return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
-};
 Blockly.Python['data_listcontainsitem'] = function(block) {
   // Block for reversing a list.
   var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
   Blockly.Variables.NAME_TYPE);
   var thing = Blockly.Python.valueToCode(block, 'ITEM',
   Blockly.Python.ORDER_NONE) || '0';
-  var code = list + ' in ' + thing;
+  var code = thing + ' in ' + list;
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
+
 Blockly.Python['data_lengthoflist'] = function(block) {
   // String or array length.
   var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
       Blockly.Variables.NAME_TYPE);
   return ['len(' + list + ')', Blockly.Python.ORDER_FUNCTION_CALL];
-};
-
-Blockly.Python['lists_isEmpty'] = function(block) {
-  // Is the string null or array empty?
-  var list = Blockly.Python.valueToCode(block, 'VALUE',
-      Blockly.Python.ORDER_NONE) || '[]';
-  var code = 'not len(' + list + ')';
-  return [code, Blockly.Python.ORDER_LOGICAL_NOT];
-};
-
-Blockly.Python['lists_indexOf'] = function(block) {
-  // Find an item in the list.
-  var item = Blockly.Python.valueToCode(block, 'FIND',
-      Blockly.Python.ORDER_NONE) || '[]';
-  var list = Blockly.Python.valueToCode(block, 'VALUE',
-      Blockly.Python.ORDER_NONE) || '\'\'';
-  if (block.workspace.options.oneBasedIndex) {
-    var errorIndex = ' 0';
-    var firstIndexAdjustment = ' + 1';
-    var lastIndexAdjustment = '';
-  } else {
-    var errorIndex = ' -1';
-    var firstIndexAdjustment = '';
-    var lastIndexAdjustment = ' - 1';
-  }
-  if (block.getFieldValue('END') == 'FIRST') {
-    var functionName = Blockly.Python.provideFunction_(
-        'first_index',
-        ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ +
-            '(my_list, elem):',
-         '  try: index = my_list.index(elem)' + firstIndexAdjustment,
-         '  except: index =' + errorIndex,
-         '  return index']);
-    var code = functionName + '(' + list + ', ' + item + ')';
-    return [code, Blockly.Python.ORDER_FUNCTION_CALL];
-  }
-  var functionName = Blockly.Python.provideFunction_(
-      'last_index',
-      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(my_list, elem):',
-       '  try: index = len(my_list) - my_list[::-1].index(elem)' +
-         lastIndexAdjustment,
-       '  except: index =' + errorIndex,
-       '  return index']);
-  var code = functionName + '(' + list + ', ' + item + ')';
-  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Python['data_itemoflist'] = function(block) {
@@ -177,7 +124,7 @@ Blockly.Python['data_itemnumoflist'] = function(block) {
     Blockly.Variables.NAME_TYPE);
   var value = Blockly.Python.valueToCode(block, 'ITEM',
     Blockly.Python.ORDER_NONE) || 'None';
-  return list + '.index(' + value + ')\n';
+  return [list + '.index(' + value + ')', Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Python['lists_sort'] = function(block) {
@@ -235,5 +182,59 @@ Blockly.Python['lists_reverse'] = function(block) {
   var list = Blockly.Python.valueToCode(block, 'LIST',
       Blockly.Python.ORDER_NONE) || '[]';
   var code = 'list(reversed(' + list + '))';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Python['lists_repeat'] = function(block) {
+  // Create a list with one element repeated.
+  var item = Blockly.Python.valueToCode(block, 'ITEM',
+      Blockly.Python.ORDER_NONE) || 'None';
+  var times = Blockly.Python.valueToCode(block, 'NUM',
+      Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+  var code = '[' + item + '] * ' + times;
+  return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+};
+Blockly.Python['lists_isEmpty'] = function(block) {
+  // Is the string null or array empty?
+  var list = Blockly.Python.valueToCode(block, 'VALUE',
+      Blockly.Python.ORDER_NONE) || '[]';
+  var code = 'not len(' + list + ')';
+  return [code, Blockly.Python.ORDER_LOGICAL_NOT];
+};
+
+Blockly.Python['lists_indexOf'] = function(block) {
+  // Find an item in the list.
+  var item = Blockly.Python.valueToCode(block, 'FIND',
+      Blockly.Python.ORDER_NONE) || '[]';
+  var list = Blockly.Python.valueToCode(block, 'VALUE',
+      Blockly.Python.ORDER_NONE) || '\'\'';
+  if (block.workspace.options.oneBasedIndex) {
+    var errorIndex = ' 0';
+    var firstIndexAdjustment = ' + 1';
+    var lastIndexAdjustment = '';
+  } else {
+    var errorIndex = ' -1';
+    var firstIndexAdjustment = '';
+    var lastIndexAdjustment = ' - 1';
+  }
+  if (block.getFieldValue('END') == 'FIRST') {
+    var functionName = Blockly.Python.provideFunction_(
+        'first_index',
+        ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ +
+            '(my_list, elem):',
+         '  try: index = my_list.index(elem)' + firstIndexAdjustment,
+         '  except: index =' + errorIndex,
+         '  return index']);
+    var code = functionName + '(' + list + ', ' + item + ')';
+    return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+  }
+  var functionName = Blockly.Python.provideFunction_(
+      'last_index',
+      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(my_list, elem):',
+       '  try: index = len(my_list) - my_list[::-1].index(elem)' +
+         lastIndexAdjustment,
+       '  except: index =' + errorIndex,
+       '  return index']);
+  var code = functionName + '(' + list + ', ' + item + ')';
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
