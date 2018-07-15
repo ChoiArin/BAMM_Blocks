@@ -31,23 +31,12 @@ goog.require('Blockly.Python');
 
 Blockly.Python['control_if'] = function(block) {
   // If/elseif/else condition.
-  var n = 0;
   var code = '', branchCode, conditionCode;
-  do {
-    conditionCode = Blockly.Python.valueToCode(block, 'IF' + n,
+  conditionCode = Blockly.Python.valueToCode(block, 'CONDITION',
         Blockly.Python.ORDER_NONE) || 'False';
-    branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+  branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
         Blockly.Python.PASS;
-    code += (n == 0 ? 'if ' : 'elif ' ) + conditionCode + ':\n' + branchCode;
-
-    ++n;
-  } while (block.getInput('IF' + n));
-
-  if (block.getInput('ELSE')) {
-    branchCode = Blockly.Python.statementToCode(block, 'SUBSTACK2') ||
-        Blockly.Python.PASS;
-    code += 'else:\n' + branchCode;
-  }
+  code += 'if ' + conditionCode + ':\n' + branchCode;
   return code;
 };
 
