@@ -217,3 +217,13 @@ Blockly.Python['controls_flow_statements'] = function(block) {
   }
   throw 'Unknown flow statement.';
 };
+
+Blockly.Python['control_stop'] = function(block) {
+  switch (block.getFieldValue('STOP_OPTION')) {
+    case 'all':
+      return 'return\n';
+    case 'this script':
+      return 'break\n';
+  }
+  throw 'Unknown flow statement.';
+}

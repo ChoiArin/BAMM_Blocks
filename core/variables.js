@@ -104,6 +104,8 @@ Blockly.Variables.allVariables = function(root) {
   return root.getAllVariables();
 };
 
+// Blockly.Variables.allUsedVarModels = Blockly.Variables.allVariables;
+
 /**
  * Find all developer variables used by blocks in the workspace.
  * Developer variables are never shown to the user, but are declared as global
