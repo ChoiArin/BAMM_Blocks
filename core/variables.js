@@ -104,7 +104,35 @@ Blockly.Variables.allVariables = function(root) {
   return root.getAllVariables();
 };
 
+/**
+ * Find all variables that the user has created through the workspace or
+ * toolbox.  For use by generators.
+ * @param {!Blockly.Block|!Blockly.Workspace} root Root block or workspace.
+ * @return {!Array.<string>} Array of variable names.
+ */
 // Blockly.Variables.allUsedVarModels = Blockly.Variables.allVariables;
+Blockly.Variables.allUsedVarModels = function(root) {
+  var blocks = root.getAllBlocks();
+  var variableHash = Object.create(null);
+  // Iterate through every block and add each variable to the hash.
+  for (var x = 0; x < blocks.length; x++) {
+    var blockVariables = blocks[x].getVarModels();
+    if (blockVariables) {
+      for (var y = 0; y < blockVariables.length; y++) {
+        var variable = blockVariables[y];
+        if (variable.getId()) {
+          variableHash[variable.getId()] = variable;
+        }
+      }
+    }
+  }
+  // Flatten the hash into a list.
+  var variableList = [];
+  for (var id in variableHash) {
+    variableList.push(variableHash[id]);
+  }
+  return variableList;
+};
 
 /**
  * Find all developer variables used by blocks in the workspace.
