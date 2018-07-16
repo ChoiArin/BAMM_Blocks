@@ -117,8 +117,8 @@ Blockly.Blocks['texts_indexOf'] = {
           "type": "field_dropdown",
           "name": "END",
           "options": [
-            ['Start', 'FIRST'],
-            ['End', 'LAST']
+            ['start', 'FIRST'],
+            ['end', 'LAST']
           ]
         },
         {
@@ -165,7 +165,7 @@ Blockly.Blocks['texts_getSubstring'] = {
   init: function() {
     this.jsonInit({
       "type": "texts_getSubstring",
-      "message0": 'get %1 from %3(from %2) to %5(from %4)',
+      "message0": ' in %1 get from %3(from %2) to %5(from %4)',
       "args0": [
         {
           "type": "input_value",
@@ -175,9 +175,9 @@ Blockly.Blocks['texts_getSubstring'] = {
           "type": "field_dropdown",
           "name": "WHERE1",
           "options": [
-            ['Start', 'FROM_START'],
-            ['End', 'FROM_END'],
-            ['First', 'FIRST']
+            ['start', 'FROM_START'],
+            ['end', 'FROM_END'],
+            ['first', 'FIRST']
           ]
         },
         {
@@ -188,9 +188,9 @@ Blockly.Blocks['texts_getSubstring'] = {
           "type": "field_dropdown",
           "name": "WHERE2",
           "options": [
-            ['Start', 'FROM_START'],
-            ['End', 'FROM_END'],
-            ['First', 'FIRST']
+            ['start', 'FROM_START'],
+            ['end', 'FROM_END'],
+            ['last', 'LAST']
           ]
         },
         {
@@ -222,9 +222,9 @@ Blockly.Blocks['texts_changeCase'] = {
           "type": "field_dropdown",
           "name": "CASE",
           "options": [
-            ['Upper', 'UPPERCASE'],
-            ['Lower', 'LOWERCASE'],
-            ['Title', 'TITLECASE']
+            ['upper', 'UPPERCASE'],
+            ['lower', 'LOWERCASE'],
+            ['title', 'TITLECASE']
           ]
         }
       ],
@@ -252,9 +252,9 @@ Blockly.Blocks['texts_trim'] = {
           "type": "field_dropdown",
           "name": "MODE",
           "options": [
-            ['Left', 'LEFT'],
-            ['Right', 'RIGHT'],
-            ['Both', 'BOTH']
+            ['left', 'LEFT'],
+            ['right', 'RIGHT'],
+            ['both', 'BOTH']
           ]
         }
       ],
