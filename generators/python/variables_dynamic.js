@@ -31,5 +31,5 @@ goog.require('Blockly.Python.variables');
 
 
 // Python is dynamically typed.
-Blockly.Python['variables_get_dynamic'] = Blockly.Python['variables_get'];
-Blockly.Python['variables_set_dynamic'] = Blockly.Python['variables_set'];
+//Blockly.Python['variables_get_dynamic'] = Blockly.Python['variables_get'];
+//Blockly.Python['variables_set_dynamic'] = Blockly.Python['variables_set'];

@@ -257,6 +257,7 @@ Blockly.Categories = {
   "dataLists": "data-lists",
   "event": "events",
   "control": "control",
+  "texts_extensions": "texts_extensions",
   "sensing": "sensing",
   "operators": "operators",
   "more": "more"
