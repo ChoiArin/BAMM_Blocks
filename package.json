@@ -1,8 +1,8 @@
 {
   "name": "BBAM_Blocks",
   "version": "0.1.0",
-  "description": "BBAM project module",
-  "author": "Massachusetts Institute of Technology",
+  "description": "scratch-blocks based BBAM blocks module",
+  "author": "BBAM",
   "license": "Apache-2.0",
   "homepage": "https://github.com/haya0206/BBAM_Blocks#readme",
   "repository": {
