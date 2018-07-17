@@ -304,6 +304,150 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
     '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
   '</category>' +
+  '<category name="Texts" id="texts_extensions" colour="#ABABAB" secondaryColour="#8B8B8B">' +
+    '<block type="texts_join" id="texts_join">' +
+      '<value name="ADD0">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="ADD1">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">world</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    /*
+    '<block type="texts_append" id="texts_append">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">world</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    */
+    '<block type="texts_length" id="texts_length">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_isEmpty" id="texts_isEmpty">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_indexOf" id="texts_indexOf">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="FIND">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">world</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_charAt" id="texts_charAt">' +
+      '<value name="WHERE">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_getSubstring" id="texts_getSubstring">' +
+      '<value name="STRING">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="AT1">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="AT2">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_changeCase" id="texts_changeCase">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_trim" id="texts_trim">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"> hello, world!  </field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_print" id="texts_print">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    /*
+    '<block type="texts_prompt" id="texts_prompt">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    */
+    '<block type="texts_count" id="texts_count">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="SUB">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">world</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_replace" id="texts_replace">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, world!</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="FROM">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="TO">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">world</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_reverse" id="texts_reverse">' +
+      '<value name="TEXT">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">hello, wolrd!</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+  '</category>' +
   '<category name="%{BKY_CATEGORY_SENSING}" id="sensing" colour="#4CBFE6" secondaryColour="#2E8EB8">' +
     '<block type="sensing_touchingobject" id="sensing_touchingobject">' +
       '<value name="TOUCHINGOBJECTMENU">' +

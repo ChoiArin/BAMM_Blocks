@@ -77,11 +77,8 @@ Blockly.Blocks['data_setvariableto'] = {
   }
 };
 
+/*
 Blockly.Blocks['data_changevariableby'] = {
-  /**
-   * Block to change variable by a certain value
-   * @this Blockly.Block
-   */
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.DATA_CHANGEVARIABLEBY,
@@ -102,10 +99,6 @@ Blockly.Blocks['data_changevariableby'] = {
 };
 
 Blockly.Blocks['data_showvariable'] = {
-  /**
-   * Block to show a variable
-   * @this Blockly.Block
-   */
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.DATA_SHOWVARIABLE,
@@ -126,10 +119,6 @@ Blockly.Blocks['data_showvariable'] = {
 };
 
 Blockly.Blocks['data_hidevariable'] = {
-  /**
-   * Block to hide a variable
-   * @this Blockly.Block
-   */
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.DATA_HIDEVARIABLE,
@@ -148,6 +137,7 @@ Blockly.Blocks['data_hidevariable'] = {
     });
   }
 };
+*/
 
 Blockly.Blocks['data_listcontents'] = {
   /**
@@ -436,11 +426,8 @@ Blockly.Blocks['data_listcontainsitem'] = {
   }
 };
 
+/*
 Blockly.Blocks['data_showlist'] = {
-  /**
-   * Block to show a list.
-   * @this Blockly.Block
-   */
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.DATA_SHOWLIST,
@@ -458,10 +445,6 @@ Blockly.Blocks['data_showlist'] = {
 };
 
 Blockly.Blocks['data_hidelist'] = {
-  /**
-   * Block to hide a list.
-   * @this Blockly.Block
-   */
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.DATA_HIDELIST,
@@ -477,6 +460,7 @@ Blockly.Blocks['data_hidelist'] = {
     });
   }
 };
+*/
 
 /**
  * Mixin to add a context menu for a data_variable block.  It adds one item for

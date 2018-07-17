@@ -361,17 +361,26 @@ Blockly.Python['operator_mathop'] = function(block) {
   // First, handle cases which generate values that don't need parentheses
   // wrapping the code.
   switch (operator) {
+    case 'abs':
+      code = 'math.fabs(' + arg + ')';
+      break;
     case 'floor':
       code = 'math.floor(' + arg + ')';
       break;
     case 'ceiling':
       code = 'math.ceil(' + arg + ')';
       break;
-    case 'abs':
-      code = 'math.fabs(' + arg + ')';
-      break;
     case 'sqrt':
       code = 'math.sqrt(' + arg + ')';
+      break;
+    case 'sin':
+      code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
+      break;
+    case 'cos':
+      code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
+      break;
+    case 'tan':
+      code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
       break;
     case 'ln':
       code = 'math.log(' + arg + ')';
@@ -384,24 +393,6 @@ Blockly.Python['operator_mathop'] = function(block) {
       break;
     case '10 ^':
       code = 'math.pow(10,' + arg + ')';
-      break;
-    case 'ROUND':
-      code = 'round(' + arg + ')';
-      break;
-    case 'ROUNDUP':
-      code = 'math.ceil(' + arg + ')';
-      break;
-    case 'ROUNDDOWN':
-      code = 'math.floor(' + arg + ')';
-      break;
-    case 'sin':
-      code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
-      break;
-    case 'cos':
-      code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
-      break;
-    case 'tan':
-      code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
       break;
   }
   if (code) {
