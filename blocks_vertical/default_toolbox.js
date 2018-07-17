@@ -463,7 +463,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="operator_letter_of" id="operator_letter_of">' +
       '<value name="LETTER">' +
         '<shadow type="math_whole_number">' +
-          '<field name="NUM">1</field>' +
+          '<field name="NUM">0</field>' +
         '</shadow>' +
       '</value>' +
       '<value name="STRING">' +
