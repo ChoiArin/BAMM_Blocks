@@ -451,7 +451,7 @@ Blockly.Variables.validateScalarVarOrListName_ = function(name, workspace,
   if (!name) {
     return null;
   }
-  if (workspace.getVariable(name, type)) {
+  if (workspace.getVariable(name, Blockly.LIST_VARIABLE_TYPE) || workspace.getVariable(name, Blockly.SCALAR_VARIABLE_TYPE)) {
     // error
     Blockly.alert(errorMsg.replace('%1', name));
     return null;
