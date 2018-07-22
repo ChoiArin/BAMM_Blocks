@@ -252,7 +252,7 @@ Blockly.Categories = {
   "motion": "motion",
   "looks": "looks",
   "sound": "sounds",
-  "pen": "pen",
+  "func": "func",
   "data": "data",
   "dataLists": "data-lists",
   "event": "events",
@@ -351,7 +351,7 @@ Blockly.LIST_VARIABLE_TYPE = 'list';
 Blockly.SCALAR_VARIABLE_TYPE = '';
 
 // function type const
-Blockly.FUNCTION_TYPE = 'func';
+Blockly.FUNC_TYPE = 'func';
 
 /**
  * The type of all procedure definition blocks.
