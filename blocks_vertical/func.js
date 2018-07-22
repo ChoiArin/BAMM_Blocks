@@ -25,7 +25,7 @@ Blockly.Blocks['func'] = {
           }
         ],
         "category": Blockly.Categories.func,
-        "extensions": ["colours_data_lists", "output_string"],
+        "extensions": ["colours_func", "shape_hat"],
         "checkboxInFlyout": true
       });
     }

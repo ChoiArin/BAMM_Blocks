@@ -453,7 +453,8 @@ Blockly.Variables.validateScalarVarOrListName_ = function(name, workspace,
     return null;
   }
   // PSB_함수 이름 체크를 해줄 부분, || 연산으로 들어가야 함
-  if (workspace.getVariable(name, Blockly.LIST_VARIABLE_TYPE) || workspace.getVariable(name, Blockly.SCALAR_VARIABLE_TYPE)) {
+  if (workspace.getVariable(name, Blockly.LIST_VARIABLE_TYPE) || workspace.getVariable(name, Blockly.SCALAR_VARIABLE_TYPE) ||
+    workspace.getVariable(name, Blockly.FUNC_TYPE)) {
     // error
     Blockly.alert(errorMsg.replace('%1', name));
     return null;
