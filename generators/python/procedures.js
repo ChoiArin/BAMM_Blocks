@@ -28,52 +28,52 @@ goog.provide('Blockly.Python.procedures');
 
 goog.require('Blockly.Python');
 
-Blockly.Procedures['externalProcedureDefCallback'] = function(workspace, opt_callback, opt_type) {
-    var modalTitle;
+// Blockly.Procedures['externalProcedureDefCallback'] = function(workspace, opt_callback, opt_type) {
+//     var modalTitle;
     
-    opt_type = opt_type ? opt_type : '';
-    // opt_type = Blockly.LIST_VARIABLE_TYPE;
-    modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
+//     opt_type = opt_type ? opt_type : '';
+//     // opt_type = Blockly.LIST_VARIABLE_TYPE;
+//     modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
 
-    var validate = Blockly.Variables.nameValidator_.bind(null, opt_type);
+//     var validate = Blockly.Variables.nameValidator_.bind(null, opt_type);
 
-    Blockly.prompt('New function name:', '',
-      function(text) {
-        var validatedText = validate(text, workspace, opt_callback);
-        if (validatedText) {
-          // The name is valid according to the type, create the variable
-          var potentialVarMap = workspace.getPotentialVariableMap();
-          var variable;
-          // This check ensures that if a new variable is being created from a
-          // workspace that already has a variable of the same name and type as
-          // a potential variable, that potential variable gets turned into a
-          // real variable and thus there aren't duplicate options in the field_variable
-          // dropdown.
-          if (potentialVarMap && opt_type) {
-            variable = Blockly.Variables.realizePotentialVar(validatedText,
-                opt_type, workspace, false);
-          }
-          if (!variable) {
-            variable = workspace.createVariable(validatedText, opt_type);
-          }
+//     Blockly.prompt('New function name:', '',
+//       function(text) {
+//         var validatedText = validate(text, workspace, opt_callback);
+//         if (validatedText) {
+//           // The name is valid according to the type, create the variable
+//           var potentialVarMap = workspace.getPotentialVariableMap();
+//           var variable;
+//           // This check ensures that if a new variable is being created from a
+//           // workspace that already has a variable of the same name and type as
+//           // a potential variable, that potential variable gets turned into a
+//           // real variable and thus there aren't duplicate options in the field_variable
+//           // dropdown.
+//           if (potentialVarMap && opt_type) {
+//             variable = Blockly.Variables.realizePotentialVar(validatedText,
+//                 opt_type, workspace, false);
+//           }
+//           if (!variable) {
+//             variable = workspace.createVariable(validatedText, opt_type);
+//           }
 
-          var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
-          var variableBlockId = variable.getId();
-          if (flyout.setCheckboxState) {
-            flyout.setCheckboxState(variableBlockId, true);
-          }
+//           var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
+//           var variableBlockId = variable.getId();
+//           if (flyout.setCheckboxState) {
+//             flyout.setCheckboxState(variableBlockId, true);
+//           }
 
-          if (opt_callback) {
-            opt_callback(variableBlockId);
-          }
-        } else {
-          // User canceled prompt without a value.
-          if (opt_callback) {
-            opt_callback(null);
-          }
-        }
-      }, modalTitle, opt_type);
-};
+//           if (opt_callback) {
+//             opt_callback(variableBlockId);
+//           }
+//         } else {
+//           // User canceled prompt without a value.
+//           if (opt_callback) {
+//             opt_callback(null);
+//           }
+//         }
+//       }, modalTitle, opt_type);
+// };
 
 Blockly.Python['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.
