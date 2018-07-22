@@ -613,6 +613,7 @@ Blockly.VerticalFlyout.prototype.setCheckboxState = function(blockId, value) {
 
       var oldValue = checkboxObj.clicked;
       checkboxObj.clicked = value;
+      console.log(value);
 
       if (checkboxObj.clicked) {
         Blockly.utils.addClass((checkboxObj.svgRoot), 'checked');
@@ -701,5 +702,16 @@ Blockly.VerticalFlyout.prototype.reflowInternal_ = function(/* blocks */) {
  * @public
  */
 Blockly.VerticalFlyout.getCheckboxState = function(/* blockId */) {
+  return false;
+};
+
+Blockly.VerticalFlyout.prototype.getCheckboxState = function(blockId) {
+  if(!this.checkboxes_) return false;
+  for (var i = 0; i < this.checkboxes_.length; i++) {
+    var checkboxObj = this.checkboxes_[i];
+    if (checkboxObj.block.id === blockId) {
+      return checkboxObj.clicked;
+    }
+  }
   return false;
 };
