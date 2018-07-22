@@ -350,6 +350,9 @@ Blockly.LIST_VARIABLE_TYPE = 'list';
  */
 Blockly.SCALAR_VARIABLE_TYPE = '';
 
+// function type const
+Blockly.FUNCTION_TYPE = 'func';
+
 /**
  * The type of all procedure definition blocks.
  * @const {string}

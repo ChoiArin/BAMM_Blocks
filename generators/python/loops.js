@@ -45,7 +45,7 @@ Blockly.Python['control_repeat'] = function(block) {
     repeats = 'int(' + repeats + ')';
   }
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
       Blockly.Python.PASS;
   var loopVar = Blockly.Python.variableDB_.getDistinctName(
       'count', Blockly.Variables.NAME_TYPE);
@@ -58,11 +58,11 @@ Blockly.Python['controls_repeat'] = Blockly.Python['controls_repeat_ext'];
 Blockly.Python['control_repeat_until'] = function(block) {
   // Do while/until loop.
   var until = block.getFieldValue('MODE') == 'UNTIL';
-  var argument0 = Blockly.Python.valueToCode(block, 'CONDITION',
+  var argument0 = Blockly.Python.valueToCode(block, 'BOOL',
       until ? Blockly.Python.ORDER_LOGICAL_NOT :
       Blockly.Python.ORDER_NONE) || 'False';
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
       Blockly.Python.PASS;
   if (until) {
     argument0 = 'not ' + argument0;
@@ -73,17 +73,9 @@ Blockly.Python['control_repeat_until'] = function(block) {
 Blockly.Python['control_forever'] = function(block) {
   // Infinite loop.
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
-        Blockly.Python.PASS;
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+      Blockly.Python.PASS;
   return 'while True:\n' + branch;
-};
-
-Blockly.Python['control_wait_until'] = function(block) {
-  var until = block.getFieldValue('MODE') == 'UNTIL';
-  var argument0 = Blockly.Python.valueToCode(block, 'CONDITION',
-      until ? Blockly.Python.ORDER_LOGICAL_NOT :
-      Blockly.Python.ORDER_NONE) || 'False';
-  return 'if ' + argument0 + ':\n    break';
 };
 
 Blockly.Python['controls_for'] = function(block) {
@@ -132,7 +124,7 @@ Blockly.Python['controls_for'] = function(block) {
   if (Blockly.isNumber(argument0) && Blockly.isNumber(argument1) &&
       Blockly.isNumber(increment)) {
     // All parameters are simple numbers.
-    argument0 = parseFloat(argument0);
+    argument0 = parseFloat(argument0);  
     argument1 = parseFloat(argument1);
     increment = Math.abs(parseFloat(increment));
     if (argument0 % 1 === 0 && argument1 % 1 === 0 && increment % 1 === 0) {
