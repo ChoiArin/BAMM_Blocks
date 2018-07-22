@@ -391,6 +391,7 @@ Blockly.Variables.nameValidator_ = function(type, text, workspace, opt_callback)
   } else if (type == Blockly.LIST_VARIABLE_TYPE) {
     return Blockly.Variables.validateScalarVarOrListName_(text, workspace, type,
         Blockly.Msg.LIST_ALREADY_EXISTS);
+        // PSB_웬지 여기에 추가
   } else {
     return Blockly.Variables.validateScalarVarOrListName_(text, workspace, type,
         Blockly.Msg.VARIABLE_ALREADY_EXISTS);
@@ -451,6 +452,7 @@ Blockly.Variables.validateScalarVarOrListName_ = function(name, workspace,
   if (!name) {
     return null;
   }
+  // PSB_함수 이름 체크를 해줄 부분, || 연산으로 들어가야 함
   if (workspace.getVariable(name, Blockly.LIST_VARIABLE_TYPE) || workspace.getVariable(name, Blockly.SCALAR_VARIABLE_TYPE)) {
     // error
     Blockly.alert(errorMsg.replace('%1', name));

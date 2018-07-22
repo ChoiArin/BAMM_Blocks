@@ -28,61 +28,51 @@ goog.provide('Blockly.Python.procedures');
 
 goog.require('Blockly.Python');
 
-Blockly.Procedures['externalProcedureDefCallback'] = function(block) {
-    // Define a procedure with a return value.
-  // First, add a 'global' statement for every variable that is not shadowed by
-  // a local parameter.
-  var globals = [];
-  var varName;
-  var workspace = block.workspace;
-  var variables = Blockly.Variables.allUsedVarModels(workspace) || [];
-  for (var i = 0, variable; variable = variables[i]; i++) {
-    varName = variable.name;
-    if (block.arguments_.indexOf(varName) == -1) {
-      globals.push(Blockly.Python.variableDB_.getName(varName,
-          Blockly.Variables.NAME_TYPE));
-    }
-  }
-  // Add developer variables.
-  var devVarList = Blockly.Variables.allDeveloperVariables(workspace);
-  for (var i = 0; i < devVarList.length; i++) {
-    globals.push(Blockly.Python.variableDB_.getName(devVarList[i],
-        Blockly.Names.DEVELOPER_VARIABLE_TYPE));
-  }
+Blockly.Procedures['externalProcedureDefCallback'] = function(workspace, opt_callback, opt_type) {
+    var modalTitle;
+    
+    opt_type = opt_type ? opt_type : '';
+    // opt_type = Blockly.LIST_VARIABLE_TYPE;
+    modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
 
-  globals = globals.length ?
-      Blockly.Python.INDENT + 'global ' + globals.join(', ') + '\n' : '';
-  var funcName = Blockly.Python.variableDB_.getName(
-      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
-  var branch = Blockly.Python.statementToCode(block, 'STACK');
-  if (Blockly.Python.STATEMENT_PREFIX) {
-    var id = block.id.replace(/\$/g, '$$$$');  // Issue 251.
-    branch = Blockly.Python.prefixLines(
-        Blockly.Python.STATEMENT_PREFIX.replace(
-            /%1/g, '\'' + id + '\''), Blockly.Python.INDENT) + branch;
-  }
-  if (Blockly.Python.INFINITE_LOOP_TRAP) {
-    branch = Blockly.Python.INFINITE_LOOP_TRAP.replace(/%1/g,
-        '"' + block.id + '"') + branch;
-  }
-  var returnValue = Blockly.Python.valueToCode(block, 'RETURN',
-      Blockly.Python.ORDER_NONE) || '';
-  if (returnValue) {
-    returnValue = Blockly.Python.INDENT + 'return ' + returnValue + '\n';
-  } else if (!branch) {
-    branch = Blockly.Python.PASS;
-  }
-  var args = [];
-  for (var i = 0; i < block.arguments_.length; i++) {
-    args[i] = Blockly.Python.variableDB_.getName(block.arguments_[i],
-        Blockly.Variables.NAME_TYPE);
-  }
-  var code = 'def ' + funcName + '(' + args.join(', ') + '):\n' +
-      globals + branch + returnValue;
-  code = Blockly.Python.scrub_(block, code);
-  // Add % so as not to collide with helper functions in definitions list.
-  Blockly.Python.definitions_['%' + funcName] = code;
-  return null;
+    var validate = Blockly.Variables.nameValidator_.bind(null, opt_type);
+
+    Blockly.prompt('New function name:', '',
+      function(text) {
+        var validatedText = validate(text, workspace, opt_callback);
+        if (validatedText) {
+          // The name is valid according to the type, create the variable
+          var potentialVarMap = workspace.getPotentialVariableMap();
+          var variable;
+          // This check ensures that if a new variable is being created from a
+          // workspace that already has a variable of the same name and type as
+          // a potential variable, that potential variable gets turned into a
+          // real variable and thus there aren't duplicate options in the field_variable
+          // dropdown.
+          if (potentialVarMap && opt_type) {
+            variable = Blockly.Variables.realizePotentialVar(validatedText,
+                opt_type, workspace, false);
+          }
+          if (!variable) {
+            variable = workspace.createVariable(validatedText, opt_type);
+          }
+
+          var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
+          var variableBlockId = variable.getId();
+          if (flyout.setCheckboxState) {
+            flyout.setCheckboxState(variableBlockId, true);
+          }
+
+          if (opt_callback) {
+            opt_callback(variableBlockId);
+          }
+        } else {
+          // User canceled prompt without a value.
+          if (opt_callback) {
+            opt_callback(null);
+          }
+        }
+      }, modalTitle, opt_type);
 };
 
 Blockly.Python['procedures_defreturn'] = function(block) {
