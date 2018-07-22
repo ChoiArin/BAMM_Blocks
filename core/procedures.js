@@ -219,23 +219,40 @@ Blockly.Procedures.rename = function(name) {
  * @return {!Array.<!Element>} Array of XML block elements.
  */
 Blockly.Procedures.flyoutCategory = function(workspace) {
+  var variableModelList = workspace.getVariablesOfType('');
+  variableModelList.sort(Blockly.VariableModel.compareByName);
   var xmlList = [];
 
   Blockly.Procedures.addCreateButton_(workspace, xmlList);
 
-  // Create call blocks for each procedure defined in the workspace
-  var mutations = Blockly.Procedures.allProcedureMutations(workspace);
-  mutations = Blockly.Procedures.sortProcedureMutations_(mutations);
-  for (var i = 0; i < mutations.length; i++) {
-    var mutation = mutations[i];
-    // <block type="procedures_call">
-    //   <mutation ...></mutation>
-    // </block>
-    var block = goog.dom.createDom('block');
-    block.setAttribute('type', 'procedures_call');
-    block.setAttribute('gap', 16);
-    block.appendChild(mutation);
-    xmlList.push(block);
+  // // Create call blocks for each procedure defined in the workspace
+  // var mutations = Blockly.Procedures.allProcedureMutations(workspace);
+  // mutations = Blockly.Procedures.sortProcedureMutations_(mutations);
+  // for (var i = 0; i < mutations.length; i++) {
+  //   var mutation = mutations[i];
+  //   // <block type="procedures_call">
+  //   //   <mutation ...></mutation>
+  //   // </block>
+  //   var block = goog.dom.createDom('block');
+  //   block.setAttribute('type', 'procedures_call');
+  //   block.setAttribute('gap', 16);
+  //   block.appendChild(mutation);
+  //   xmlList.push(block);
+  // }
+  // return xmlList;
+  
+  for (var i = 0; i < variableModelList.length; i++) {
+    Blockly.DataCategory.addDataVariable(xmlList, variableModelList[i]);
+  }
+
+  if (variableModelList.length > 0) {
+    xmlList[xmlList.length - 1].setAttribute('gap', 24);
+    var firstVariable = variableModelList[0];
+
+    Blockly.DataCategory.addSetVariableTo(xmlList, firstVariable);
+    //Blockly.DataCategory.addChangeVariableBy(xmlList, firstVariable);
+    //Blockly.DataCategory.addShowVariable(xmlList, firstVariable);
+    //Blockly.DataCategory.addHideVariable(xmlList, firstVariable);
   }
   return xmlList;
 };
