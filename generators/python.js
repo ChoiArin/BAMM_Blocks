@@ -164,9 +164,10 @@ Blockly.Python.init = function(workspace) {
 
   var defvars = [];
   var variables = workspace.getAllVariables();
+  var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
   for (var i = 0; i < variables.length; i++) {
     defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
-        Blockly.Variables.NAME_TYPE);
+      Blockly.Variables.NAME_TYPE);
     if(variables[i].type === 'list'){
       defvars[i] += ' = []';
     }
