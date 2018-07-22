@@ -114,11 +114,12 @@ Blockly.Python['texts_indexOf'] = function(block) {
 };
 
 Blockly.Python['texts_charAt'] = function(block) {
-  // Get letter at index.
-  // Note: Until January 2013 this block did not have the WHERE input.
-  var where = block.getFieldValue('WHERE') || 'FROM_START';
+  var where = Blockly.Python.valueToCode(block, 'WHERE',
+  Blockly.Python.ORDER_MEMBER) || '\'\'';
   var text = Blockly.Python.valueToCode(block, 'VALUE',
       Blockly.Python.ORDER_MEMBER) || '\'\'';
+  /*
+  var where = block.getFieldValue('WHERE') || 'FROM_START';
   switch (where) {
     case 'FIRST':
       var code = text + '[0]';
@@ -145,6 +146,9 @@ Blockly.Python['texts_charAt'] = function(block) {
       return [code, Blockly.Python.ORDER_FUNCTION_CALL];
   }
   throw 'Unhandled option (text_charAt).';
+  */
+  var code = text + '[' + where + ']';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Python['texts_getSubstring'] = function(block) {
@@ -155,7 +159,7 @@ Blockly.Python['texts_getSubstring'] = function(block) {
       Blockly.Python.ORDER_MEMBER) || '\'\'';
   switch (where1) {
     case 'FROM_START':
-      var at1 = Blockly.Python.getAdjustedInt(block, 'AT1');
+      var at1 = Blockly.Python.getAdjustedInt(block, 'AT1', 1);
       if (at1 == '0') {
         at1 = '';
       }
@@ -222,11 +226,18 @@ Blockly.Python['texts_trim'] = function(block) {
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Python['texts_print'] = function(block) {
+Blockly.Python['texts_println'] = function(block) {
   // Print statement.
   var msg = Blockly.Python.valueToCode(block, 'TEXT',
       Blockly.Python.ORDER_NONE) || '\'\'';
   return 'print(' + msg + ')\n';
+};
+
+Blockly.Python['texts_print'] = function(block) {
+  // Print statement.
+  var msg = Blockly.Python.valueToCode(block, 'TEXT',
+      Blockly.Python.ORDER_NONE) || '\'\'';
+  return 'print(' + msg + ', end=\'\')\n';
 };
 
 Blockly.Python['texts_prompt_ext'] = function(block) {
