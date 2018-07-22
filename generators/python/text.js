@@ -222,11 +222,18 @@ Blockly.Python['texts_trim'] = function(block) {
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Python['texts_print'] = function(block) {
+Blockly.Python['texts_println'] = function(block) {
   // Print statement.
   var msg = Blockly.Python.valueToCode(block, 'TEXT',
       Blockly.Python.ORDER_NONE) || '\'\'';
   return 'print(' + msg + ')\n';
+};
+
+Blockly.Python['texts_print'] = function(block) {
+  // Print statement.
+  var msg = Blockly.Python.valueToCode(block, 'TEXT',
+      Blockly.Python.ORDER_NONE) || '\'\'';
+  return 'print(' + msg + ', end=\'\')\n';
 };
 
 Blockly.Python['texts_prompt_ext'] = function(block) {
