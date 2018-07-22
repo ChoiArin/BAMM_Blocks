@@ -390,9 +390,9 @@ Blockly.Procedures.newProcedureMutation = function() {
  * @private
  */
 Blockly.Procedures.createProcedureDefCallback_ = function(workspace) {
-  Blockly.Procedures.externalProcedureDefCallback(
-      Blockly.Procedures.newProcedureMutation(),
-      Blockly.Procedures.createProcedureCallbackFactory_(workspace)
+  Blockly.Procedures.externalProcedureDefCallback(workspace,
+      // Blockly.Procedures.newProcedureMutation(),
+      // Blockly.Procedures.createProcedureCallbackFactory_(workspace)
   );
 };
 
