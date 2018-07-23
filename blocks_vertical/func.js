@@ -30,3 +30,23 @@ Blockly.Blocks['func'] = {
       });
     }
   };
+
+  Blockly.Blocks['modify_func'] = {
+    /**
+     * Block for reporting length of list.
+     * @this Blockly.Block
+     */
+    init: function() {
+      this.jsonInit({
+        "message0": "%1",
+        "args0": [
+          {
+            "type": "field_variable",
+            "name": "func"
+          }
+        ],
+        "category": Blockly.Categories.func,
+        "extensions": ["colours_func", "output_number"]
+      });
+    }
+  };

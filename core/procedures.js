@@ -244,8 +244,24 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   for (var i = 0; i < variableModelList.length; i++) {
     Blockly.Procedures.addDataVariable(xmlList, variableModelList[i]);
   }
+
+  // PSB_고쳐야할 부분, 함수의 호출, 함수 이름 변경 등
+  // 파라미터, 리턴값 정의
+  // if (variableModelList.length > 0) {
+  //   xmlList[xmlList.length - 1].setAttribute('gap', 24);
+  //   var firstVariable = variableModelList[0];
+
+  //   Blockly.Procedures.modifyFunc(xmlList, firstVariable);
+  // }
   
   return xmlList;
+};
+
+Blockly.Procedures.modifyFunc = function(xmlList, variable) {
+  // <block type="modify_func">
+  //   <field name="func" variabletype="func" id="">variablename</field>
+  // </block>
+  Blockly.Procedures.addBlock(xmlList, variable, 'modify_func', 'func');
 };
 
 Blockly.Procedures.addDataVariable = function(xmlList, variable) {
@@ -259,28 +275,28 @@ Blockly.Procedures.addDataVariable = function(xmlList, variable) {
 
 Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
   fieldName, opt_value, opt_secondValue) {
-if (Blockly.Blocks[blockType]) {
-  var firstValueField;
-  var secondValueField;
-  if (opt_value) {
-    firstValueField = Blockly.Procedures.createValue(opt_value[0],
-        opt_value[1], opt_value[2]);
-  }
-  if (opt_secondValue) {
-    secondValueField = Blockly.Procedures.createValue(opt_secondValue[0],
-        opt_secondValue[1], opt_value[2]);
-  }
+  if (Blockly.Blocks[blockType]) {
+    var firstValueField;
+    var secondValueField;
+    if (opt_value) {
+      firstValueField = Blockly.Procedures.createValue(opt_value[0],
+          opt_value[1], opt_value[2]);
+    }
+    if (opt_secondValue) {
+      secondValueField = Blockly.Procedures.createValue(opt_secondValue[0],
+          opt_secondValue[1], opt_value[2]);
+    }
 
-  var gap = 8;
-  var blockText = '<xml>' +
-      '<block type="' + blockType + '" gap="' + gap + '">' +
-      Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
-      firstValueField + secondValueField +
-      '</block>' +
-      '</xml>';
-  var block = Blockly.Xml.textToDom(blockText).firstChild;
-  xmlList.push(block);
-}
+    var gap = 8;
+    var blockText = '<xml>' +
+        '<block type="' + blockType + '" gap="' + gap + '">' +
+        Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
+        firstValueField + secondValueField +
+        '</block>' +
+        '</xml>';
+    var block = Blockly.Xml.textToDom(blockText).firstChild;
+    xmlList.push(block);
+  }
 };
 
 Blockly.Procedures.createValue = function(valueName, type, value) {
