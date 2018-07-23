@@ -45,7 +45,7 @@ Blockly.Python['control_repeat'] = function(block) {
     repeats = 'int(' + repeats + ')';
   }
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
       Blockly.Python.PASS;
   var loopVar = Blockly.Python.variableDB_.getDistinctName(
       'count', Blockly.Variables.NAME_TYPE);
@@ -62,7 +62,7 @@ Blockly.Python['control_repeat_until'] = function(block) {
       until ? Blockly.Python.ORDER_LOGICAL_NOT :
       Blockly.Python.ORDER_NONE) || 'False';
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
       Blockly.Python.PASS;
   if (until) {
     argument0 = 'not ' + argument0;
@@ -73,10 +73,18 @@ Blockly.Python['control_repeat_until'] = function(block) {
 Blockly.Python['control_forever'] = function(block) {
   // Infinite loop.
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+  branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
       Blockly.Python.PASS;
   return 'while True:\n' + branch;
 };
+
+// Blockly.Python['control_wait_until'] = function(block) {
+//   var until = block.getFieldValue('MODE') == 'UNTIL';
+//   var argument0 = Blockly.Python.valueToCode(block, 'CONDITION',
+//       until ? Blockly.Python.ORDER_LOGICAL_NOT :
+//       Blockly.Python.ORDER_NONE) || 'False';
+//   return 'if ' + argument0 + ':\n    break';
+// };
 
 Blockly.Python['controls_for'] = function(block) {
   // For loop.
