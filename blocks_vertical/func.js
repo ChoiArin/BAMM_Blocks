@@ -68,6 +68,6 @@ Blockly.Blocks.getFuncUniqueId = function(name) {
   return Blockly.Blocks.funcUniqueId[name];
 }
 
-Blockly.Blocks.deleteFuncUniqueId = function(name) {
-  delete Blockly.Blocks.funcUniqueId[name];
+Blockly.Blocks.deleteFuncUniqueIndex = function(i) {
+  delete Blockly.Blocks.funcUniqueId[i];
 }

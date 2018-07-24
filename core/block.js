@@ -259,6 +259,13 @@ Blockly.Block.prototype.dispose = function(healStack) {
   }
   Blockly.Events.disable();
 
+  for (var i in Blockly.Blocks.funcUniqueId) {
+    console.log(Blockly.Blocks.getFuncUniqueId(i) + "  /  " + this.id);
+    if(Blockly.Blocks.getFuncUniqueId(i) === this.id) {
+      Blockly.Blocks.deleteFuncUniqueIndex(i);
+    }
+  }
+
   try {
     // This block is now at the top of the workspace.
     // Remove this block from the workspace's list of top-most blocks.

@@ -795,12 +795,10 @@ Blockly.Flyout.prototype.onMouseDown_ = function(e) {
  */
 Blockly.Flyout.prototype.createBlock = function(originalBlock) {
   var funcVar = this.workspace_.getVariableById(originalBlock.id);
+
   if(funcVar !== null) {
     var blockName = funcVar.name;
-    if(Blockly.Blocks.getFuncUniqueId(blockName) === undefined){
-      Blockly.Blocks.setFuncUniqueId(blockName, originalBlock.id);
-    }
-    else
+    if(Blockly.Blocks.getFuncUniqueId(blockName) !== undefined)
       return;
   }
 
@@ -810,6 +808,9 @@ Blockly.Flyout.prototype.createBlock = function(originalBlock) {
   this.targetWorkspace_.setResizesEnabled(false);
   try {
     newBlock = this.placeNewBlock_(originalBlock);
+    if(funcVar !== null) {
+      Blockly.Blocks.setFuncUniqueId(blockName, newBlock.id);
+    }
     // Close the flyout.
     Blockly.hideChaff();
   } finally {
