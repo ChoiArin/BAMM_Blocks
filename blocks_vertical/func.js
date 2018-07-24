@@ -16,6 +16,7 @@ Blockly.Blocks['func'] = {
     init: function() {
       this.jsonInit({
         "message0": "%1",
+        "message1": "%1",
         "args0": [
           {
             "type": "field_variable_getter",
@@ -24,9 +25,14 @@ Blockly.Blocks['func'] = {
             "variableType": Blockly.FUNC_TYPE
           }
         ],
+        "args1": [
+          {
+            "type": "input_statement",
+            "name": "SUBSTACK"
+          }
+        ],
         "category": Blockly.Categories.func,
-        "extensions": ["colours_func", "shape_hat"],
-        "checkboxInFlyout": true
+        "extensions": ["colours_func", "shape_func"]
       });
     }
   };

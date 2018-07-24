@@ -102,6 +102,10 @@ Blockly.ScratchBlocks.VerticalExtensions.SHAPE_END = function() {
   this.setPreviousStatement(true, null);
 };
 
+Blockly.ScratchBlocks.VerticalExtensions.SHAPE_FUNC = function() {
+  this.setInputsInline(true);
+};
+
 /**
  * Extension to make represent a number reporter in Scratch-Blocks.
  * That means the block has inline inputs, a round output shape, and a 'Number'
@@ -242,6 +246,8 @@ Blockly.ScratchBlocks.VerticalExtensions.registerAll = function() {
       Blockly.ScratchBlocks.VerticalExtensions.SHAPE_HAT);
   Blockly.Extensions.register('shape_end',
       Blockly.ScratchBlocks.VerticalExtensions.SHAPE_END);
+  Blockly.Extensions.register('shape_func',
+      Blockly.ScratchBlocks.VerticalExtensions.SHAPE_FUNC);
 
   // Output shapes and types are related.
   Blockly.Extensions.register('output_number',
