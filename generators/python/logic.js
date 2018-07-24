@@ -141,7 +141,7 @@ Blockly.Python['operator_equals'] = function(block) {
   var order = Blockly.Python.ORDER_RELATIONAL;
   var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
   var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
-  var code = argument0 + ' ' + '=' + ' ' + argument1;
+  var code = argument0 + ' ' + '==' + ' ' + argument1;
   return [code, order];
 };
 
