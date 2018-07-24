@@ -74,7 +74,6 @@ goog.inherits(Blockly.VerticalFlyout, Blockly.Flyout);
  * @type {boolean}
  */
 Blockly.VerticalFlyout.prototype.autoClose = false;
-
 /**
  * The width of the flyout, if not otherwise specified.
  * @type {number}
