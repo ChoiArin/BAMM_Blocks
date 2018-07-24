@@ -168,8 +168,12 @@ Blockly.Python.init = function(workspace) {
   for (var i = 0; i < variables.length; i++) {
     defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
       Blockly.Variables.NAME_TYPE);
+
     if(variables[i].type === 'list'){
       defvars[i] += ' = []';
+    }
+    else if(variables[i].type === 'func'){
+      defvars[i] = 'def ' + defvars[i] + '():';
     }
     else{
       defvars[i] += ' = None';

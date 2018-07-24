@@ -75,6 +75,21 @@ goog.require('Blockly.Python');
 //       }, modalTitle, opt_type);
 // };
 
+Blockly.Python['func'] = function(block) {
+    // PSB_이 부분에 함수의 호출을 구현
+    // 함수의 정의는 함수가 변수처럼 정의되는 부분을 고쳐서 하는 것이 나아보임
+    // variable과 list가 생성되면 맨 위에 코드를 작성해주는 부분을 찾아야 함!!!
+
+    // var until = block.getFieldValue('MODE') == 'UNTIL';
+    // var argument0 = Blockly.Python.valueToCode(block, 'BOOL',
+    //     until ? Blockly.Python.ORDER_LOGICAL_NOT :
+    //     Blockly.Python.ORDER_NONE) || 'False';
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
+    return 'def ' + argument0 + ':\n' + branch;
+}
+
 Blockly.Python['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.
   // First, add a 'global' statement for every variable that is not shadowed by

@@ -219,7 +219,7 @@ Blockly.Procedures.rename = function(name) {
  * @return {!Array.<!Element>} Array of XML block elements.
  */
 Blockly.Procedures.flyoutCategory = function(workspace) {
-  var variableModelList = workspace.getVariablesOfType('');
+  var variableModelList = workspace.getVariablesOfType(Blockly.FUNC_TYPE);
   variableModelList.sort(Blockly.VariableModel.compareByName);
   var xmlList = [];
 
@@ -242,19 +242,87 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   // return xmlList;
   
   for (var i = 0; i < variableModelList.length; i++) {
-    Blockly.DataCategory.addDataVariable(xmlList, variableModelList[i]);
+    Blockly.Procedures.addDataVariable(xmlList, variableModelList[i]);
   }
 
-  if (variableModelList.length > 0) {
-    xmlList[xmlList.length - 1].setAttribute('gap', 24);
-    var firstVariable = variableModelList[0];
+  // PSB_고쳐야할 부분, 함수의 호출, 함수 이름 변경 등
+  // 파라미터, 리턴값 정의
+  // if (variableModelList.length > 0) {
+  //   xmlList[xmlList.length - 1].setAttribute('gap', 24);
+  //   var firstVariable = variableModelList[0];
 
-    Blockly.DataCategory.addSetVariableTo(xmlList, firstVariable);
-    //Blockly.DataCategory.addChangeVariableBy(xmlList, firstVariable);
-    //Blockly.DataCategory.addShowVariable(xmlList, firstVariable);
-    //Blockly.DataCategory.addHideVariable(xmlList, firstVariable);
-  }
+  //   Blockly.Procedures.modifyFunc(xmlList, firstVariable);
+  // }
+  
   return xmlList;
+};
+
+Blockly.Procedures.modifyFunc = function(xmlList, variable) {
+  // <block type="modify_func">
+  //   <field name="func" variabletype="func" id="">variablename</field>
+  // </block>
+  Blockly.Procedures.addBlock(xmlList, variable, 'modify_func', 'func');
+};
+
+Blockly.Procedures.addDataVariable = function(xmlList, variable) {
+  // <block id="variableId" type="data_variable">
+  //    <field name="VARIABLE">variablename</field>
+  // </block>
+  Blockly.Procedures.addBlock(xmlList, variable, 'func', 'func');
+  // In the flyout, this ID must match variable ID for monitor syncing reasons
+  xmlList[xmlList.length - 1].setAttribute('id', variable.getId());
+};
+
+Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
+  fieldName, opt_value, opt_secondValue) {
+  if (Blockly.Blocks[blockType]) {
+    var firstValueField;
+    var secondValueField;
+    if (opt_value) {
+      firstValueField = Blockly.Procedures.createValue(opt_value[0],
+          opt_value[1], opt_value[2]);
+    }
+    if (opt_secondValue) {
+      secondValueField = Blockly.Procedures.createValue(opt_secondValue[0],
+          opt_secondValue[1], opt_value[2]);
+    }
+
+    var gap = 8;
+    var blockText = '<xml>' +
+        '<block type="' + blockType + '" gap="' + gap + '">' +
+        Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
+        firstValueField + secondValueField +
+        '</block>' +
+        '</xml>';
+    var block = Blockly.Xml.textToDom(blockText).firstChild;
+    xmlList.push(block);
+  }
+};
+
+Blockly.Procedures.createValue = function(valueName, type, value) {
+  var fieldName;
+  switch (valueName) {
+    case 'ITEM':
+      fieldName = 'TEXT';
+      break;
+    case 'INDEX':
+      fieldName = 'NUM';
+      break;
+    case 'VALUE':
+      if (type === 'math_number') {
+        fieldName = 'NUM';
+      } else {
+        fieldName = 'TEXT';
+      }
+      break;
+  }
+  var valueField =
+      '<value name="' + valueName + '">' +
+      '<shadow type="' + type + '">' +
+      '<field name="' + fieldName + '">' + value + '</field>' +
+      '</shadow>' +
+      '</value>';
+  return valueField;
 };
 
 /**
@@ -267,8 +335,8 @@ Blockly.Procedures.addCreateButton_ = function(workspace, xmlList) {
   var button = goog.dom.createDom('button');
   var msg = Blockly.Msg.NEW_PROCEDURE;
   var callbackKey = 'CREATE_PROCEDURE';
-  var callback = function() {
-    Blockly.Procedures.createProcedureDefCallback_(workspace);
+  var callback = function(button) {
+    Blockly.Procedures.createProcedureDefCallback_(button.getTargetWorkspace(), null, Blockly.FUNC_TYPE);
   };
   button.setAttribute('text', msg);
   button.setAttribute('callbackKey', callbackKey);
@@ -406,11 +474,54 @@ Blockly.Procedures.newProcedureMutation = function() {
  * @param {!Blockly.Workspace} workspace The workspace to create the new procedure on.
  * @private
  */
-Blockly.Procedures.createProcedureDefCallback_ = function(workspace) {
-  Blockly.Procedures.externalProcedureDefCallback(workspace,
-      // Blockly.Procedures.newProcedureMutation(),
-      // Blockly.Procedures.createProcedureCallbackFactory_(workspace)
-  );
+Blockly.Procedures.createProcedureDefCallback_ = function(workspace, opt_callback, opt_type) {
+  // Blockly.Procedures.externalProcedureDefCallback(workspace,
+  //     // Blockly.Procedures.newProcedureMutation(),
+  //     // Blockly.Procedures.createProcedureCallbackFactory_(workspace)
+  // );
+  var modalTitle;
+  
+  // opt_type = Blockly.LIST_VARIABLE_TYPE;
+  modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
+
+  var validate = Blockly.Variables.nameValidator_.bind(null, opt_type);
+
+  Blockly.prompt('New function name:', '',
+    function(text) {
+      var validatedText = validate(text, workspace, opt_callback);
+      if (validatedText) {
+        // The name is valid according to the type, create the variable
+        var potentialVarMap = workspace.getPotentialVariableMap();
+        var variable;
+        // This check ensures that if a new variable is being created from a
+        // workspace that already has a variable of the same name and type as
+        // a potential variable, that potential variable gets turned into a
+        // real variable and thus there aren't duplicate options in the field_variable
+        // dropdown.
+        if (potentialVarMap && opt_type) {
+          variable = Blockly.Variables.realizePotentialVar(validatedText,
+              opt_type, workspace, false);
+        }
+        if (!variable) {
+          variable = workspace.createVariable(validatedText, opt_type);
+        }
+
+        var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
+        var variableBlockId = variable.getId();
+        if (flyout.setCheckboxState) {
+          flyout.setCheckboxState(variableBlockId, true);
+        }
+
+        if (opt_callback) {
+          opt_callback(variableBlockId);
+        }
+      } else {
+        // User canceled prompt without a value.
+        if (opt_callback) {
+          opt_callback(null);
+        }
+      }
+    }, modalTitle, opt_type);
 };
 
 /**
@@ -507,7 +618,7 @@ Blockly.Procedures.editProcedureCallbackFactory_ = function(block) {
 Blockly.Procedures['externalProcedureDefCallback'] = function(workspace, opt_callback, opt_type) {
   var modalTitle;
   
-  opt_type = opt_type ? opt_type : '';
+  opt_type = '';
   // opt_type = Blockly.LIST_VARIABLE_TYPE;
   modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
 

@@ -60,10 +60,10 @@ Blockly.Colours = {
     "secondary": "#47A8D1",
     "tertiary": "#2E8EB8"
   },
-  "pen": {
-    "primary": "#0fBD8C",
-    "secondary": "#0DA57A",
-    "tertiary": "#0B8E69"
+  "func": {
+    "primary": "#FF6680",
+    "secondary": "#FF4D6A",
+    "tertiary": "#FF3355"
   },
   "operators": {
     "primary": "#59C059",
