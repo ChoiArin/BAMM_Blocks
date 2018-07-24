@@ -183,6 +183,13 @@ Blockly.Python.init = function(workspace) {
       // }
       // var branch = Blockly.Python['func'](block);
 
+      // PSB_고쳐야 하는 곳!!!
+      // 여기서 SUBBLOCK을 불러와야 함!
+      
+      // workspace.getBlockById(block.workspace.id);
+      // var block = workspace.getBlockById(Blockly.Blocks.getFuncUniqueId(/*이름*/));
+      // var branch = Blockly.Python['func'](this.targetBlock);
+
       defvars[i] = 'def ' + defvars[i] + '():\n  ';
     }
     else{
