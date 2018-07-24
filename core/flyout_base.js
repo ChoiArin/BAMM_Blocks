@@ -794,6 +794,16 @@ Blockly.Flyout.prototype.onMouseDown_ = function(e) {
  * @package
  */
 Blockly.Flyout.prototype.createBlock = function(originalBlock) {
+  var funcVar = this.workspace_.getVariableById(originalBlock.id);
+  if(funcVar !== null) {
+    var blockName = funcVar.name;
+    if(Blockly.Blocks.getFuncUniqueId(blockName) === undefined){
+      Blockly.Blocks.setFuncUniqueId(blockName, originalBlock.id);
+    }
+    else
+      return;
+  }
+
   var newBlock = null;
   Blockly.Events.disable();
   var variablesBeforeCreation = this.targetWorkspace_.getAllVariables();

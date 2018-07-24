@@ -172,8 +172,18 @@ Blockly.Python.init = function(workspace) {
     if(variables[i].type === 'list'){
       defvars[i] += ' = []';
     }
+    // PSB_블록의 정의를 고쳐야 하는 부분
     else if(variables[i].type === 'func'){
-      defvars[i] = 'def ' + defvars[i] + '():';
+      // var blocks = workspace.getAllBlocks();
+
+      // var block = workspace.getBlockById(variables[i].getId());
+
+      // for (var j = 0; j < variables.length; j++) {
+
+      // }
+      // var branch = Blockly.Python['func'](block);
+
+      defvars[i] = 'def ' + defvars[i] + '():\n  ';
     }
     else{
       defvars[i] += ' = None';

@@ -345,6 +345,8 @@ Blockly.Gesture.prototype.updateIsDraggingFromFlyout_ = function() {
     // The start block is no longer relevant, because this is a drag.
     this.startBlock_ = null;
     this.targetBlock_ = this.flyout_.createBlock(this.targetBlock_);
+    if(this.targetBlock_ === undefined)
+      return null;
     this.targetBlock_.select();
     return true;
   }
@@ -386,6 +388,8 @@ Blockly.Gesture.prototype.updateIsDraggingBlock_ = function() {
 
   if (this.flyout_) {
     this.isDraggingBlock_ = this.updateIsDraggingFromFlyout_();
+    if(this.isDraggingBlock_ === null)
+      return null;
   } else if (this.targetBlock_.isMovable() || this.shouldDuplicateOnDrag_){
     this.isDraggingBlock_ = true;
   }
@@ -440,11 +444,14 @@ Blockly.Gesture.prototype.updateIsDragging_ = function() {
     return;
   }
   // Then check if it was a block drag.
-  if (this.updateIsDraggingBlock_()) {
+  var uidb = this.updateIsDraggingBlock_();
+  if (uidb) {
     return;
   }
   // Then check if it's a workspace drag.
-  this.updateIsDraggingWorkspace_();
+  if (uidb === false) {
+    this.updateIsDraggingWorkspace_();
+  }
 };
 
 /**

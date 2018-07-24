@@ -37,22 +37,37 @@ Blockly.Blocks['func'] = {
     }
   };
 
-  Blockly.Blocks['modify_func'] = {
-    /**
-     * Block for reporting length of list.
-     * @this Blockly.Block
-     */
-    init: function() {
-      this.jsonInit({
-        "message0": "%1",
-        "args0": [
-          {
-            "type": "field_variable",
-            "name": "func"
-          }
-        ],
-        "category": Blockly.Categories.func,
-        "extensions": ["colours_func", "output_number"]
-      });
-    }
-  };
+Blockly.Blocks['modify_func'] = {
+  /**
+   * Block for reporting length of list.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": "%1",
+      "args0": [
+        {
+          "type": "field_variable",
+          "name": "func"
+        }
+      ],
+      "category": Blockly.Categories.func,
+      "extensions": ["colours_func", "output_number"]
+    });
+  }
+};
+  
+// PSB_블록을 만들 때 이름과 ID를 저장할 dictionary
+Blockly.Blocks.funcUniqueId = {};
+
+Blockly.Blocks.setFuncUniqueId = function(name, id) {
+  Blockly.Blocks.funcUniqueId[name] = id;
+}
+
+Blockly.Blocks.getFuncUniqueId = function(name) {
+  return Blockly.Blocks.funcUniqueId[name];
+}
+
+Blockly.Blocks.deleteFuncUniqueId = function(name) {
+  delete Blockly.Blocks.funcUniqueId[name];
+}
