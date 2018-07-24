@@ -597,7 +597,7 @@ Blockly.WorkspaceSvg.prototype.addFlyout_ = function(tagName) {
   } else {
     this.flyout_ = new Blockly.VerticalFlyout(workspaceOptions);
   }
-  this.flyout_.autoClose = true;
+  this.flyout_.autoClose = false;
 
   // Return the element  so that callers can place it in their desired
   // spot in the DOM.  For example, mutator flyouts do not go in the same place
