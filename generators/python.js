@@ -189,8 +189,17 @@ Blockly.Python.init = function(workspace) {
       // workspace.getBlockById(block.workspace.id);
       // var block = workspace.getBlockById(Blockly.Blocks.getFuncUniqueId(/*이름*/));
       // var branch = Blockly.Python['func'](this.targetBlock);
+      var funcId = Blockly.Blocks.getFuncUniqueId(variables[i].name);
+      var block = workspace.getBlockById(funcId);
+      if(Blockly.Blocks.getFuncUniqueDef(funcId) === undefined){
+        defvars[i] = 'def ' + defvars[i] + '():\n' + Blockly.Python.PASS;
+      }
+      else {
+        Blockly.Python['func'](block);
+        var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
 
-      defvars[i] = 'def ' + defvars[i] + '():\n  ';
+        defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
+      }
     }
     else{
       defvars[i] += ' = None';

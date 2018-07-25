@@ -58,7 +58,7 @@ Blockly.Blocks['modify_func'] = {
 };
   
 // PSB_블록을 만들 때 이름과 ID를 저장할 dictionary
-Blockly.Blocks.funcUniqueId = {};
+Blockly.Blocks.funcUniqueId = {}
 
 Blockly.Blocks.setFuncUniqueId = function(name, id) {
   Blockly.Blocks.funcUniqueId[name] = id;
@@ -70,4 +70,14 @@ Blockly.Blocks.getFuncUniqueId = function(name) {
 
 Blockly.Blocks.deleteFuncUniqueIndex = function(i) {
   delete Blockly.Blocks.funcUniqueId[i];
+}
+
+Blockly.Blocks.funcUniqueDef = {}
+
+Blockly.Blocks.updateFuncUniqueDef = function(id, branch) {
+  Blockly.Blocks.funcUniqueDef[id] = branch;
+}
+
+Blockly.Blocks.getFuncUniqueDef = function(id) {
+  return Blockly.Blocks.funcUniqueDef[id];
 }

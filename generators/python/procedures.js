@@ -94,7 +94,8 @@ Blockly.Python['func'] = function(block) {
         Blockly.Python.PASS;
 
     // Default로 pass가 들어가는 것은 NAME_TYPE일듯
-    var workspace = Blockly.Workspace.getById(block.workspace.id);
+    var blockId = block.workspace.id;
+    var workspace = Blockly.Workspace.getById(blockId);
     var defvars = [];
     var variables = workspace.getAllVariables();
     var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
@@ -104,15 +105,16 @@ Blockly.Python['func'] = function(block) {
 
         // PSB_맨 위쪽에 함수의 정의를 하고 싶으나 붙지 않음...
         // 적용이 되지 않는 문제가 있음
-         if(variables[i].type === 'func'){
-            //console.log(defvars[i]);
-            defvars[i] += branch;
-            //console.log(defvars[i]);
-         }
+        // if(variables[i].type === 'func'){
+        //     //console.log(defvars[i]);
+        //     defvars[i] += branch;
+        //     //console.log(defvars[i]);
+        // }
+        Blockly.Blocks.updateFuncUniqueDef(block.id, branch);
     }
 
-    // return '';
-    return branch;
+    return '';
+    // return branch;
 }
 
 Blockly.Python['procedures_defreturn'] = function(block) {

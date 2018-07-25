@@ -810,6 +810,7 @@ Blockly.Flyout.prototype.createBlock = function(originalBlock) {
     newBlock = this.placeNewBlock_(originalBlock);
     if(funcVar !== null) {
       Blockly.Blocks.setFuncUniqueId(blockName, newBlock.id);
+      Blockly.Blocks.updateFuncUniqueDef(newBlock.id, Blockly.Python.PASS);
     }
     // Close the flyout.
     Blockly.hideChaff();
