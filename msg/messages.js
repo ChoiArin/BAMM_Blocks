@@ -58,6 +58,8 @@ Blockly.Msg.CONTROL_ALLATONCE = 'all at once';
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = 'set %1 to %2';
+// PSB_수정요망
+Blockly.Msg.DATA_SETFUNCTO = 'set %1 to %2';
 Blockly.Msg.DATA_CHANGEVARIABLEBY = 'change %1 by %2';
 Blockly.Msg.DATA_SHOWVARIABLE = 'show variable %1';
 Blockly.Msg.DATA_HIDEVARIABLE = 'hide variable %1';

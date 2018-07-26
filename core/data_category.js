@@ -55,6 +55,8 @@ Blockly.DataCategory = function(workspace) {
     xmlList[xmlList.length - 1].setAttribute('gap', 24);
     var firstVariable = variableModelList[0];
 
+    // PSB_변수가 생성될 때 아래에 생기는 리스트
+    // 함수가 생성될 때 참고해야 할 부분
     Blockly.DataCategory.addSetVariableTo(xmlList, firstVariable);
     //Blockly.DataCategory.addChangeVariableBy(xmlList, firstVariable);
     //Blockly.DataCategory.addShowVariable(xmlList, firstVariable);

@@ -56,6 +56,26 @@ Blockly.Blocks['modify_func'] = {
     });
   }
 };
+
+Blockly.Blocks['data_setfuncto'] = {
+  /**
+   * Block to set variable to a certain value
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.DATA_SETFUNCTO,
+      "args0": [
+        {
+          "type": "field_variable",
+          "name": "VARIABLE"
+        }
+      ],
+      "category": Blockly.Categories.func,
+      "extensions": ["colours_func", "shape_statement"]
+    });
+  }
+};
   
 // PSB_블록을 만들 때 이름과 ID를 저장할 dictionary
 Blockly.Blocks.funcUniqueId = {}

@@ -191,15 +191,11 @@ Blockly.Python.init = function(workspace) {
       // var branch = Blockly.Python['func'](this.targetBlock);
       var funcId = Blockly.Blocks.getFuncUniqueId(variables[i].name);
       var block = workspace.getBlockById(funcId);
-      if(Blockly.Blocks.getFuncUniqueDef(funcId) === undefined){
-        defvars[i] = 'def ' + defvars[i] + '():\n' + Blockly.Python.PASS;
-      }
-      else {
-        Blockly.Python['func'](block);
-        var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+      
+      Blockly.Python['func'](block);
+      var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
 
-        defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
-      }
+      defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
     }
     else{
       defvars[i] += ' = None';
