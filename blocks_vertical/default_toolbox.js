@@ -602,7 +602,13 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
     '<block type="operator_and" id="operator_and"></block>' +
     '<block type="operator_or" id="operator_or"></block>' +
-    '<block type="operator_not" id="operator_not"></block>' +
+    '<block type="operator_not" id="operator_not">' +
+      '<value name="OPERAND">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
     '<block type="operator_mod" id="operator_mod">' +
       '<value name="NUM1">' +
         '<shadow type="math_number">' +
