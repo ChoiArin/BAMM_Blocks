@@ -242,17 +242,14 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   // return xmlList;
   
   for (var i = 0; i < variableModelList.length; i++) {
-    Blockly.Procedures.addDataVariable(xmlList, variableModelList[i]);
+    Blockly.Procedures.addDataFunc(xmlList, variableModelList[i]);
 
     if (variableModelList.length > 0) {
       xmlList[xmlList.length - 1].setAttribute('gap', 24);
       var firstVariable = variableModelList[0];
 
       // PSB_함수의 호출, 함수 이름 변경, 파라미터, 리턴값 정의
-      Blockly.Procedures.addSetFuncTo(xmlList, firstVariable);
-      //Blockly.DataCategory.addChangeVariableBy(xmlList, firstVariable);
-      //Blockly.DataCategory.addShowVariable(xmlList, firstVariable);
-      //Blockly.DataCategory.addHideVariable(xmlList, firstVariable);
+      Blockly.Procedures.returnNothing(xmlList, firstVariable);
     }
   }
 
@@ -266,14 +263,6 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   return xmlList;
 };
 
-Blockly.Procedures.addSetFuncTo = function(xmlList, variable) {
-  Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
-      'VARIABLE', ['VALUE', 'text', 0]);
-  // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
-  //     'VARIABLE', ['VALUE', 'text', 0]);
-};
-
-
 Blockly.Procedures.modifyFunc = function(xmlList, variable) {
   // <block type="modify_func">
   //   <field name="func" variabletype="func" id="">variablename</field>
@@ -281,13 +270,26 @@ Blockly.Procedures.modifyFunc = function(xmlList, variable) {
   Blockly.Procedures.addBlock(xmlList, variable, 'modify_func', 'func');
 };
 
-Blockly.Procedures.addDataVariable = function(xmlList, variable) {
+Blockly.Procedures.addDataFunc = function(xmlList, variable) {
   // <block id="variableId" type="data_variable">
   //    <field name="VARIABLE">variablename</field>
   // </block>
   Blockly.Procedures.addBlock(xmlList, variable, 'func', 'func');
   // In the flyout, this ID must match variable ID for monitor syncing reasons
   xmlList[xmlList.length - 1].setAttribute('id', variable.getId());
+};
+
+Blockly.Procedures.returnNothing = function(xmlList, variable) {
+  Blockly.Procedures.addBlock(xmlList, variable, 'return_nothing');
+  // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
+  //    'func', ['VALUE', 'text', 0]);
+};
+
+// PSB_return값이 있는 것 구현
+Blockly.Procedures.returnSomething = function(xmlList, variable) {
+  Blockly.Procedures.addBlock(xmlList, variable, 'return_something');
+  // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
+  //    'func', ['VALUE', 'text', 0]);
 };
 
 Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
@@ -314,20 +316,6 @@ Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
     var block = Blockly.Xml.textToDom(blockText).firstChild;
     xmlList.push(block);
   }
-};
-
-Blockly.Procedures.generateVariableFieldXml_ = function(variableModel, opt_name) {
-  // The variable name may be user input, so it may contain characters that need
-  // to be escaped to create valid XML.
-  var typeString = variableModel.type;
-  if (typeString == '') {
-    typeString = '\'\'';
-  }
-  var fieldName = opt_name || 'VARIABLE';
-  var text = '<field name="' + fieldName + '" id="' + variableModel.getId() +
-    '" variabletype="' + goog.string.htmlEscape(typeString) +
-    '">' + goog.string.htmlEscape(variableModel.name) + '</field>';
-  return text;
 };
 
 Blockly.Procedures.createValue = function(valueName, type, value) {

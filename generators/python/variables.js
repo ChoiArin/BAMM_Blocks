@@ -52,12 +52,12 @@ Blockly.Python['data_setvariableto'] = function(block) {
   return varName + ' = ' + argument0 + '\n';
 };
 
-// PSB_수정요망, 임의 추가
-Blockly.Python['data_setfuncto'] = function(block) {
-  // Variable setter.
-  var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
-    Blockly.Python.ORDER_NONE) || '0';
-  var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
-    Blockly.Variables.NAME_TYPE);
-  return varName + ' = ' + argument0 + '\n';
-};
+// // PSB_수정요망, 임의 추가
+// Blockly.Python['data_setfuncto'] = function(block) {
+//   // Variable setter.
+//   var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
+//     Blockly.Python.ORDER_NONE) || '0';
+//   var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('VARIABLE'),
+//     Blockly.Variables.NAME_TYPE);
+//   return varName + ' = ' + argument0 + '\n';
+// };

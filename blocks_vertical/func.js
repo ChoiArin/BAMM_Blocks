@@ -57,25 +57,74 @@ Blockly.Blocks['modify_func'] = {
   }
 };
 
-Blockly.Blocks['data_setfuncto'] = {
+Blockly.Blocks['return_nothing'] = {
   /**
-   * Block to set variable to a certain value
+   * function blocks
    * @this Blockly.Block
    */
   init: function() {
     this.jsonInit({
-      "message0": Blockly.Msg.DATA_SETFUNCTO,
-      "args0": [
-        {
-          "type": "field_variable",
-          "name": "VARIABLE"
-        }
-      ],
+      "message0": "return",
+      // "args0": [
+      //   {
+      //     "type": "field_variable_getter",
+      //     "text": "",
+      //     "name": "func",
+      //     "variableType": Blockly.FUNC_TYPE
+      //   }
+      // ],
       "category": Blockly.Categories.func,
       "extensions": ["colours_func", "shape_statement"]
     });
   }
 };
+
+// PSB_return값이 있는 것 구현
+Blockly.Blocks['return_something'] = {
+  /**
+   * function blocks
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": "return",
+      // "args0": [
+      //   {
+      //     "type": "field_variable_getter",
+      //     "text": "",
+      //     "name": "func",
+      //     "variableType": Blockly.FUNC_TYPE
+      //   }
+      // ],
+      "category": Blockly.Categories.func,
+      "extensions": ["colours_func", "shape_statement"]
+    });
+  }
+};
+
+// Blockly.Blocks['data_setfuncto'] = {
+//   /**
+//    * Block to set variable to a certain value
+//    * @this Blockly.Block
+//    */
+//   init: function() {
+//     this.jsonInit({
+//       "message0": Blockly.Msg.DATA_SETFUNCTO,
+//       "args0": [
+//         {
+//           "type": "field_variable",
+//           "name": "VARIABLE"
+//         },
+//         {
+//           "type": "input_value",
+//           "name": "VALUE"
+//         }
+//       ],
+//       "category": Blockly.Categories.func,
+//       "extensions": ["colours_func", "shape_statement"]
+//     });
+//   }
+// };
   
 // PSB_블록을 만들 때 이름과 ID를 저장할 dictionary
 Blockly.Blocks.funcUniqueId = {}
