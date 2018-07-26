@@ -89,6 +89,9 @@ Blockly.Python['func'] = function(block) {
     //     Blockly.Python.PASS;
     // return 'def ' + argument0 + ':\n' + branch;
 
+    if(block === null)
+        return '';
+    
     var branch = Blockly.Python.statementToCode(block, 'DO');
     branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
         Blockly.Python.PASS;

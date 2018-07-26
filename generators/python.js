@@ -193,9 +193,21 @@ Blockly.Python.init = function(workspace) {
       var block = workspace.getBlockById(funcId);
       
       Blockly.Python['func'](block);
-      var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+      if(Blockly.Blocks.getFuncUniqueDef(funcId) === undefined){
+        defvars[i] = 'def ' + defvars[i] + '():\n' + Blockly.Python.PASS;
+        //Blockly.Blocks.updateFuncUniqueDef(funcId, Blockly.Python.PASS);
+      }
+      else {
+        var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+        //Blockly.Blocks.updateFuncUniqueDef(funcId, branch);
 
-      defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
+        defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
+      }
+
+      // Blockly.Python['func'](block);
+      // var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+
+      // defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
     }
     else{
       defvars[i] += ' = None';

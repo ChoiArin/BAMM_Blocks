@@ -267,18 +267,10 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
 };
 
 Blockly.Procedures.addSetFuncTo = function(xmlList, variable) {
-  // <block type="data_setvariableto" gap="20">
-  //   <value name="VARIABLE">
-  //    <shadow type="data_variablemenu"></shadow>
-  //   </value>
-  //   <value name="VALUE">
-  //     <shadow type="text">
-  //       <field name="TEXT">0</field>
-  //     </shadow>
-  //   </value>
-  // </block>
   Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
       'VARIABLE', ['VALUE', 'text', 0]);
+  // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
+  //     'VARIABLE', ['VALUE', 'text', 0]);
 };
 
 
@@ -315,7 +307,7 @@ Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
     var gap = 8;
     var blockText = '<xml>' +
         '<block type="' + blockType + '" gap="' + gap + '">' +
-        Blockly.Procedures.generateVariableFieldXml_(variable, fieldName) +
+        Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
         firstValueField + secondValueField +
         '</block>' +
         '</xml>';
