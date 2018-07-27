@@ -120,6 +120,16 @@ Blockly.Python['func'] = function(block) {
     // return branch;
 }
 
+Blockly.Python['return_nothing'] = function(block) {
+    var branch = Blockly.Python.statementToCode(block, 'DO');
+    branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+        Blockly.Python.PASS;
+
+    return 'return\n';
+}
+
+// PSB_여기에 return_something 추가
+
 Blockly.Python['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.
   // First, add a 'global' statement for every variable that is not shadowed by
