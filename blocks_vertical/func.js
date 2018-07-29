@@ -87,15 +87,19 @@ Blockly.Blocks['return_something'] = {
    */
   init: function() {
     this.jsonInit({
-      "message0": "return",
+      "message0": "return %1",
       // "args0": [
       //   {
-      //     "type": "field_variable_getter",
-      //     "text": "",
-      //     "name": "func",
-      //     "variableType": Blockly.FUNC_TYPE
+      //     "type": "input_value",
+      //     "name": "VALUE"
       //   }
       // ],
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "VALUE"
+        }
+      ],
       "category": Blockly.Categories.func,
       "extensions": ["colours_func", "shape_statement"]
     });

@@ -121,14 +121,28 @@ Blockly.Python['func'] = function(block) {
 }
 
 Blockly.Python['return_nothing'] = function(block) {
-    var branch = Blockly.Python.statementToCode(block, 'DO');
-    branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
-        Blockly.Python.PASS;
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
 
     return 'return\n';
 }
 
 // PSB_여기에 return_something 추가
+Blockly.Python['return_something'] = function(block) {
+    var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
+    Blockly.Python.ORDER_NONE) || 0;
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
+
+    // PSB_정수를 판단하여 정수형으로 바꿔야 함
+    return 'return ' + argument0;
+    // if(branch === Blockly.Python.PASS)
+    //     return 'return\n';
+    // else
+    //     return 'return' + argument0;
+}
 
 Blockly.Python['procedures_defreturn'] = function(block) {
   // Define a procedure with a return value.

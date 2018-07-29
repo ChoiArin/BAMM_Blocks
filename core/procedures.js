@@ -250,6 +250,7 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
 
       // PSB_함수의 호출, 함수 이름 변경, 파라미터, 리턴값 정의
       Blockly.Procedures.returnNothing(xmlList, firstVariable);
+      Blockly.Procedures.returnSomething(xmlList, firstVariable);
     }
   }
 
@@ -287,7 +288,8 @@ Blockly.Procedures.returnNothing = function(xmlList, variable) {
 
 // PSB_return값이 있는 것 구현
 Blockly.Procedures.returnSomething = function(xmlList, variable) {
-  Blockly.Procedures.addBlock(xmlList, variable, 'return_something');
+  Blockly.Procedures.addBlock(xmlList, variable, 'return_something',
+    'func', ['VALUE', 'text', '0']);
   // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
   //    'func', ['VALUE', 'text', 0]);
 };
@@ -309,13 +311,36 @@ Blockly.Procedures.addBlock = function(xmlList, variable, blockType,
     var gap = 8;
     var blockText = '<xml>' +
         '<block type="' + blockType + '" gap="' + gap + '">' +
-        Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
+        Blockly.Procedures.generateVariableFieldXml_(variable, fieldName) +
         firstValueField + secondValueField +
         '</block>' +
         '</xml>';
     var block = Blockly.Xml.textToDom(blockText).firstChild;
     xmlList.push(block);
   }
+};
+
+/**
+ * Generate XML string for variable field.
+ * @param {!Blockly.VariableModel} variableModel The variable model to generate
+ *     an XML string from.
+ * @param {?string} opt_name The optional name of the field, such as "VARIABLE"
+ *     or "LIST". Defaults to "VARIABLE".
+ * @return {string} The generated XML.
+ * @private
+ */
+Blockly.Procedures.generateVariableFieldXml_ = function(variableModel, opt_name) {
+  // The variable name may be user input, so it may contain characters that need
+  // to be escaped to create valid XML.
+  var typeString = variableModel.type;
+  if (typeString == '') {
+    typeString = '\'\'';
+  }
+  var fieldName = opt_name || 'func';
+  var text = '<field name="' + fieldName + '" id="' + variableModel.getId() +
+    '" variabletype="' + goog.string.htmlEscape(typeString) +
+    '">' + goog.string.htmlEscape(variableModel.name) + '</field>';
+  return text;
 };
 
 Blockly.Procedures.createValue = function(valueName, type, value) {
