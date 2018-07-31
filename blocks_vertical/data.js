@@ -234,6 +234,27 @@ Blockly.Blocks['data_clearlist'] = {
   }
 };
 
+Blockly.Blocks['data_range'] = {
+  init: function() {
+    this.jsonInit({
+      "type": "data_range",
+      "message0": 'range %1 to %2',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "NUM1"
+        },
+        {
+          "type": "input_value",
+          "name": "NUM2"
+        }
+      ],
+      "category": Blockly.Categories.dataLists,
+      "extensions": ["colours_data_lists", "output_number"]
+    });
+  }
+};
+
 Blockly.Blocks['data_addtolist'] = {
   /**
    * Block to add item to list.

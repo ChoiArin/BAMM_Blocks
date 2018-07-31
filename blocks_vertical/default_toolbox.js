@@ -637,13 +637,25 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
       '<value name="NUM2">' +
-        '<shadow type="math_number">' +
+        '<shadow type="math_integer">' +
           '<field name="NUM"></field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
+    '<block type="data_range" id="data_range">' +
+      '<value name="NUM1">' +
+        '<shadow type="math_integer">' +
+          '<field name="NUM"></field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="NUM2">' +
+        '<shadow type="math_integer">' +
+          '<field name="NUM"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
   '</category>' +

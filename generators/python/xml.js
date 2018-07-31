@@ -233,6 +233,12 @@ function codeBlockAnalyze(varList, code, elem) {
         elem.init.valueName = 'VALUE';
         codeBlockAnalyze(varList, code, elem.id);
         codeBlockAnalyze(varList, code, elem.init);
+      } else if(elem.init.type == 'CallExpression') { //func
+        varList[elem.id] = 'var';
+        code.head += '<block type="data_setvariableto">';
+        elem.init.valueName = 'VALUE';
+        codeBlockAnalyze(varList, code, elem.id);
+        codeBlockAnalyze(varList, code, elem.init);
       }
       code.head += '<next>';
       code.tail = '</next></block>' + code.tail;
@@ -375,5 +381,26 @@ Blockly.Python.xml['pow'] = function(varList, code, args) {
   args[1].shadowType = 'math_number';
   args[1].fieldName = 'NUM';
   codeBlockAnalyze(varList, code, args[1]);
+  code.head += '</block>';
+};
+
+Blockly.Python.xml['range'] = function(varList, code, args) {
+  code.head += '<block type="data_setrangelist">';
+  if(args.length > 1) {
+    args[0].valueName = 'NUM1';
+    args[0].shadowType = 'math_number';
+    args[0].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[0]);
+    args[1].valueName = 'NUM2';
+    args[1].shadowType = 'math_number';
+    args[1].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[1]);
+  } else {
+    code.head += '<value name="NUM1"><shadow type="math_integer"><field name="NUM">0</field></shadow></value>';
+    args[0].valueName = 'NUM2';
+    args[0].shadowType = 'math_number';
+    args[0].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[0]);
+  }
   code.head += '</block>';
 };

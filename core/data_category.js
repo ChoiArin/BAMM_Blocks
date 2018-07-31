@@ -65,6 +65,9 @@ Blockly.DataCategory = function(workspace) {
 
   // Now add list variables to the flyout
   Blockly.DataCategory.addCreateButton(xmlList, workspace, 'LIST');
+  
+  Blockly.DataCategory.addRange(xmlList);
+
   variableModelList = workspace.getVariablesOfType(Blockly.LIST_VARIABLE_TYPE);
   variableModelList.sort(Blockly.VariableModel.compareByName);
   for (var i = 0; i < variableModelList.length; i++) {
@@ -191,6 +194,10 @@ Blockly.DataCategory.addDataList = function(xmlList, variable) {
 
 Blockly.DataCategory.addClearList = function(xmlList, variable) {
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_clearlist', 'LIST');
+};
+
+Blockly.DataCategory.addRange = function(xmlList) {
+  Blockly.DataCategory.addBlockNaive(xmlList, 'data_range', ['NUM1', 'math_integer', 0], ['NUM2', 'math_integer', 10]);
 };
 
 /**
@@ -424,6 +431,31 @@ Blockly.DataCategory.addBlock = function(xmlList, variable, blockType,
     var blockText = '<xml>' +
         '<block type="' + blockType + '" gap="' + gap + '">' +
         Blockly.Variables.generateVariableFieldXml_(variable, fieldName) +
+        firstValueField + secondValueField +
+        '</block>' +
+        '</xml>';
+    var block = Blockly.Xml.textToDom(blockText).firstChild;
+    xmlList.push(block);
+  }
+};
+
+Blockly.DataCategory.addBlockNaive = function(xmlList, blockType,
+    opt_value, opt_secondValue) {
+  if (Blockly.Blocks[blockType]) {
+    var firstValueField;
+    var secondValueField;
+    if (opt_value) {
+      firstValueField = Blockly.DataCategory.createValue(opt_value[0],
+          opt_value[1], opt_value[2]);
+    }
+    if (opt_secondValue) {
+      secondValueField = Blockly.DataCategory.createValue(opt_secondValue[0],
+          opt_secondValue[1], opt_value[2]);
+    }
+
+    var gap = 8;
+    var blockText = '<xml>' +
+        '<block type="' + blockType + '" gap="' + gap + '">' +
         firstValueField + secondValueField +
         '</block>' +
         '</xml>';
