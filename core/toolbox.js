@@ -148,6 +148,10 @@ Blockly.Toolbox.prototype.dispose = function() {
   this.lastCategory_ = null;
 };
 
+Blockly.Toolbox.prototype.setWidth = function(width) {
+  this.width = width;
+};
+
 /**
  * Create and configure a flyout based on the main workspace's options.
  * @private

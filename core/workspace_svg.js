@@ -1170,6 +1170,9 @@ Blockly.WorkspaceSvg.prototype.recordCachedAreas = function() {
  * @private
  */
 Blockly.WorkspaceSvg.prototype.recordDeleteAreas_ = function() {
+  if (this.getFlyout() && this.getFlyout().isVisible()) {
+    this.deleteAreaToolbox_ = this.getFlyout().getClientRect();
+  }
   if (this.trashcan) {
     this.deleteAreaTrash_ = this.trashcan.getClientRect();
   } else {
@@ -1947,7 +1950,7 @@ Blockly.WorkspaceSvg.getTopLevelWorkspaceMetrics_ = function() {
       Blockly.WorkspaceSvg.getDimensionsPx_(this.toolbox_);
   var flyoutDimensions =
       Blockly.WorkspaceSvg.getDimensionsPx_(this.flyout_);
-
+  toolboxDimensions.width = 52;
   // Contains height and width in CSS pixels.
   // svgSize is equivalent to the size of the injectionDiv at this point.
   var svgSize = Blockly.svgSize(this.getParentSvg());
