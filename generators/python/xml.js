@@ -385,7 +385,7 @@ Blockly.Python.xml['pow'] = function(varList, code, args) {
 };
 
 Blockly.Python.xml['range'] = function(varList, code, args) {
-  code.head += '<block type="data_setrangelist">';
+  code.head += '<block type="data_range">';
   if(args.length > 1) {
     args[0].valueName = 'NUM1';
     args[0].shadowType = 'math_number';
