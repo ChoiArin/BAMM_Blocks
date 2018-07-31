@@ -48,7 +48,9 @@ Blockly.Python['data_range'] = function(block){
   Blockly.Python.ORDER_NONE) || '0';
   var OP2 = Blockly.Python.valueToCode(block, 'NUM2',
   Blockly.Python.ORDER_NONE) || '0';
-  var code = 'range(' + OP1 + ', ' + OP2 + ')';
+  var OP3 = Blockly.Python.valueToCode(block, 'STEP',
+  Blockly.Python.ORDER_NONE) || '1';
+  var code = 'range(' + OP1 + ', ' + OP2 + ', ' + OP3 + ')';
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 

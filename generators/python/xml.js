@@ -386,21 +386,35 @@ Blockly.Python.xml['pow'] = function(varList, code, args) {
 
 Blockly.Python.xml['range'] = function(varList, code, args) {
   code.head += '<block type="data_range">';
-  if(args.length > 1) {
+  if(args.length == 3) {
     args[0].valueName = 'NUM1';
-    args[0].shadowType = 'math_number';
+    args[0].shadowType = 'math_integer';
     args[0].fieldName = 'NUM';
     codeBlockAnalyze(varList, code, args[0]);
     args[1].valueName = 'NUM2';
-    args[1].shadowType = 'math_number';
+    args[1].shadowType = 'math_integer';
     args[1].fieldName = 'NUM';
     codeBlockAnalyze(varList, code, args[1]);
-  } else {
-    code.head += '<value name="NUM1"><shadow type="math_integer"><field name="NUM">0</field></shadow></value>';
-    args[0].valueName = 'NUM2';
-    args[0].shadowType = 'math_number';
+    args[1].valueName = 'STEP';
+    args[1].shadowType = 'math_integer';
+    args[1].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[1]);
+  } else if(args.length == 2) {
+    args[0].valueName = 'NUM1';
+    args[0].shadowType = 'math_integer';
     args[0].fieldName = 'NUM';
     codeBlockAnalyze(varList, code, args[0]);
+    args[1].valueName = 'NUM2';
+    args[1].shadowType = 'math_integer';
+    args[1].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[1]);
+  } else if(args.length == 1) {
+    code.head += '<value name="NUM1"><shadow type="math_integer"><field name="NUM">0</field></shadow></value>';
+    args[0].valueName = 'NUM2';
+    args[0].shadowType = 'math_integer';
+    args[0].fieldName = 'NUM';
+    codeBlockAnalyze(varList, code, args[0]);
+    code.head += '<value name="STEP"><shadow type="math_integer"><field name="NUM">1</field></shadow></value>';
   }
   code.head += '</block>';
 };

@@ -238,7 +238,7 @@ Blockly.Blocks['data_range'] = {
   init: function() {
     this.jsonInit({
       "type": "data_range",
-      "message0": 'range %1 to %2',
+      "message0": 'range %1 to %2 step %3',
       "args0": [
         {
           "type": "input_value",
@@ -247,6 +247,10 @@ Blockly.Blocks['data_range'] = {
         {
           "type": "input_value",
           "name": "NUM2"
+        },
+        {
+          "type": "input_value",
+          "name": "STEP"
         }
       ],
       "category": Blockly.Categories.dataLists,
