@@ -283,8 +283,7 @@ Blockly.Blocks['operator_not'] = {
       "args0": [
         {
           "type": "input_value",
-          "name": "OPERAND",
-          "check": "Boolean"
+          "name": "OPERAND"
         }
       ],
       "category": Blockly.Categories.operators,

@@ -87,7 +87,61 @@ Blockly.Python['func'] = function(block) {
     // var branch = Blockly.Python.statementToCode(block, 'DO');
     // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
     //     Blockly.Python.PASS;
-    return 'def ' + argument0 + ':\n' + branch;
+    // return 'def ' + argument0 + ':\n' + branch;
+
+    if(block === null)
+        return '';
+    
+    var branch = Blockly.Python.statementToCode(block, 'DO');
+    branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+        Blockly.Python.PASS;
+
+    // Default로 pass가 들어가는 것은 NAME_TYPE일듯
+    var blockId = block.workspace.id;
+    var workspace = Blockly.Workspace.getById(blockId);
+    var defvars = [];
+    var variables = workspace.getAllVariables();
+    var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
+    for (var i = 0; i < variables.length; i++) {
+        defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
+            Blockly.Variables.NAME_TYPE);
+
+        // PSB_맨 위쪽에 함수의 정의를 하고 싶으나 붙지 않음...
+        // 적용이 되지 않는 문제가 있음
+        // if(variables[i].type === 'func'){
+        //     //console.log(defvars[i]);
+        //     defvars[i] += branch;
+        //     //console.log(defvars[i]);
+        // }
+        Blockly.Blocks.updateFuncUniqueDef(block.id, branch);
+    }
+
+    return '';
+    // return branch;
+}
+
+Blockly.Python['return_nothing'] = function(block) {
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
+
+    return 'return\n';
+}
+
+// PSB_여기에 return_something 추가
+Blockly.Python['return_something'] = function(block) {
+    var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
+    Blockly.Python.ORDER_NONE) || 0;
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
+
+    // PSB_정수를 판단하여 정수형으로 바꿔야 함
+    return 'return ' + argument0;
+    // if(branch === Blockly.Python.PASS)
+    //     return 'return\n';
+    // else
+    //     return 'return' + argument0;
 }
 
 Blockly.Python['procedures_defreturn'] = function(block) {

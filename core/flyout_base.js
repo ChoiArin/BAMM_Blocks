@@ -794,12 +794,24 @@ Blockly.Flyout.prototype.onMouseDown_ = function(e) {
  * @package
  */
 Blockly.Flyout.prototype.createBlock = function(originalBlock) {
+  var funcVar = this.workspace_.getVariableById(originalBlock.id);
+
+  if(funcVar !== null) {
+    var blockName = funcVar.name;
+    if(Blockly.Blocks.getFuncUniqueId(blockName) !== undefined)
+      return;
+  }
+
   var newBlock = null;
   Blockly.Events.disable();
   var variablesBeforeCreation = this.targetWorkspace_.getAllVariables();
   this.targetWorkspace_.setResizesEnabled(false);
   try {
     newBlock = this.placeNewBlock_(originalBlock);
+    if(funcVar !== null) {
+      Blockly.Blocks.setFuncUniqueId(blockName, newBlock.id);
+      Blockly.Blocks.updateFuncUniqueDef(newBlock.id, Blockly.Python.PASS);
+    }
     // Close the flyout.
     Blockly.hideChaff();
   } finally {

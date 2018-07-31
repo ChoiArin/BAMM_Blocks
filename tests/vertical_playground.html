@@ -27,6 +27,7 @@
     <script src="../blocks_vertical/extensions.js"></script>
     <script src="../blocks_vertical/default_toolbox.js"></script>
     <script src="../generators/python.js"></script>
+    <script src="../generators/python/filbert.js"></script>
     <script src="../generators/python/xml.js"></script>
     <script src="../generators/python/logic.js"></script>
     <script src="../generators/python/loops.js"></script>
@@ -154,13 +155,11 @@
 
       function fromCode(lang) {
         var input = document.getElementById('importExport');
-        
-        var xmlText = Blockly.Python.toXML(input.value);
-        input.value = xmlText;
-        return;
-
-        var xml = Blockly.Xml.textToDom(xmlText);
-        Blockly.Xml.domToWorkspace(xml, workspace);
+        var ast = filbert.parse(input.value);
+        var xml = Blockly.Python.xml.fromAST(ast);
+        //input.value = xml; //Blockly.Xml.domToPrettyText(Blockly.Xml.textToDom(xml));
+        //return;
+        Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
         taChange();
       }
 

@@ -172,8 +172,42 @@ Blockly.Python.init = function(workspace) {
     if(variables[i].type === 'list'){
       defvars[i] += ' = []';
     }
+    // PSB_블록의 정의를 고쳐야 하는 부분
     else if(variables[i].type === 'func'){
-      defvars[i] = 'def ' + defvars[i] + '():';
+      // var blocks = workspace.getAllBlocks();
+
+      // var block = workspace.getBlockById(variables[i].getId());
+
+      // for (var j = 0; j < variables.length; j++) {
+
+      // }
+      // var branch = Blockly.Python['func'](block);
+
+      // PSB_고쳐야 하는 곳!!!
+      // 여기서 SUBBLOCK을 불러와야 함!
+      
+      // workspace.getBlockById(block.workspace.id);
+      // var block = workspace.getBlockById(Blockly.Blocks.getFuncUniqueId(/*이름*/));
+      // var branch = Blockly.Python['func'](this.targetBlock);
+      var funcId = Blockly.Blocks.getFuncUniqueId(variables[i].name);
+      var block = workspace.getBlockById(funcId);
+      
+      Blockly.Python['func'](block);
+      if(Blockly.Blocks.getFuncUniqueDef(funcId) === undefined){
+        defvars[i] = 'def ' + defvars[i] + '():\n' + Blockly.Python.PASS;
+        //Blockly.Blocks.updateFuncUniqueDef(funcId, Blockly.Python.PASS);
+      }
+      else {
+        var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+        //Blockly.Blocks.updateFuncUniqueDef(funcId, branch);
+
+        defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
+      }
+
+      // Blockly.Python['func'](block);
+      // var branch = Blockly.Blocks.getFuncUniqueDef(funcId);
+
+      // defvars[i] = 'def ' + defvars[i] + '():\n' + branch;
     }
     else{
       defvars[i] += ' = None';
