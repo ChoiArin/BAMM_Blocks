@@ -307,15 +307,10 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     // '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
   '</category>' +
   '<category name="Texts" id="texts_extensions" colour="#ABABAB" secondaryColour="#8B8B8B">' +
-    '<block type="texts_join" id="texts_join">' +
-      '<value name="ADD0">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="ADD1">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">world</field>' +
+    '<block type="texts_text" id="texts_text">' +
+      '<value name="VAR">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM">0</field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
@@ -630,6 +625,18 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
     '<block type="operator_mathop" id="operator_mathop">' +
       '<value name="NUM">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="operator_pow" id="operator_pow">' +
+      '<value name="NUM1">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM"></field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="NUM2">' +
         '<shadow type="math_number">' +
           '<field name="NUM"></field>' +
         '</shadow>' +

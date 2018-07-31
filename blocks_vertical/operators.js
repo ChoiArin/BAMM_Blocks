@@ -453,13 +453,32 @@ Blockly.Blocks['operator_mathop'] = {
             [Blockly.Msg.OPERATORS_MATHOP_ATAN, 'atan'],
             [Blockly.Msg.OPERATORS_MATHOP_LN, 'ln'],
             [Blockly.Msg.OPERATORS_MATHOP_LOG, 'log'],
-            [Blockly.Msg.OPERATORS_MATHOP_EEXP, 'e ^'],
-            [Blockly.Msg.OPERATORS_MATHOP_10EXP, '10 ^']
+            [Blockly.Msg.OPERATORS_MATHOP_EEXP, 'e ^']
           ]
         },
         {
           "type": "input_value",
           "name": "NUM"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_number"]
+    });
+  }
+};
+
+Blockly.Blocks['operator_pow'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": 'pow %1 ^ %2',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "NUM1"
+        },
+        {
+          "type": "input_value",
+          "name": "NUM2"
         }
       ],
       "category": Blockly.Categories.operators,

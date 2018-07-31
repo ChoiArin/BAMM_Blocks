@@ -36,6 +36,13 @@ Blockly.Python['data_listcontents'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
+Blockly.Python['data_clearlist'] = function(block){
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+  Blockly.Variables.NAME_TYPE);
+  var code = list + ' = []\n';
+  return code;
+};
+
 Blockly.Python['data_addtolist'] = function(block){
   var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
   Blockly.Variables.NAME_TYPE);

@@ -156,8 +156,8 @@
         var input = document.getElementById('importExport');
         var ast = filbert.parse(input.value);
         var xml = Blockly.Python.xml.fromAST(ast);
-        //input.value = xml; //Blockly.Xml.domToPrettyText(Blockly.Xml.textToDom(xml));
-        //return;
+        input.value = Blockly.Xml.domToPrettyText(Blockly.Xml.textToDom(xml));
+        return;
         Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
         taChange();
       }

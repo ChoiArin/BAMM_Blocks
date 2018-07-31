@@ -75,6 +75,7 @@ Blockly.DataCategory = function(workspace) {
     xmlList[xmlList.length - 1].setAttribute('gap', 24);
     var firstVariable = variableModelList[0];
 
+    Blockly.DataCategory.addClearList(xmlList, firstVariable);
     Blockly.DataCategory.addAddToList(xmlList, firstVariable);
     Blockly.DataCategory.addDeleteOfList(xmlList, firstVariable);
     Blockly.DataCategory.addInsertAtList(xmlList, firstVariable);
@@ -186,6 +187,10 @@ Blockly.DataCategory.addDataList = function(xmlList, variable) {
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_listcontents', 'LIST');
   // In the flyout, this ID must match variable ID for monitor syncing reasons
   xmlList[xmlList.length - 1].setAttribute('id', variable.getId());
+};
+
+Blockly.DataCategory.addClearList = function(xmlList, variable) {
+  Blockly.DataCategory.addBlock(xmlList, variable, 'data_clearlist', 'LIST');
 };
 
 /**
