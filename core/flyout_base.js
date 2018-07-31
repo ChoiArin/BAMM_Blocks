@@ -151,7 +151,7 @@ Blockly.Flyout = function(workspaceOptions) {
  * Does the flyout automatically close when a block is created?
  * @type {boolean}
  */
-Blockly.Flyout.prototype.autoClose = false;
+Blockly.Flyout.prototype.autoClose = true;
 
 /**
  * Whether the flyout is visible.
