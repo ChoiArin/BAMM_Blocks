@@ -86,6 +86,24 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
     }
     case 'BlockStatement': {
+      if(elem.body.length == 2 //while block check..
+      && elem.body[0].type === 'VariableDeclaration'
+      && elem.body[1].type === 'IfStatement'
+      && elem.body[1].consequent.type === 'BlockStatement'
+      && elem.body[1].consequent.body[0].type === 'ForStatement') {
+        code.head += '<block type="control_repeat">';
+        code.head += '<value name="TIMES"><shadow type="math_whole_number"><field name="NUM">';
+        var repeatNum = 0;
+        if(elem.body[0].declarations[0].init.arguments.length == 1)
+          repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
+        else
+          repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
+        code.head += repeatNum;
+        code.head += '</field></shadow></value>';
+        code.head += '</block>';
+        break;
+      }
+
       elem.body.forEach(function(e) {
         codeBlockAnalyze(varList, code, e);
       });
@@ -110,11 +128,11 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
     }
     case 'ForInStatement': {
-
+      //Useless..
       break;
     }
     case 'ForStatement': {
-
+      //Useless..
       break;
     }
     case 'FunctionDeclaration': {
