@@ -89,6 +89,8 @@ function codeBlockAnalyze(varList, code, elem) {
       elem.body.forEach(function(e) {
         codeBlockAnalyze(varList, code, e);
       });
+      code.head += code.tail;
+      code.tail = '';
       break;
     }
     case 'BreakStatement': {
@@ -122,8 +124,8 @@ function codeBlockAnalyze(varList, code, elem) {
       codeBlockAnalyze(varList, code, elem.id);
       code.head += '</field>';
       code.head += '<statement name="SUBSTACK">';
-      code.tail = '</statement></block>' + code.tail;
       codeBlockAnalyze(varList, code, elem.body);
+      code.tail = '</statement></block>' + code.tail;
       break;
     }
     case 'Identifier': {
@@ -150,13 +152,13 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '</value>';
 
       code.head += '<statement name="SUBSTACK">';
+      code.tail = '</statement>' + code.tail;
       codeBlockAnalyze(varList, code, elem.consequent);
-      code.head += '</statement>';
 
       if(elem.alternate) {
         code.head += '<statement name="SUBSTACK2">';
+        code.tail = '</statement>' + code.tail;
         codeBlockAnalyze(varList, code, elem.alternate);
-        code.head += '</statement>';
       }
 
       code.head += '<next>';
@@ -225,7 +227,7 @@ function codeBlockAnalyze(varList, code, elem) {
         varList[elem.id] = 'list';
         code.head += '<block type="data_clearlist">';
         codeBlockAnalyze(varList, code, elem.id);
-      } else { //Variable
+      } else if(elem.init.type == 'Identifier') { //Variable
         varList[elem.id] = 'var';
         code.head += '<block type="data_setvariableto">';
         elem.init.valueName = 'VALUE';
@@ -242,8 +244,8 @@ function codeBlockAnalyze(varList, code, elem) {
       codeBlockAnalyze(varList, code, elem.test);
       code.head += '</value>';
       code.head += '<statement name="SUBSTACK">';
-      code.tail = '</statement></block>' + code.tail;
       codeBlockAnalyze(varList, code, elem.body);
+      code.tail = '</statement></block>' + code.tail;
       break;
     }
   }
@@ -258,7 +260,7 @@ Blockly.Python.xml['print'] = function(varList, code, args) {
   args[0].valueName = 'TEXT';
   codeBlockAnalyze(varList, code, args[0]);
   code.head += '<next>';
-  code.tail += '</next></block>';
+  code.tail = '</next></block>' + code.tail;
 };
 
 Blockly.Python.xml['str'] = function(varList, code, args) {
