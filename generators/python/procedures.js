@@ -120,15 +120,19 @@ Blockly.Python['func'] = function(block) {
     // return branch;
 }
 
-Blockly.Python['return_nothing'] = function(block) {
-    // var branch = Blockly.Python.statementToCode(block, 'DO');
-    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
-    //     Blockly.Python.PASS;
-
-    return 'return\n';
+Blockly.Python['function_call'] = function(block) {
+    return 'abc()\n';
 }
 
-// PSB_여기에 return_something 추가
+// PSB_functionCall 제네레이터
+// Blockly.Python['return_nothing'] = function(block) {
+//     // var branch = Blockly.Python.statementToCode(block, 'DO');
+//     // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+//     //     Blockly.Python.PASS;
+
+//     return 'return\n';
+// }
+
 Blockly.Python['return_something'] = function(block) {
     var argument0 = Blockly.Python.valueToCode(block, 'VALUE',
     Blockly.Python.ORDER_NONE) || 0;
