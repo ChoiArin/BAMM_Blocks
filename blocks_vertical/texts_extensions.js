@@ -7,23 +7,19 @@ goog.require('Blockly.Colours');
 goog.require('Blockly.constants');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 
-Blockly.Blocks['texts_join'] = {
+Blockly.Blocks['texts_text'] = {
   /**
    * Block for texts join.
    * @this Blockly.Block
    */
   init: function() {
     this.jsonInit({
-      "type": "texts_join",
-      "message0": 'join %1 and %2',
+      "type": "texts_text",
+      "message0": '"%1"',
       "args0": [
         {
           "type": "input_value",
-          "name": "ADD0"
-        },
-        {
-          "type": "input_value",
-          "name": "ADD1"
+          "name": "VAR"
         }
       ],
       "category": Blockly.Categories.texts_extensions,

@@ -36,6 +36,24 @@ Blockly.Python['data_listcontents'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
+Blockly.Python['data_clearlist'] = function(block){
+  var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
+  Blockly.Variables.NAME_TYPE);
+  var code = list + ' = []\n';
+  return code;
+};
+
+Blockly.Python['data_range'] = function(block){
+  var OP1 = Blockly.Python.valueToCode(block, 'NUM1',
+  Blockly.Python.ORDER_NONE) || '0';
+  var OP2 = Blockly.Python.valueToCode(block, 'NUM2',
+  Blockly.Python.ORDER_NONE) || '0';
+  var OP3 = Blockly.Python.valueToCode(block, 'STEP',
+  Blockly.Python.ORDER_NONE) || '1';
+  var code = 'range(' + OP1 + ', ' + OP2 + ', ' + OP3 + ')';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
 Blockly.Python['data_addtolist'] = function(block){
   var list = Blockly.Python.variableDB_.getName(block.getFieldValue('LIST'),
   Blockly.Variables.NAME_TYPE);

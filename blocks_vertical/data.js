@@ -217,6 +217,48 @@ Blockly.Blocks['data_listindexrandom'] = {
   }
 };
 
+Blockly.Blocks['data_clearlist'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": 'clear %1',
+      "args0": [
+        {
+          "type": "field_variable",
+          "name": "LIST",
+          "variableTypes": [Blockly.LIST_VARIABLE_TYPE]
+        }
+      ],
+      "category": Blockly.Categories.dataLists,
+      "extensions": ["colours_data_lists", "shape_statement"]
+    });
+  }
+};
+
+Blockly.Blocks['data_range'] = {
+  init: function() {
+    this.jsonInit({
+      "type": "data_range",
+      "message0": 'range %1 to %2 step %3',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "NUM1"
+        },
+        {
+          "type": "input_value",
+          "name": "NUM2"
+        },
+        {
+          "type": "input_value",
+          "name": "STEP"
+        }
+      ],
+      "category": Blockly.Categories.dataLists,
+      "extensions": ["colours_data_lists", "output_number"]
+    });
+  }
+};
+
 Blockly.Blocks['data_addtolist'] = {
   /**
    * Block to add item to list.

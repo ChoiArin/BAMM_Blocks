@@ -114,7 +114,7 @@ Blockly.Python['operator_divide'] = function(block) {
 
 Blockly.Python['operator_mod'] = function(block) {
   // Basic arithmetic operators(mod).
-  var operator = ' mod ';
+  var operator = ' % ';
   var order = Blockly.Python.ORDER_MULTIPLICATIVE;
   var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
   var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
@@ -553,4 +553,13 @@ Blockly.Python['math_random_float'] = function(block) {
   // Random fraction between 0 and 1.
   Blockly.Python.definitions_['import_random'] = 'import random';
   return ['random.random()', Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Python['operator_pow'] = function(block) {
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1',
+      Blockly.Python.ORDER_NONE) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2',
+      Blockly.Python.ORDER_NONE) || '0';
+  var code = 'math.pow(' + argument0 + ', ' + argument1 + ')';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };

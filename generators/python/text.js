@@ -35,43 +35,11 @@ Blockly.Python['text'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python['texts_join'] = function(block) {
-  // Create a string made up of any number of elements of any type.
-  //Should we allow joining by '-' or ',' or any other characters?
-  /*
-  switch (block.itemCount_) {
-    case 0:
-      return ['\'\'', Blockly.Python.ORDER_ATOMIC];
-      break;
-    case 1:
-      var element = Blockly.Python.valueToCode(block, 'ADD0',
-              Blockly.Python.ORDER_NONE) || '\'\'';
-      var code = 'str(' + element + ')';
-      return [code, Blockly.Python.ORDER_FUNCTION_CALL];
-      break;
-    case 2:
-    */
-      var element0 = Blockly.Python.valueToCode(block, 'ADD0',
-              Blockly.Python.ORDER_NONE) || '\'\'';
-      var element1 = Blockly.Python.valueToCode(block, 'ADD1',
-              Blockly.Python.ORDER_NONE) || '\'\'';
-      var code = 'str(' + element0 + ') + str(' + element1 + ')';
-      return [code, Blockly.Python.ORDER_ADDITIVE];
-      /*
-      break;
-    default:
-      var elements = [];
-      for (var i = 0; i < block.itemCount_; i++) {
-        elements[i] = Blockly.Python.valueToCode(block, 'ADD' + i,
-                Blockly.Python.ORDER_NONE) || '\'\'';
-      }
-      var tempVar = Blockly.Python.variableDB_.getDistinctName('x',
-          Blockly.Variables.NAME_TYPE);
-      var code = '\'\'.join([str(' + tempVar + ') for ' + tempVar + ' in [' +
-          elements.join(', ') + ']])';
-      return [code, Blockly.Python.ORDER_FUNCTION_CALL];
-  }
-  */
+Blockly.Python['texts_text'] = function(block) {
+  var element0 = Blockly.Python.valueToCode(block, 'VAR',
+          Blockly.Python.ORDER_NONE) || '\'\'';
+  var code = 'str(' + element0 + ')';
+  return [code, Blockly.Python.ORDER_ADDITIVE];
 };
 
 Blockly.Python['texts_append'] = function(block) {
