@@ -163,6 +163,11 @@
         taChange();
       }
 
+      // PSB_Brython을 사용하여 결과 코드를 변환
+      function ShowResult() {
+        
+      }
+
       // Disable the "Import from XML" button if the XML is invalid.
       // Preserve text between page reloads.
       function taChange() {
@@ -564,6 +569,8 @@
       <input type="button" value="To Python" onclick="toCode('Python')">
       &nbsp;
       <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
+      <br>
+      <input type="button" value="Show Result" onclick="ShowResult()">
       <br>
       <textarea id="importExport" style="width: 26%; height: 12em"
         onchange="taChange();" onkeyup="taChange()"></textarea>
