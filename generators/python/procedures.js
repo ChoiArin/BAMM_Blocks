@@ -120,18 +120,41 @@ Blockly.Python['func'] = function(block) {
     // return branch;
 }
 
+// PSB_functionCall 제네레이터
 Blockly.Python['function_call'] = function(block) {
-    return 'abc()\n';
+    // blockname = Blockly.Python.variableDB_.getName(block.getById,
+    //   Blockly.Variables.NAME_TYPE);
+    
+    // PSB_블록에 있는 텍스트를 추출하여 return해줘야 함
+    // var defvars = [];
+    // var workspace = block.workspace;
+    // var variables = workspace.getAllVariables();
+
+    // for (var i = 0; i < variables.length; i++) {
+    //   defvars[i] = Blockly.Python.variableDB_.getName(variables[i].getId(),
+    //     Blockly.Variables.NAME_TYPE);
+
+    //     console.log(variables[i].getId());
+    //     console.log(block.id);
+    //     if(variables[i].type === 'func' && variables[i].getId in block) {
+    //       console.log(defvars[i]);
+    //     }
+    // }
+    // console.log(block);
+
+    var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('func'),
+      Blockly.Variables.NAME_TYPE);
+
+    return varName + '()\n';
 }
 
-// PSB_functionCall 제네레이터
-// Blockly.Python['return_nothing'] = function(block) {
-//     // var branch = Blockly.Python.statementToCode(block, 'DO');
-//     // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
-//     //     Blockly.Python.PASS;
+Blockly.Python['return_nothing'] = function(block) {
+    // var branch = Blockly.Python.statementToCode(block, 'DO');
+    // branch = Blockly.Python.statementToCode(block, 'SUBSTACK') ||
+    //     Blockly.Python.PASS;
 
-//     return 'return\n';
-// }
+    return 'return\n';
+}
 
 Blockly.Python['return_something'] = function(block) {
     var argument0 = Blockly.Python.valueToCode(block, 'VALUE',

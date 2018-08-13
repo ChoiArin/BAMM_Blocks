@@ -249,7 +249,7 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
       var firstVariable = variableModelList[0];
 
       // PSB_functionCall 블록 추가(현재 동작 X)
-      //Blockly.Procedures.functionCall(xmlList, firstVariable);
+      Blockly.Procedures.functionCall(xmlList, firstVariable);
       // PSB_함수의 호출, 함수 이름 변경, 파라미터, 리턴값 정의
       Blockly.Procedures.returnNothing(xmlList, firstVariable);
       Blockly.Procedures.returnSomething(xmlList, firstVariable);
@@ -283,8 +283,9 @@ Blockly.Procedures.addDataFunc = function(xmlList, variable) {
 };
 
 // PSB_functionCall
-Blockly.Procedures.functionCall = function(xmllist, variable) {
-  Blockly.Procedures.addBlock(xmlList, variable, 'function_call');
+Blockly.Procedures.functionCall = function(xmlList, variable) {
+  Blockly.Procedures.addBlock(xmlList, variable, 'function_call',
+    'func', []);
 }
 
 Blockly.Procedures.returnNothing = function(xmlList, variable) {

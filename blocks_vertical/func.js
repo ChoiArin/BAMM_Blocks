@@ -65,15 +65,13 @@ Blockly.Blocks['function_call'] = {
    */
   init: function() {
     this.jsonInit({
-      "message0": "return",
-      // "args0": [
-      //   {
-      //     "type": "field_variable_getter",
-      //     "text": "",
-      //     "name": "func",
-      //     "variableType": Blockly.FUNC_TYPE
-      //   }
-      // ],
+      "message0": "%1",
+      "args0": [
+        {
+          "type": "field_variable_getter",
+          "name": "func"
+        }
+      ],
       "category": Blockly.Categories.func,
       "extensions": ["colours_func", "shape_statement"]
     });
