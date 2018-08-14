@@ -38,10 +38,17 @@
     <script src="../generators/python/variables.js"></script>
     <script src="../generators/python/variables_dynamic.js"></script>
     <script src="../generators/python/procedures.js"></script>
+    <script src="../node_modules/brython/brython.js"></script>
+    <script src="../node_modules/brython/brython_stdlib.js"></script>
     <script>
       'use strict';
 
       var workspace = null;
+
+      function startAll() {
+        start();
+        brython();
+      }
 
       function start() {
         var soundsEnabled = null;
@@ -165,7 +172,19 @@
 
       // PSB_Brython을 사용하여 결과 코드를 변환
       function ShowResult() {
+        var textarea = document.getElementById('importExport');
+        var pythonCode = '\n' + textarea.value;
+
+        var textToPython = document.createElement('script');
+        var textNode = document.createTextNode(pythonCode);
+        textToPython.type = "text/python";
+        textToPython.appendChild(textNode);
+
+        console.log(textToPython);
+        // console.log(document.getElementById('importExport'));
+        document.getElementById('importExport').value = textToPython.value;
         
+        // return textarea.value;
       }
 
       // Disable the "Import from XML" button if the XML is invalid.
@@ -384,7 +403,7 @@
     </style>
   </head>
 
-  <body onload="start()">
+  <body onload="startAll()">
     <div id="collaborators"></div>
     <div id="blocklyDiv"></div>
     <!-- Simple toolbox -->
@@ -570,7 +589,9 @@
       &nbsp;
       <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
       <br>
-      <input type="button" value="Show Result" onclick="ShowResult()">
+      <input id="result" type="button" value="Show Result" onclick="ShowResult()">
+      <!--<script id="tteesstt" type="text/python" value="ShowReslut()" onclick="ShowTest()"></script>-->
+      <!--<script type="text/python" value="ShowResult()"></script>-->
       <br>
       <textarea id="importExport" style="width: 26%; height: 12em"
         onchange="taChange();" onkeyup="taChange()"></textarea>
