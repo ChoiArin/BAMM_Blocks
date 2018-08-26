@@ -114,7 +114,7 @@ Blockly.Python['operator_divide'] = function(block) {
 
 Blockly.Python['operator_mod'] = function(block) {
   // Basic arithmetic operators(mod).
-  var operator = ' mod ';
+  var operator = ' % ';
   var order = Blockly.Python.ORDER_MULTIPLICATIVE;
   var argument0 = Blockly.Python.valueToCode(block, 'NUM1', order) || '0';
   var argument1 = Blockly.Python.valueToCode(block, 'NUM2', order) || '0';
@@ -374,13 +374,13 @@ Blockly.Python['operator_mathop'] = function(block) {
       code = 'math.sqrt(' + arg + ')';
       break;
     case 'sin':
-      code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
+      code = 'math.sin(' + arg + ')';
       break;
     case 'cos':
-      code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
+      code = 'math.cos(' + arg + ')';
       break;
     case 'tan':
-      code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
+      code = 'math.tan(' + arg + ')';
       break;
     case 'ln':
       code = 'math.log(' + arg + ')';
@@ -402,13 +402,13 @@ Blockly.Python['operator_mathop'] = function(block) {
   // wrapping the code.
   switch (operator) {
     case 'asin':
-      code = 'math.asin(' + arg + ') / math.pi * 180';
+      code = 'math.asin(' + arg + ')';
       break;
     case 'acos':
-      code = 'math.acos(' + arg + ') / math.pi * 180';
+      code = 'math.acos(' + arg + ')';
       break;
     case 'atan':
-      code = 'math.atan(' + arg + ') / math.pi * 180';
+      code = 'math.atan(' + arg + ')';
       break;
     default:
       throw 'Unknown math operator: ' + operator;
@@ -553,4 +553,13 @@ Blockly.Python['math_random_float'] = function(block) {
   // Random fraction between 0 and 1.
   Blockly.Python.definitions_['import_random'] = 'import random';
   return ['random.random()', Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Python['operator_pow'] = function(block) {
+  var argument0 = Blockly.Python.valueToCode(block, 'NUM1',
+      Blockly.Python.ORDER_NONE) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'NUM2',
+      Blockly.Python.ORDER_NONE) || '0';
+  var code = 'math.pow(' + argument0 + ', ' + argument1 + ')';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
