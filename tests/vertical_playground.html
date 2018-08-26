@@ -27,8 +27,7 @@
     <script src="../blocks_vertical/extensions.js"></script>
     <script src="../blocks_vertical/default_toolbox.js"></script>
     <script src="../generators/python.js"></script>
-    <script src="../generators/python/filbert.js"></script>
-    <script src="../generators/python/xml.js"></script>
+    <script src="../generators/python/revert.js"></script>
     <script src="../generators/python/logic.js"></script>
     <script src="../generators/python/loops.js"></script>
     <script src="../generators/python/math.js"></script>
@@ -155,10 +154,7 @@
 
       function fromCode(lang) {
         var input = document.getElementById('importExport');
-        var ast = filbert.parse(input.value);
-        var xml = Blockly.Python.xml.fromAST(ast);
-        input.value = Blockly.Xml.domToPrettyText(Blockly.Xml.textToDom(xml));
-        return;
+        var xml = Blockly.Python.revert(input.value);
         Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
         taChange();
       }
