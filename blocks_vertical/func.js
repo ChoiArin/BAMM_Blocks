@@ -57,6 +57,27 @@ Blockly.Blocks['modify_func'] = {
   }
 };
 
+// PSB_functionCall 블록 속성
+Blockly.Blocks['function_call'] = {
+  /**
+   * function blocks
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": "%1",
+      "args0": [
+        {
+          "type": "field_variable_getter",
+          "name": "func"
+        }
+      ],
+      "category": Blockly.Categories.func,
+      "extensions": ["colours_func", "shape_statement"]
+    });
+  }
+};
+
 Blockly.Blocks['return_nothing'] = {
   /**
    * function blocks
@@ -79,7 +100,6 @@ Blockly.Blocks['return_nothing'] = {
   }
 };
 
-// PSB_return값이 있는 것 구현
 Blockly.Blocks['return_something'] = {
   /**
    * function blocks

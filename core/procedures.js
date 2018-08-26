@@ -248,6 +248,8 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
       xmlList[xmlList.length - 1].setAttribute('gap', 24);
       var firstVariable = variableModelList[0];
 
+      // PSB_functionCall 블록 추가(현재 동작 X)
+      Blockly.Procedures.functionCall(xmlList, firstVariable);
       // PSB_함수의 호출, 함수 이름 변경, 파라미터, 리턴값 정의
       Blockly.Procedures.returnNothing(xmlList, firstVariable);
       Blockly.Procedures.returnSomething(xmlList, firstVariable);
@@ -280,13 +282,18 @@ Blockly.Procedures.addDataFunc = function(xmlList, variable) {
   xmlList[xmlList.length - 1].setAttribute('id', variable.getId());
 };
 
+// PSB_functionCall
+Blockly.Procedures.functionCall = function(xmlList, variable) {
+  Blockly.Procedures.addBlock(xmlList, variable, 'function_call',
+    'func', []);
+}
+
 Blockly.Procedures.returnNothing = function(xmlList, variable) {
   Blockly.Procedures.addBlock(xmlList, variable, 'return_nothing');
   // Blockly.Procedures.addBlock(xmlList, variable, 'data_setfuncto',
   //    'func', ['VALUE', 'text', 0]);
 };
 
-// PSB_return값이 있는 것 구현
 Blockly.Procedures.returnSomething = function(xmlList, variable) {
   Blockly.Procedures.addBlock(xmlList, variable, 'return_something',
     'func', ['VALUE', 'text', '0']);

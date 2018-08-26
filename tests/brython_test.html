@@ -1,0 +1,37 @@
+<html>
+
+        <head>
+            <script type="text/javascript" src="../node_modules/brython/brython.js"></script>
+            <script type="text/javascript" src="../node_modules/brython/brython_stdlib.js"></script>
+        </head>
+
+        <body onload="brython()">
+
+            <script type="text/python">
+            from browser import document, alert
+
+            def echo(event):
+                alert(document["zone"].value)
+            
+            document["mybutton"].bind("click", echo)
+            </script>
+
+            <input id="zone"><button id="mybutton">click !</button>
+
+            <br><br>
+
+            <script type="text/python">
+            from browser import document, alert
+
+            def echo(event):
+                for i in range(3):
+                    alert(i)
+            
+            document["mybutton_test"].bind("click", echo)
+            </script>
+
+            <input id="zone_test"><button id="mybutton_test">click !</button>
+
+        </body>
+
+    </html>
