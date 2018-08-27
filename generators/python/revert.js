@@ -188,6 +188,15 @@ function getControlArgs(codeLine) {
   return tokens;
 }
 
+function extractFromComma(literal) {
+  var tokens = [], args;
+  var m = literal.match(/^['"]([\w\W]+)['"]$/);
+  if(m && m.length > 0)
+    return m[1];
+  else
+    return literal;
+}
+
 revertHeaders = {};
 
 //#region control methods
@@ -306,11 +315,11 @@ revertHeaders['print'] = function(args) {
         bData += revertHeaders[header](getControlArgs(args));
       }
     } else {
-      bData += '<field name="TEXT">' + args[0] + '</field>';
+      bData += '<field name="TEXT">' + extractFromComma(args[0]) + '</field>';
       bData += '</shadow>';
     }
   } else {
-    bData += '<field name="TEXT">' + args[0] + '</field>';
+    bData += '<field name="TEXT">' + extractFromComma(args[0]) + '</field>';
     bData += '</shadow>';
   }
   bData += '</value>';
