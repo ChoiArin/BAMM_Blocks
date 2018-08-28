@@ -7,36 +7,19 @@ goog.require("Blockly.Colours");
 goog.require("Blockly.constants");
 goog.require("Blockly.ScratchBlocks.VerticalExtensions");
 
-<<<<<<< HEAD
-Blockly.Blocks["texts_join"] = {
-=======
 Blockly.Blocks['texts_text'] = {
->>>>>>> 694477364c386ead1a435c7780abe5e683eac075
   /**
    * Block for texts join.
    * @this Blockly.Block
    */
   init: function() {
     this.jsonInit({
-<<<<<<< HEAD
-      type: "texts_join",
-      message0: "join %1 and %2",
-      args0: [
-        {
-          type: "input_value",
-          name: "ADD0"
-        },
-        {
-          type: "input_value",
-          name: "ADD1"
-=======
       "type": "texts_text",
       "message0": '"%1"',
       "args0": [
         {
           "type": "input_value",
           "name": "VAR"
->>>>>>> 694477364c386ead1a435c7780abe5e683eac075
         }
       ],
       category: Blockly.Categories.texts_extensions,
