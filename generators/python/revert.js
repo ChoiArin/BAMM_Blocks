@@ -173,10 +173,12 @@ function getFuncArgs(codeLine) {
     var parts = args.split(",");
     
     var commaParts = "";
+    var checkedChar = "";
     parts.forEach(elem => {
-      if(elem[0] == "'" || elem[0] == '"') {
+      if(elem[0] === "'" || elem[0] === '"') {
         commaParts = elem;
-      } else if(elem[elem.length - 1] == "'" || elem[elem.length - 1] == '"') {
+        checkedChar = elem[0];
+      } else if(elem[elem.length - 1] === checkedChar) {
         commaParts += "," + elem;
         tokens.push(commaParts);
         commaParts = "";
