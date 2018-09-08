@@ -142,6 +142,7 @@ Blockly.Python['function_call'] = function(block) {
     // }
     // console.log(block);
 
+    // PSB_새로운 함수가 생겨도 맨 처음의 이름으로 고정됨...
     var varName = Blockly.Python.variableDB_.getName(block.getFieldValue('func'),
       Blockly.Variables.NAME_TYPE);
 

@@ -38,10 +38,46 @@
     <script src="../generators/python/variables.js"></script>
     <script src="../generators/python/variables_dynamic.js"></script>
     <script src="../generators/python/procedures.js"></script>
-    
-    <script type="text/javascript" src="../node_modules/brython/brython.js"></script>
+
+    <script type="text/javascript" src="../brython/brython_builtins.js"></script>
+    <script type="text/javascript" src="../brython/version_info.js"></script>
+    <script type="text/javascript" src="../brython/py2js.js"></script>
+    <script type="text/javascript" src="../brython/py_object.js"></script>
+    <script type="text/javascript" src="../brython/py_type.js"></script>
+    <script type="text/javascript" src="../brython/py_utils.js"></script>
+    <script type="text/javascript" src="../brython/py_sort.js"></script>
+    <script type="text/javascript" src="../brython/py_builtin_functions.js"></script>
+    <script type="text/javascript" src="../brython/py_exceptions.js"></script>
+    <script type="text/javascript" src="../brython/py_range_slice.js"></script>
+    <script type="text/javascript" src="../brython/py_bytes.js"></script>
+    <script type="text/javascript" src="../brython/py_set.js"></script>
+    <script type="text/javascript" src="../brython/js_objects.js"></script>
+    <script type="text/javascript" src="../brython/stdlib_paths.js"></script>
+    <script type="text/javascript" src="../brython/py_import.js"></script>
+
+    <script type="text/javascript" src="../brython/unicode.min.js"></script>
+    <script type="text/javascript" src="../brython/py_string.js"></script>
+    <script type="text/javascript" src="../brython/py_int.js"></script>
+    <script type="text/javascript" src="../brython/py_long_int.js"></script>
+    <script type="text/javascript" src="../brython/py_float.js"></script>
+    <script type="text/javascript" src="../brython/py_complex.js"></script>
+    <script type="text/javascript" src="../brython/py_dict.js"></script>
+    <script type="text/javascript" src="../brython/py_list.js"></script>
+    <script type="text/javascript" src="../brython/py_generator.js"></script>
+    <script type="text/javascript" src="../brython/py_dom.js"></script>
+
+    <script type="text/javascript" src="../brython/builtin_modules.js"></script>
+    <script type="text/javascript" src="../brython/py_import_hooks.js"></script>
+    <script type="text/javascript" src="../brython/async.js"></script>
+
+    <!--<script type="text/javascript" src="../node_modules/brython/brython.js"></script>-->
     <script type="text/javascript" src="../node_modules/brython/brython_stdlib.js"></script>
 
+    <!-- 없음, 추가해야 함, brython 폴더 하위에 추가할까 함 -->
+    <script src="../brython/ace_ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../brython/ace_ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../brython/ace_mode-python3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../brython/ace_snippets_python.js" type="text/javascript" charset="utf-8"></script>
 
     <script>
       'use strict';
@@ -49,8 +85,8 @@
       var workspace = null;
 
       function startAll() {
-        start();
         brython();
+        start();
       }
 
       function start() {
@@ -620,6 +656,128 @@ document["mybutton"].bind("click", echo)`);
       <br>
       <textarea id="importExport" style="width: 26%; height: 12em"
         onchange="taChange();" onkeyup="taChange()"></textarea>
+
+      <script type="text/python3" id="tests_editor">
+        global output
+        doc["console"].value = ''
+        src = editor.getValue()
+        if storage is not None:
+           storage["py_src"] = src
+    
+        t0 = time.perf_counter()
+        try:
+            ns = {'__name__':'__main__'}
+            exec(src, ns)
+            state = 1
+        except Exception as exc:
+            traceback.print_exc(file=sys.stderr)
+            state = 0
+        output = doc["console"].value
+    
+        print('<completed in %6.2f ms>' % ((time.perf_counter() - t0) * 1000.0))
+        return state
+      </script>
+      <!--
+      <script type="text/python3" id="tests_editor">
+        from browser import document as doc, window
+        from browser import html
+        import header
+        import editor
+        
+        qs_lang,language = header.show()
+        
+        # other translations
+        
+        trans = {
+            'report_bugs':{'en':'Please report bugs in the ',
+                            'es':'Poner los bugs en el ',
+                            'fr':"Signalez les bugs dans l'"},
+            'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+            'run':{'en':'run','es':'ejecutar','fr':'Exécuter'},
+            'clear':{'en':'clear','es':'borrar','fr':'Effacer'}
+        }
+        
+        for key in trans:
+            if key in doc:
+                doc[key].html = trans[key].get(language,trans[key]['en'])
+        
+        # link to test page
+        tplink = doc['test_page']
+        if qs_lang:
+            tplink.attrs["href"] += '?lang=%s' %qs_lang
+        
+        def set_debug(ev):
+            if ev.target.checked:
+                __BRYTHON__.debug = 1
+            else:
+                __BRYTHON__.debug = 0
+        
+        __BRYTHON__.debug = int(doc['set_debug'].checked)
+        
+        # bindings
+        doc['set_debug'].bind('change',set_debug)
+        
+        # next functions are defined in editor.py
+        doc['show_js'].bind('click',editor.show_js)
+        # Create a lambda around editor.run() so that the event object is not passed to it
+        doc['result'].bind('click',lambda *args: editor.run())
+        doc['show_console'].bind('click',editor.show_console)
+        
+        # erase "main" div
+        def clear_main(ev):
+            doc['main'].text = ''
+        
+        main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+        
+        # add "main" div
+        def add_main(ev):
+            global main_content
+            try:
+                # if "main" div already exists, save content and erase container
+                main_content = doc["main"].html
+                doc["main_container"].html = ""
+                doc["add_main"].text = 'Show "main" div'
+            except KeyError:
+                t = html.TABLE()
+                row = html.TR()
+                b = html.BUTTON('Clear')
+                b.bind('click', clear_main)
+                row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+                t <= row
+                doc["main_container"] <= t
+                doc["main"].html = main_content
+                doc["add_main"].text = 'Hide "main" div'
+        
+        doc["add_main"].bind('click', add_main)
+        
+        </script>
+        
+        <div id="container">
+            <div id="left-div">
+            <div style="padding: 3px 3px 3px 3px;">
+            <button id="add_main">Add <b>&lt;div id=main&gt;</b></button>
+            
+            </div>
+              <div id="editor" style="width:100%;"></div>
+            </div>
+            
+            <div id="right-div">
+            <div style="padding: 3px 3px 3px 3px;">
+              <div style="float:left">
+                <button id="run"> ▶ Run</button>
+                Debug<input type="checkbox" id="set_debug" checked>
+              </div>
+            
+              <div style="float:right">
+                <button id="show_console">Python</button>
+                <button id="show_js">Javascript</button>
+              </div>
+            </div>
+            <div style="width:100%;height:100%;">
+            <textarea id="console" autocomplete="off"></textarea>
+            </div>
+          </div>
+        -->
 
       <!-- brython 동작 테스트 -->
       <!--
