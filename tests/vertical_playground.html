@@ -158,11 +158,8 @@
 
     function fromCode(lang) {
       var input = document.getElementById('importExport');
-      console.log(JSON.stringify(code2AST(input.value), null, 2));
-      /*
-      var xml = Blockly.Python.revert(input.value);
+      var xml = code2XML(input.value);
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
-      */
       taChange();
     }
     // PSB_Brython을 사용하여 결과 코드를 변환
