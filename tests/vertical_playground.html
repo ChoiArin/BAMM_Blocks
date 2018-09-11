@@ -159,6 +159,7 @@
     function fromCode(lang) {
       var input = document.getElementById('importExport');
       var xml = code2XML(input.value);
+      console.log(xml);
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       taChange();
     }

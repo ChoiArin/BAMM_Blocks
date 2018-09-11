@@ -28,7 +28,7 @@ function codeBlockAnalyze(varList, code, elem) {
   }
 
   switch (elem.type) {
-    case 'AssignmentExpression': {
+    case 'AssignmentExpression':
       if(elem.right.type === 'NewExpression') { //List
         code.head += '<block type="data_clearlist">';
         codeBlockAnalyze(varList, code, elem.left);
@@ -48,8 +48,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '<next>';
       code.tail = '</next></block>' + code.tail;
       break;
-    }
-    case 'BinaryExpression': {
+
+    case 'BinaryExpression':
       var type = false;
       code.head += '<block type="'
       if(elem.operator === '+') {
@@ -84,40 +84,56 @@ function codeBlockAnalyze(varList, code, elem) {
       codeBlockAnalyze(varList, code, elem.right);
       code.head += '</block>';
       break;
-    }
-    case 'BlockStatement': {
-      elem.body.forEach(function(e) {
-        codeBlockAnalyze(varList, code, e);
-      });
-      code.head += code.tail;
-      code.tail = '';
+
+    case 'BlockStatement':
+      if(elem.body.length == 2 //while block check..
+        && elem.body[0].type === 'VariableDeclaration'
+        && elem.body[1].type === 'IfStatement'
+        && elem.body[1].consequent.type === 'BlockStatement'
+        && elem.body[1].consequent.body[0].type === 'ForStatement') {
+        code.head += '<block type="control_repeat">';
+        code.head += '<value name="TIMES"><shadow type="math_whole_number"><field name="NUM">';
+        var repeatNum = 0;
+        if(elem.body[0].declarations[0].init.arguments.length == 1)
+          repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
+        else
+          repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
+        code.head += repeatNum;
+        code.head += '</field></shadow></value>';
+        code.head += '</block>';
+      }
+      else {
+        elem.body.forEach(function(e) {
+          codeBlockAnalyze(varList, code, e);
+        });
+        code.head += code.tail;
+        code.tail = '';
+      }
       break;
-    }
-    case 'BreakStatement': {
+
+    case 'BreakStatement':
       code.head += '<block type="control_stop"><mutation hasnext="false"></mutation><field name="STOP_OPTION">this script</field></block>';
       break;
-    }
-    case 'CallExpression': {
+
+    case 'CallExpression':
       revertFunc[elem.callee.property.name](varList, code, elem.arguments);
       break;
-    }
-    case 'EmptyStatement': {
+
+    case 'EmptyStatement':
       //Do nothing ^오^
       break;
-    }
-    case 'ExpressionStatement': {
+
+    case 'ExpressionStatement':
       codeBlockAnalyze(varList, code, elem.expression);
       break;
-    }
-    case 'ForInStatement': {
 
+    case 'ForInStatement':
       break;
-    }
-    case 'ForStatement': {
+      
+    case 'ForStatement':
+      break;
 
-      break;
-    }
-    case 'FunctionDeclaration': {
+    case 'FunctionDeclaration':
       varList[elem.id.name] = 'func';
       code.head += '<block type="func">';
       code.head += '<field name="func" variabletype="func">';
@@ -127,8 +143,8 @@ function codeBlockAnalyze(varList, code, elem) {
       codeBlockAnalyze(varList, code, elem.body);
       code.tail = '</statement></block>' + code.tail;
       break;
-    }
-    case 'Identifier': {
+
+    case 'Identifier':
       code.head += '<field name="';
       if(varList[elem.name] == 'var')
         code.head += 'VARIABLE';
@@ -140,8 +156,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += elem.name;
       code.head += '</field>';
       break;
-    }
-    case 'IfStatement': {
+
+    case 'IfStatement':
       if(elem.alternate)
         code.head += '<block type="control_if_else">';
       else
@@ -164,8 +180,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '<next>';
       code.tail = '</next></block>' + code.tail;
       break;
-    }
-    case 'Literal': {
+
+    case 'Literal':
       code.head += '<shadow type="';
       code.head += elem.shadowType ? elem.shadowType : 'text';
       code.head += '"><field name="';
@@ -174,8 +190,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += elem.value === null ? '' : elem.value;
       code.head += '</field></shadow>';
       break;
-    }
-    case 'LogicalExpression': {
+
+    case 'LogicalExpression':
       if(elem.operator === '&&') {
         code.head += '<block type="operator_and">';
         elem.left.valueName = 'OPERAND1';
@@ -195,34 +211,34 @@ function codeBlockAnalyze(varList, code, elem) {
       }
       code.head += '</block>';
       break;
-    }
-    case 'MemberExpression': {
+
+    case 'MemberExpression':
       // Yet
       break;
-    }
-    case 'NewExpression': {
+
+    case 'NewExpression':
       // list. no block assign
       break;
-    }
-    case 'Program': {
+
+    case 'Program':
       codeBlockAnalyze(varList, code, elem.body);
       break;
-    }
-    case 'UnaryExpression': {
+
+    case 'UnaryExpression':
       code.head += '<block type="operator_not">';
       codeBlockAnalyze(varList, code, elem.argument);
       code.head += '</block>';
       break;
-    }
-    case 'UpdateExpression': {
+
+    case 'UpdateExpression':
       // Yet
       break;
-    }
-    case 'VariableDeclaration': {
+
+    case 'VariableDeclaration':
       codeBlockAnalyze(varList, code, elem.declarations[0]);
       break;
-    }
-    case 'VariableDeclarator': {
+
+    case 'VariableDeclarator':
       if(elem.init.type === 'NewExpression') { //List
         varList[elem.id] = 'list';
         code.head += '<block type="data_clearlist">';
@@ -237,8 +253,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '<next>';
       code.tail = '</next></block>' + code.tail;
       break;
-    }
-    case 'WhileStatement': {
+
+    case 'WhileStatement':
       code.head += '<block type="control_repeat_until">';
       code.head += '<value name="CONDITION">';
       codeBlockAnalyze(varList, code, elem.test);
@@ -247,7 +263,6 @@ function codeBlockAnalyze(varList, code, elem) {
       codeBlockAnalyze(varList, code, elem.body);
       code.tail = '</statement></block>' + code.tail;
       break;
-    }
   }
 
   if(elem.valueName) {
