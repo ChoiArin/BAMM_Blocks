@@ -39,8 +39,8 @@
   <script src="../generators/python/variables_dynamic.js"></script>
   <script src="../generators/python/procedures.js"></script>
 
-  <script type="text/javascript" src="../node_modules/brython/brython.js"></script>
-  <script type="text/javascript" src="../node_modules/brython/brython_stdlib.js"></script>
+  <script type="text/javascript" src="../brython/brython.js"></script>
+  <script type="text/javascript" src="../brython/brython_stdlib.js"></script>
 
 
   <script>
@@ -598,16 +598,31 @@ document["mybutton"].bind("click", echo)`);
     <br>
     <!-- PSB_TEST_CODE -->
     <script type="text/python">
-      from browser import document, alert
+      import sys
 
-      def echo(event):
-          alert(document["zone"].value)
+      from browser import document as doc, window, alert
 
-      document["mybutton"].bind("click", echo)
-      </script>
+      class cOutput:
+        def write(self, data):
+            doc["console"].value += str(data)
+        def flush(self):
+            pass
+            
+      sys.stdout = cOutput()
+      sys.stderr = cOutput()
 
-      <input id="zone"><button id="mybutton">click !</button>
+      def runn(*args):
+        doc["console"].value = ''
+        src = doc["zone"].value
+        ns = {'__name__':'__main__'}
+        exec(src, ns)
+
+      doc["mybutton"].bind("click", runn)
+    </script>
+
+    <textarea id="zone"></textarea><button id="mybutton">click !</button>
     <textarea id="importExport" style="width: 26%; height: 12em" onchange="taChange();" onkeyup="taChange()"></textarea>
+    <textarea id="console" style="width: 26%; height: 12em"></textarea>
   </p>
 
   <hr>
