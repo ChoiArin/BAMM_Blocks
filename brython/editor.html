@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brython</title>
+<link rel="stylesheet" href="./doc_brython.css">
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="./console.css">
+
+<script type="text/javascript" src="./brython_builtins.js"></script>
+<script type="text/javascript" src="./version_info.js"></script>
+<script type="text/javascript" src="./py2js.js"></script>
+<script type="text/javascript" src="./py_object.js"></script>
+<script type="text/javascript" src="./py_type.js"></script>
+<script type="text/javascript" src="./py_utils.js"></script>
+<script type="text/javascript" src="./py_sort.js"></script>
+<script type="text/javascript" src="./py_builtin_functions.js"></script>
+<script type="text/javascript" src="./py_exceptions.js"></script>
+<script type="text/javascript" src="./py_range_slice.js"></script>
+<script type="text/javascript" src="./py_bytes.js"></script>
+<script type="text/javascript" src="./py_set.js"></script>
+<script type="text/javascript" src="./js_objects.js"></script>
+<script type="text/javascript" src="./stdlib_paths.js"></script>
+<script type="text/javascript" src="./py_import.js"></script>
+
+<script type="text/javascript" src="./unicode.min.js"></script>
+<script type="text/javascript" src="./py_string.js"></script>
+<script type="text/javascript" src="./py_int.js"></script>
+<script type="text/javascript" src="./py_long_int.js"></script>
+<script type="text/javascript" src="./py_float.js"></script>
+<script type="text/javascript" src="./py_complex.js"></script>
+<script type="text/javascript" src="./py_dict.js"></script>
+<script type="text/javascript" src="./py_list.js"></script>
+<script type="text/javascript" src="./py_generator.js"></script>
+<script type="text/javascript" src="./py_dom.js"></script>
+
+<script type="text/javascript" src="./builtin_modules.js"></script>
+<script type="text/javascript" src="./py_import_hooks.js"></script>
+<script type="text/javascript" src="./async.js"></script>
+
+<script type="text/javascript" src="./brython_stdlib.js"></script>
+
+<script src="./ace_ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./ace_ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="./ace_mode-python3.js" type="text/javascript" charset="utf-8"></script>
+<script src="./ace_snippets_python.js" type="text/javascript" charset="utf-8"></script>
+
+</script>
+
+<script type="text/python3" id="tests_editor">
+from browser import document as doc, window
+from browser import html
+import header
+import editor
+qs_lang,language = header.show()
+# other translations
+trans = {
+    'report_bugs':{'en':'Please report bugs in the ',
+                   'es':'Poner los bugs en el ',
+                   'fr':"Signalez les bugs dans l'"},
+    'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+    'run':{'en':'run','es':'ejecutar','fr':'Exécuter'},
+    'clear':{'en':'clear','es':'borrar','fr':'Effacer'}
+}
+for key in trans:
+    if key in doc:
+        doc[key].html = trans[key].get(language,trans[key]['en'])
+# link to test page
+tplink = doc['test_page']
+if qs_lang:
+    tplink.attrs["href"] += '?lang=%s' %qs_lang
+def set_debug(ev):
+    if ev.target.checked:
+        __BRYTHON__.debug = 1
+    else:
+        __BRYTHON__.debug = 0
+__BRYTHON__.debug = int(doc['set_debug'].checked)
+# bindings
+doc['set_debug'].bind('change',set_debug)
+# next functions are defined in editor.py
+doc['show_js'].bind('click',editor.show_js)
+# Create a lambda around editor.run() so that the event object is not passed to it
+doc['run'].bind('click',lambda *args: editor.run())
+doc['show_console'].bind('click',editor.show_console)
+# erase "main" div
+def clear_main(ev):
+    doc['main'].text = ''
+main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+# add "main" div
+def add_main(ev):
+    global main_content
+    try:
+        # if "main" div already exists, save content and erase container
+        main_content = doc["main"].html
+        doc["main_container"].html = ""
+        doc["add_main"].text = 'Show "main" div'
+    except KeyError:
+        t = html.TABLE()
+        row = html.TR()
+        b = html.BUTTON('Clear')
+        b.bind('click', clear_main)
+        row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+        t <= row
+        doc["main_container"] <= t
+        doc["main"].html = main_content
+        doc["add_main"].text = 'Hide "main" div'
+doc["add_main"].bind('click', add_main)
+</script>
+
+<script>
+function run_js(){
+    var cons = document.getElementById("console")
+    var jscode = cons.value
+    var t0 = (new Date()).getTime()
+    eval(jscode)
+    var t1 = (new Date()).getTime()
+    console.log("Javascript code run in "+(t1-t0)+" ms")
+}
+</script>
+</head>
+<body onload="brython({debug:1})">
+
+<table id=banner cellpadding=0 cellspacing=0>
+<tr id=banner_row >
+<td class="logo"><a href="./index.html"><img src="./brython_tp.png" class="logo"></a></td>
+</tr>
+</table>
+
+<div id="main_container"></div>
+
+<div style="text-align:center">Brython version: <span id="version"></span>
+</div>
+
+<div id="container">
+<div id="left-div">
+<div style="padding: 3px 3px 3px 3px;">
+<button id="add_main">Add <b>&lt;div id=main&gt;</b></button>
+
+</div>
+  <div id="editor" style="width:100%;" class=" ace_editor ace-tm">
+    <textarea class="ace_text-input" wrap="off" autocapacitalize="off" spellcheck="false" style="opacity: 0; height: 14.4px; width: 6.6px; left: 44px; top: 0px"></textarea>
+    <div class="ace_gutter"><div class="ace_layer ace_gutter-layer ace_folding-enabled" style="margin-top: 0px; height: 496.8px; width: 40px;"><div class="ace_gutter-cell " style="height: 14.4px;">1</div></div><div class="ace_gutter-active-line" style="top: 0px; height: 14.4px;"></div></div>
+    <div class="ace_scroller" style="left: 40px; right: 0px; bottom: 0px;"><div class="ace_content" style="margin-top: 0px; width: 449px; height: 496.8px; margin-left: 0px;"><div class="ace_layer ace_print-margin-layer"><div class="ace_print-margin" style="left: 532px; visibility: visible;"></div></div><div class="ace_layer ace_marker-layer"></div><div class="ace_layer ace_text-layer" style="padding: 0px 4px;"><div class="ace_line" style="height:14.40000057220459px"></div></div><div class="ace_layer ace_marker-layer"></div><div class="ace_layer ace_cursor-layer ace_hidden-cursors"><div class="ace_cursor" style="left: 4px; top: 0px; width: 6.6px; height: 14.4px;"></div></div></div></div>
+    <div class="ace_scrollbar ace_scrollbar-v" style="display: none; width: 22px; bottom: 0px;"><div class="ace_scrollbar-inner" style="width: 22px; height: 14.4px;"></div></div>
+    <div class="ace_scrollbar ace_scrollbar-h" style="display: none; height: 22px; left: 40px; right: 0px;"><div class="ace_scrollbar-inner" style="height: 22px; width: 449px;"></div></div>
+    <div style="height: auto; width: auto; top: -100px; left: -100px; visibility: hidden; position: fixed; white-space: pre; font: inherit; overflow: hidden;"><div style="height: auto; width: auto; top: -100px; left: -100px; visibility: hidden; position: fixed; white-space: pre; font: inherit; overflow: visible;"></div><div style="height: auto; width: auto; top: -100px; left: -100px; visibility: hidden; position: fixed; white-space: pre; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: visible;">X</div></div>
+  </div>
+</div>
+
+<div id="right-div">
+<div style="padding: 3px 3px 3px 3px;">
+  <div style="float:left">
+    <button id="run"> ▶ Run</button>
+    Debug<input type="checkbox" id="set_debug" checked>
+  </div>
+
+  <div style="float:right">
+    <button id="show_console">Python</button>
+    <button id="show_js">Javascript</button>
+  </div>
+</div>
+<div style="width:100%;height:100%;">
+<textarea id="console" autocomplete="off"></textarea>
+</div>
+</div>
+
+</body>
+</html>
