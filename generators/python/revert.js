@@ -156,7 +156,10 @@ function getDepth(codeLine, tab) {
 }
 
 function splitHeader(codeLine) {
-  var m = codeLine.match(/^[^ ^\(^\)^\{^\}^\[^\]]+/);
+  var m = codeLine.match(/^""$/);
+  if(m !== null)
+    return null;
+  m = codeLine.match(/^[^ ^\(^\)^\{^\}^\[^\]]+/);
   if(m === null)
     return null;
   return { header: m[0], body: codeLine.replace(new RegExp("^" + m[0]), "").trim() };
@@ -168,8 +171,22 @@ function getFuncArgs(codeLine) {
   if(m && m.length > 0) {
     var args = m[1];
     var parts = args.split(",");
+    
+    var commaParts = "";
+    var checkedChar = "";
     parts.forEach(elem => {
-      tokens.push(elem.trim());
+      if(elem[0] === "'" || elem[0] === '"') {
+        commaParts = elem;
+        checkedChar = elem[0];
+      } else if(elem[elem.length - 1] === checkedChar) {
+        commaParts += "," + elem;
+        tokens.push(commaParts);
+        commaParts = "";
+      } else if(commaParts !== "") {
+        commaParts += "," + elem;
+      } else {
+        tokens.push(elem);
+      }
     });
   }
 
@@ -214,7 +231,6 @@ revertHeaders['if'] = function(args) {
 
     case 3:
     bData += '<value name="CONDITION">';
-    console.log(args[1]);
     bData += revertExecuters[args[1]](args[0], args[2]);
     bData += '</value>';
     break;
