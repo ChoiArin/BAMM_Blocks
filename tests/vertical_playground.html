@@ -411,7 +411,7 @@ document["mybutton"].bind("click", echo)`);
   </style>
 </head>
 
-<body onload="start()">
+<body onload="startAll()">
   <div id="collaborators"></div>
   <div id="blocklyDiv"></div>
   <!-- Simple toolbox -->
@@ -596,6 +596,17 @@ document["mybutton"].bind("click", echo)`);
     <input type="button" value="To Python" onclick="toCode('Python')"> &nbsp;
     <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
     <br>
+    <!-- PSB_TEST_CODE -->
+    <script type="text/python">
+      from browser import document, alert
+
+      def echo(event):
+          alert(document["zone"].value)
+
+      document["mybutton"].bind("click", echo)
+      </script>
+
+      <input id="zone"><button id="mybutton">click !</button>
     <textarea id="importExport" style="width: 26%; height: 12em" onchange="taChange();" onkeyup="taChange()"></textarea>
   </p>
 
