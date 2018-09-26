@@ -10,14 +10,15 @@ function code2XML(inpt) {
 
 //#region AST analyze
 function codeAnalyze(AST) {
-  var code = {head: '', tail: ''};
+  var code = {head: '', tail: []};
   var varList = {};
 
+  code.tail.push('');
   AST.body.forEach(function(elem) {
     codeBlockAnalyze(varList, code, elem);
   });
 
-  return code.head + code.tail;
+  return code.head + code.tail[code.tail.length - 1];
 }
 
 function codeBlockAnalyze(varList, code, elem) {
@@ -46,7 +47,7 @@ function codeBlockAnalyze(varList, code, elem) {
         codeBlockAnalyze(varList, code, elem.right);
       }
       code.head += '<next>';
-      code.tail = '</next></block>' + code.tail;
+      code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
       break;
 
     case 'BinaryExpression':
@@ -103,11 +104,12 @@ function codeBlockAnalyze(varList, code, elem) {
         code.head += '</block>';
       }
       else {
+        code.tail.push('');
         elem.body.forEach(function(e) {
           codeBlockAnalyze(varList, code, e);
         });
-        code.head += code.tail;
-        code.tail = '';
+        code.head += code.tail[code.tail.length - 1];
+        code.tail.pop();
       }
       break;
 
@@ -116,7 +118,12 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'CallExpression':
-      revertFunc[elem.callee.property.name](varList, code, elem.arguments);
+      if(elem.callee.property.name === "_pySlice"
+        || elem.callee.property.name === "find"
+        || elem.callee.property.name === "rfind")
+        revertFunc[elem.callee.property.name](varList, code, elem.callee.object, elem.arguments);
+      else
+        revertFunc[elem.callee.property.name](varList, code, elem.arguments);
       break;
 
     case 'EmptyStatement':
@@ -141,7 +148,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '</field>';
       code.head += '<statement name="SUBSTACK">';
       codeBlockAnalyze(varList, code, elem.body);
-      code.tail = '</statement></block>' + code.tail;
+      code.head += '</statement></block>';
+      //code.tail[code.tail.length - 1] = '</statement></block>' + code.tail[code.tail.length - 1];
       break;
 
     case 'Identifier':
@@ -163,22 +171,25 @@ function codeBlockAnalyze(varList, code, elem) {
       else
         code.head += '<block type="control_if">';
 
-      code.head += '<value name="CONDITION">';
-      codeBlockAnalyze(varList, code, elem.test);
-      code.head += '</value>';
+      if(elem.test.type !== "Literal" || elem.test.value !== false) {
+        code.head += '<value name="CONDITION">';
+        codeBlockAnalyze(varList, code, elem.test);
+        code.head += '</value>';
+      }
 
       code.head += '<statement name="SUBSTACK">';
-      code.tail = '</statement>' + code.tail;
       codeBlockAnalyze(varList, code, elem.consequent);
+      code.head += '</statement>';
 
       if(elem.alternate) {
         code.head += '<statement name="SUBSTACK2">';
-        code.tail = '</statement>' + code.tail;
         codeBlockAnalyze(varList, code, elem.alternate);
+        code.head += '</statement>';
       }
 
       code.head += '<next>';
-      code.tail = '</next></block>' + code.tail;
+      code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
+      
       break;
 
     case 'Literal':
@@ -213,7 +224,20 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'MemberExpression':
-      // Yet
+      if(elem.object.type === "Literal") {
+        if(elem.property.callee && elem.property.callee.object.type === "MemberExpression") {
+          code.head += '<block type="texts_charAt">';
+          elem.property.arguments[1].valueName = 'WHERE';
+          elem.property.arguments[1].shadowType = 'math_number';
+          elem.property.arguments[1].fieldName = 'NUM';
+          codeBlockAnalyze(varList, code, elem.property.arguments[1]);
+          elem.property.arguments[0].valueName = 'VALUE';
+          elem.property.arguments[0].shadowType = 'text';
+          elem.property.arguments[0].fieldName = 'TEXT';
+          codeBlockAnalyze(varList, code, elem.property.arguments[0]);
+          code.head += '</block>';
+        }
+      }
       break;
 
     case 'NewExpression':
@@ -225,9 +249,18 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'UnaryExpression':
-      code.head += '<block type="operator_not">';
-      codeBlockAnalyze(varList, code, elem.argument);
-      code.head += '</block>';
+      if(elem.argument.type === "MemberExpression" && elem.argument.property.name === "length") {
+        code.head += '<block type="texts_isEmpty">';
+        elem.argument.object.valueName = 'VALUE';
+        elem.argument.object.shadowType = 'text';
+        elem.argument.object.fieldName = 'TEXT';
+        codeBlockAnalyze(varList, code, elem.argument.object);
+        code.head += '</block>';
+      } else {
+        code.head += '<block type="operator_not">';
+        codeBlockAnalyze(varList, code, elem.argument);
+        code.head += '</block>';
+      }
       break;
 
     case 'UpdateExpression':
@@ -251,17 +284,19 @@ function codeBlockAnalyze(varList, code, elem) {
         codeBlockAnalyze(varList, code, elem.init);
       }
       code.head += '<next>';
-      code.tail = '</next></block>' + code.tail;
+      code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
       break;
 
     case 'WhileStatement':
       code.head += '<block type="control_repeat_until">';
-      code.head += '<value name="CONDITION">';
-      codeBlockAnalyze(varList, code, elem.test);
-      code.head += '</value>';
+      if(elem.test.type !== "Literal" || elem.test.value !== false) {
+        code.head += '<value name="CONDITION">';
+        codeBlockAnalyze(varList, code, elem.test);
+        code.head += '</value>';
+      }
       code.head += '<statement name="SUBSTACK">';
       codeBlockAnalyze(varList, code, elem.body);
-      code.tail = '</statement></block>' + code.tail;
+      code.head += '</statement>';
       break;
   }
 
@@ -272,12 +307,84 @@ function codeBlockAnalyze(varList, code, elem) {
 
 revertFunc = {};
 
+revertFunc['_pySlice'] = function(varList, code, object, args) {
+  if(args.length === 3) {
+    if(args[0].value === null && args[1].value === null && args[2].operator === "-" && args[2].argument.value === 1) {
+      code.head += '<block type="texts_reverse">';
+      object.valueName = 'TEXT';
+      object.shadowType = 'text';
+      object.fieldName = 'TEXT';
+      codeBlockAnalyze(varList, code, object);
+      code.head += '</block>';
+    } else {
+      code.head += '<block type="texts_getSubstring">';
+      if(args[0].value < 0)
+        code.head += '<field name="WHERE1">FROM_END</field>';
+      else
+        code.head += '<field name="WHERE1">FROM_START</field>';
+      code.head += '<field name="WHERE2">FROM_START</field>';
+      object.valueName = 'STRING';
+      object.shadowType = 'text';
+      object.fieldName = 'TEXT';
+      codeBlockAnalyze(varList, code, object);
+      if(args[0].value === null) {
+        args[0].value = 0;
+        args[0].raw = "0";
+      }
+      args[0].valueName = 'AT1';
+      args[0].shadowType = 'math_number';
+      args[0].fieldName = 'NUM';
+      codeBlockAnalyze(varList, code, args[0]);
+      if(args[1].value === null) {
+        args[1].value = 0;
+        args[1].raw = "0";
+      }
+      args[1].valueName = 'AT2';
+      args[1].shadowType = 'math_number';
+      args[1].fieldName = 'NUM';
+      codeBlockAnalyze(varList, code, args[1]);
+      code.head += '</block>';
+    }
+  }
+};
+
+revertFunc['find'] = function(varList, code, object, args) {
+  code.head += '<block type="texts_indexOf">';
+  code.head += '<field name="END">FIRST</field>';
+  args[0].valueName = 'FIND';
+  args[0].shadowType = 'text';
+  args[0].fieldName = 'TEXT';
+  codeBlockAnalyze(varList, code, args[0]);
+  object.valueName = 'VALUE';
+  object.shadowType = 'text';
+  object.fieldName = 'TEXT';
+  codeBlockAnalyze(varList, code, object);
+  code.head += '</block>';
+};
+
+revertFunc['rfind'] = function(varList, code, object, args) {
+  code.head += '<block type="texts_indexOf">';
+  code.head += '<field name="END">LAST</field>';
+  args[0].valueName = 'FIND';
+  args[0].shadowType = 'text';
+  args[0].fieldName = 'TEXT';
+  codeBlockAnalyze(varList, code, args[0]);
+  object.valueName = 'VALUE';
+  object.shadowType = 'text';
+  object.fieldName = 'TEXT';
+  codeBlockAnalyze(varList, code, object);
+  code.head += '</block>';
+};
+
 revertFunc['print'] = function(varList, code, args) {
-  code.head += '<block type="texts_println">';
+  if(args.length > 2 && args[1].name === "endl" && args[2].value === "")
+    code.head += '<block type="texts_print">';
+  else
+    code.head += '<block type="texts_println">';
   args[0].valueName = 'TEXT';
   codeBlockAnalyze(varList, code, args[0]);
   code.head += '<next>';
-  code.tail = '</next></block>' + code.tail;
+  code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
 };
 
 revertFunc['str'] = function(varList, code, args) {
@@ -1459,6 +1566,7 @@ function eat(type) {
 
 function expect(type) {
   if (tokType === type) next();
+  else if (tokType.isAssign === true) next();
   else unexpected();
 }
 
@@ -2929,7 +3037,6 @@ var pythonRuntime = {
       var s = "";
       for (var i = 0; i < arguments.length; i++)
         s += i === 0 ? arguments[i] : " " + arguments[i];
-      console.log(s);
     },
     range: function (start, stop, step) {
       if (stop === undefined) {
