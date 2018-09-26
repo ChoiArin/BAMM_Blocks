@@ -447,7 +447,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="texts_reverse" id="texts_reverse">' +
       '<value name="TEXT">' +
         '<shadow type="text">' +
-          '<field name="TEXT">hello, wolrd!</field>' +
+          '<field name="TEXT">hello, world!</field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +

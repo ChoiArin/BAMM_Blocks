@@ -39,8 +39,8 @@
   <script src="../generators/python/variables_dynamic.js"></script>
   <script src="../generators/python/procedures.js"></script>
 
-  <script type="text/javascript" src="../node_modules/brython/brython.js"></script>
-  <script type="text/javascript" src="../node_modules/brython/brython_stdlib.js"></script>
+  <script type="text/javascript" src="../brython/brython.js"></script>
+  <script type="text/javascript" src="../brython/brython_stdlib.js"></script>
 
 
   <script>
@@ -158,42 +158,46 @@
 
     function fromCode(lang) {
       var input = document.getElementById('importExport');
-      var xml = Blockly.Python.revert(input.value);
+      var xml = code2XML(input.value);
+      //console.log(xml);
+      var t0 = performance.now();
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
+      var t1 = performance.now();
+      console.log("code2block: " + (t1 - t0) + "ms.")
       taChange();
     }
     // PSB_Brython을 사용하여 결과 코드를 변환
-    function ShowResult() {
-      var textarea = document.getElementById('importExport');
-      var pythonCode = '\n' + textarea.value;
-      var textToPython = document.createElement('script');
-      var textNode = document.createTextNode(pythonCode);
-      textToPython.type = "text/python";
-      //textToPython.src = "../node_modules/brython/brython.js"; // 테스트, .py로 변경해보기
-      textToPython.appendChild(textNode);
-      console.log(textToPython);
-      // console.log(document.getElementById('importExport'));
-      /*
-        // 위의 방식으로 기존 예제를 만들어보기
-        var textToPython_t = document.createElement('script');
-        var textNode_t = document.createTextNode(`from browser import document, alert
-def echo(event):
-    alert(document["zone"].value)
+    // function ShowResult() {
+    //   var textarea = document.getElementById('importExport');
+    //   var pythonCode = '\n' + textarea.value;
+    //   var textToPython = document.createElement('script');
+    //   var textNode = document.createTextNode(pythonCode);
+    //   textToPython.type = "text/python";
+    //   //textToPython.src = "../node_modules/brython/brython.js"; // 테스트, .py로 변경해보기
+    //   textToPython.appendChild(textNode);
+    //   console.log(textToPython);
+    //   // console.log(document.getElementById('importExport'));
+    //   /*
+    //     // 위의 방식으로 기존 예제를 만들어보기
+    //     var textToPython_t = document.createElement('script');
+    //     var textNode_t = document.createTextNode(`from browser import document, alert
+    //     def echo(event):
+    //       alert(document["zone"].value)
   
-document["mybutton"].bind("click", echo)`);
-        textToPython_t.type = "text/python";
-        console.log(textToPython_t);
-        console.log(textNode_t);
-        textToPython_t.appendChild(textNode_t);
-        var input_t = document.createElement('input');
-        var button_t = document.createElement('button');
-        button_t.value = "Click";
-        */
-      // PSB_brython.js의 run 함수의 리턴값을 대입! -> 실패
-      //document.getElementById('importExport').value;
-      //document.getElementById('importExport').value = textToPython.value;
-      // return textarea.value;
-    }
+    //     document["mybutton"].bind("click", echo)`);
+    //     textToPython_t.type = "text/python";
+    //     console.log(textToPython_t);
+    //     console.log(textNode_t);
+    //     textToPython_t.appendChild(textNode_t);
+    //     var input_t = document.createElement('input');
+    //     var button_t = document.createElement('button');
+    //     button_t.value = "Click";
+    //     */
+    //   // PSB_brython.js의 run 함수의 리턴값을 대입! -> 실패
+    //   //document.getElementById('importExport').value;
+    //   //document.getElementById('importExport').value = textToPython.value;
+    //   // return textarea.value;
+    // }
     // Disable the "Import from XML" button if the XML is invalid.
     // Preserve text between page reloads.
     function taChange() {
@@ -408,7 +412,7 @@ document["mybutton"].bind("click", echo)`);
   </style>
 </head>
 
-<body onload="start()">
+<body onload="startAll()">
   <div id="collaborators"></div>
   <div id="blocklyDiv"></div>
   <!-- Simple toolbox -->
@@ -593,7 +597,34 @@ document["mybutton"].bind("click", echo)`);
     <input type="button" value="To Python" onclick="toCode('Python')"> &nbsp;
     <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
     <br>
+    <input type="button" value="Run Python" id="runPython">
+    <!-- PSB_TEST_CODE -->
+    <script type="text/python">
+      import sys
+
+      from browser import document as doc, window, alert
+
+      class cOutput:
+        def write(self, data):
+            doc["console"].value += str(data)
+        def flush(self):
+            pass
+            
+      sys.stdout = cOutput()
+      sys.stderr = cOutput()
+
+      def run(*args):
+        doc["console"].value = ''
+        src = doc["importExport"].value
+        ns = {'__name__':'__main__'}
+        exec(src, ns)
+
+      doc["runPython"].bind("click", run)
+    </script>
+
+    <!-- <textarea id="zone"></textarea><button id="mybutton">click !</button> -->
     <textarea id="importExport" style="width: 26%; height: 12em" onchange="taChange();" onkeyup="taChange()"></textarea>
+    <textarea id="console" style="width: 26%; height: 12em"></textarea>
   </p>
 
   <hr>
