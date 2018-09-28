@@ -510,8 +510,8 @@ flour['반복문'] = {
 
 function yeast(flourStr, level, inputParam, inputCount) {
   let sacks = [];
-  for(let i = 0; i <= level; i++)
-    sacks = sacks.concat(flour[flourStr][level]);
+  for(let i = Math.max(level - 1, 0); i <= level; i++)
+    sacks = sacks.concat(flour[flourStr][i]);
   
   let sack = sacks.filter(function(e){
     if((!e.isStr && !e.isNum) || (inputParam === 's' && e.isStr) || (inputParam === 'i' && e.isNum)) {
