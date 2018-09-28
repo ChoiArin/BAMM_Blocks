@@ -159,7 +159,6 @@
     function fromCode(lang) {
       var input = document.getElementById('importExport');
       var xml = code2XML(input.value);
-      //console.log(xml);
       var t0 = performance.now();
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       var t1 = performance.now();

@@ -105,7 +105,13 @@ function codeBlockAnalyze(varList, code, elem) {
           repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
         code.head += repeatNum;
         code.head += '</field></shadow></value>';
-        code.head += '</block>';
+        code.head += '<statement name="SUBSTACK">';
+        elem.body[1].consequent.body[0].body.body.splice(0, 1);
+        elem.body[1].consequent.body[0].body.body.splice(elem.body[1].consequent.body[0].body.body.length, 1);
+        codeBlockAnalyze(varList, code, elem.body[1].consequent.body[0].body);
+        code.head += '</statement>';
+        code.head += '<next>';
+        code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
       }
       else {
         code.tail.push('');
@@ -193,7 +199,6 @@ function codeBlockAnalyze(varList, code, elem) {
 
       code.head += '<next>';
       code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
-      
       break;
 
     case 'Literal':
@@ -298,9 +303,13 @@ function codeBlockAnalyze(varList, code, elem) {
         codeBlockAnalyze(varList, code, elem.test);
         code.head += '</value>';
       }
+
       code.head += '<statement name="SUBSTACK">';
       codeBlockAnalyze(varList, code, elem.body);
       code.head += '</statement>';
+
+      code.head += '<next>';
+      code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
       break;
   }
 
