@@ -212,6 +212,13 @@
         valid = false;
       }
       document.getElementById('import').disabled = !valid;
+      valid = true;
+      try {
+        valid = isPythonCode(textarea.value);
+      } catch (e) {
+        valid = false;
+      }
+      document.getElementById('importPython').disabled = !valid;
     }
 
     function logEvents(state) {

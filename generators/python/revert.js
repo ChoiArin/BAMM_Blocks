@@ -8,6 +8,10 @@ function code2XML(inpt) {
   return '<xml>' + code + '</xml>';
 }
 
+function isPythonCode(inpt) {
+  return code2AST(inpt) !== null;
+}
+
 //#region AST analyze
 function codeAnalyze(AST) {
   var code = {head: '', tail: []};

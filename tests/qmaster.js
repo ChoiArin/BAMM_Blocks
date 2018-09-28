@@ -631,4 +631,16 @@ baguette['입출력'] = function(levels) {
 
   return ret + "<br><br>[입력 예제]<br>" + param.join("<br>") + "<br><br>[출력 예제]<br>";
 }
+
+baguette['연산자'] = function(levels) {
+  return "Not yet.";
+}
+
+baguette['조건문'] = function(levels) {
+  return "Not yet.";
+}
+
+baguette['반복문'] = function(levels) {
+  return "Not yet.";
+}
 //#endregion
