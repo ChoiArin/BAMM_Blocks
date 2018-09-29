@@ -18,102 +18,102 @@
  * limitations under the License.
  */
 
-'use strict';
+"use strict";
 
-goog.provide('Blockly.Colours');
+goog.provide("Blockly.Colours");
 
 Blockly.Colours = {
   // SVG colours: these must be specificed in #RRGGBB style
   // To add an opacity, this must be specified as a separate property (for SVG fill-opacity)
-  "motion": {
-    "primary": "#4C97FF",
-    "secondary": "#4280D7",
-    "tertiary": "#3373CC"
+  motion: {
+    primary: "#4C97FF",
+    secondary: "#4280D7",
+    tertiary: "#3373CC"
   },
-  "looks": {
-    "primary": "#9966FF",
-    "secondary": "#855CD6",
-    "tertiary": "#774DCB"
+  looks: {
+    primary: "#9966FF",
+    secondary: "#855CD6",
+    tertiary: "#774DCB"
   },
-  "sounds": {
-    "primary": "#CF63CF",
-    "secondary": "#C94FC9",
-    "tertiary": "#BD42BD"
+  sounds: {
+    primary: "#CF63CF",
+    secondary: "#C94FC9",
+    tertiary: "#BD42BD"
   },
-  "control": {
-    "primary": "#FFAB19",
-    "secondary": "#EC9C13",
-    "tertiary": "#CF8B17"
+  control: {
+    primary: "#ffcafd",
+    secondary: "#ffcafd",
+    tertiary: "#D0A3CE"
   },
-  "texts_extensions": {
-    "primary": "#979797",
-    "secondary": "#808080",
-    "tertiary": "#737373"
+  texts_extensions: {
+    primary: "#e196e3",
+    secondary: "#e196e3",
+    tertiary: "#CB87CC"
   },
-  "event": {
-    "primary": "#FFBF00",
-    "secondary": "#E6AC00",
-    "tertiary": "#CC9900"
+  event: {
+    primary: "#FFBF00",
+    secondary: "#E6AC00",
+    tertiary: "#CC9900"
   },
-  "sensing": {
-    "primary": "#5CB1D6",
-    "secondary": "#47A8D1",
-    "tertiary": "#2E8EB8"
+  sensing: {
+    primary: "#5CB1D6",
+    secondary: "#47A8D1",
+    tertiary: "#2E8EB8"
   },
-  "func": {
-    "primary": "#FF6680",
-    "secondary": "#FF4D6A",
-    "tertiary": "#FF3355"
+  func: {
+    primary: "#5eacff",
+    secondary: "#5eacff",
+    tertiary: "#4D8FD5"
   },
-  "operators": {
-    "primary": "#59C059",
-    "secondary": "#46B946",
-    "tertiary": "#389438"
+  operators: {
+    primary: "#b17aff",
+    secondary: "#b17aff",
+    tertiary: "#9063CF"
   },
-  "data": {
-    "primary": "#FF8C1A",
-    "secondary": "#FF8000",
-    "tertiary": "#DB6E00"
+  data: {
+    primary: "#a6b6fe",
+    secondary: "#a6b6fe",
+    tertiary: "#8E9BD9"
   },
   // This is not a new category, but rather for differentiation
   // between lists and scalar variables.
-  "data_lists": {
-    "primary": "#FF661A",
-    "secondary": "#FF5500",
-    "tertiary": "#E64D00"
+  data_lists: {
+    primary: "#a6b6fe",
+    secondary: "#a6b6fe",
+    tertiary: "#8E9BD9"
   },
-  "more": {
-    "primary": "#FF6680",
-    "secondary": "#FF4D6A",
-    "tertiary": "#FF3355"
+  more: {
+    primary: "#5eacff",
+    secondary: "#5eacff",
+    tertiary: "#4D8FD5"
   },
-  "text": "#575E75",
-  "workspace": "#F9F9F9",
-  "toolboxHover": "#4C97FF",
-  "toolboxSelected": "#e9eef2",
-  "toolboxText": "#575E75",
-  "toolbox": "#FFFFFF",
-  "flyout": "#F9F9F9",
-  "scrollbar": "#CECDCE",
-  "scrollbarHover": '#CECDCE',
-  "textField": "#FFFFFF",
-  "insertionMarker": "#000000",
-  "insertionMarkerOpacity": 0.2,
-  "dragShadowOpacity": 0.3,
-  "stackGlow": "#FFF200",
-  "stackGlowSize": 4,
-  "stackGlowOpacity": 1,
-  "replacementGlow": "#FFFFFF",
-  "replacementGlowSize": 2,
-  "replacementGlowOpacity": 1,
-  "colourPickerStroke": "#FFFFFF",
+  text: "#575E75",
+  workspace: "#F9F9F9",
+  toolboxHover: "#4C97FF",
+  toolboxSelected: "#e9eef2",
+  toolboxText: "#575E75",
+  toolbox: "#FFFFFF",
+  flyout: "#F9F9F9",
+  scrollbar: "#CECDCE",
+  scrollbarHover: "#CECDCE",
+  textField: "#FFFFFF",
+  insertionMarker: "#000000",
+  insertionMarkerOpacity: 0.2,
+  dragShadowOpacity: 0.3,
+  stackGlow: "#FFF200",
+  stackGlowSize: 4,
+  stackGlowOpacity: 1,
+  replacementGlow: "#FFFFFF",
+  replacementGlowSize: 2,
+  replacementGlowOpacity: 1,
+  colourPickerStroke: "#FFFFFF",
   // CSS colours: support RGBA
-  "fieldShadow": "rgba(0,0,0,0.1)",
-  "dropDownShadow": "rgba(0, 0, 0, .3)",
-  "numPadBackground": "#547AB2",
-  "numPadBorder": "#435F91",
-  "numPadActiveBackground": "#435F91",
-  "numPadText": "#FFFFFF",
-  "valueReportBackground": "#FFFFFF",
-  "valueReportBorder": "#AAAAAA"
+  fieldShadow: "rgba(0,0,0,0.1)",
+  dropDownShadow: "rgba(0, 0, 0, .3)",
+  numPadBackground: "#547AB2",
+  numPadBorder: "#435F91",
+  numPadActiveBackground: "#435F91",
+  numPadText: "#FFFFFF",
+  valueReportBackground: "#FFFFFF",
+  valueReportBorder: "#AAAAAA"
 };

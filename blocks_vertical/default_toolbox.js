@@ -18,17 +18,18 @@
  * limitations under the License.
  */
 
-'use strict';
+"use strict";
 
-goog.provide('Blockly.Blocks.defaultToolbox');
+goog.provide("Blockly.Blocks.defaultToolbox");
 
-goog.require('Blockly.Blocks');
+goog.require("Blockly.Blocks");
 
 /**
  * @fileoverview Provide a default toolbox XML.
  */
 
-Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: none">' +
+Blockly.Blocks.defaultToolbox =
+  '<xml id="toolbox-categories" style="display: none">' +
   /*
   '<category name="%{BKY_CATEGORY_MOTION}" id="motion" colour="#4C97FF" secondaryColour="#3373CC">' +
     '<block type="motion_movesteps" id="motion_movesteps">' +
@@ -277,44 +278,44 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
   '</category>' +
   */
-  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#FFAB19" secondaryColour="#CF8B17">' +
-    '<block type="control_wait" id="control_wait">' +
-      '<value name="DURATION">' +
-        '<shadow type="math_positive_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="control_repeat" id="control_repeat">' +
-      '<value name="TIMES">' +
-        '<shadow type="math_whole_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="control_forever" id="control_forever"></block>' +
-    '<block type="control_if" id="control_if"></block>' +
-    '<block type="control_if_else" id="control_if_else"></block>' +
-    '<block type="control_wait_until" id="control_wait_until"></block>' +
-    '<block type="control_repeat_until" id="control_repeat_until"></block>' +
-    '<block type="control_stop" id="control_stop"></block>' +
-    // '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
-    // '<block type="control_create_clone_of" id="control_create_clone_of">' +
-    //   '<value name="CLONE_OPTION">' +
-    //     '<shadow type="control_create_clone_of_menu"></shadow>' +
-    //   '</value>' +
-    // '</block>' +
-    // '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
-  '</category>' +
-  '<category name="Texts" id="texts_extensions" colour="#ABABAB" secondaryColour="#8B8B8B">' +
-    '<block type="texts_text" id="texts_text">' +
-      '<value name="VAR">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    /*
+  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#ffcafd" secondaryColour="#ffcafd">' +
+  '<block type="control_wait" id="control_wait">' +
+  '<value name="DURATION">' +
+  '<shadow type="math_positive_number">' +
+  '<field name="NUM">1</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="control_repeat" id="control_repeat">' +
+  '<value name="TIMES">' +
+  '<shadow type="math_whole_number">' +
+  '<field name="NUM">10</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="control_forever" id="control_forever"></block>' +
+  '<block type="control_if" id="control_if"></block>' +
+  '<block type="control_if_else" id="control_if_else"></block>' +
+  '<block type="control_wait_until" id="control_wait_until"></block>' +
+  '<block type="control_repeat_until" id="control_repeat_until"></block>' +
+  '<block type="control_stop" id="control_stop"></block>' +
+  // '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
+  // '<block type="control_create_clone_of" id="control_create_clone_of">' +
+  //   '<value name="CLONE_OPTION">' +
+  //     '<shadow type="control_create_clone_of_menu"></shadow>' +
+  //   '</value>' +
+  // '</block>' +
+  // '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
+  "</category>" +
+  '<category name="Texts" id="texts_extensions" colour="#e196e3" secondaryColour="#e196e3">' +
+  '<block type="texts_text" id="texts_text">' +
+  '<value name="VAR">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">0</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  /*
     '<block type="texts_append" id="texts_append">' +
       '<value name="TEXT">' +
         '<shadow type="text">' +
@@ -323,90 +324,90 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     */
-    '<block type="texts_length" id="texts_length">' +
-      '<value name="VALUE">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_isEmpty" id="texts_isEmpty">' +
-      '<value name="VALUE">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_indexOf" id="texts_indexOf">' +
-      '<value name="VALUE">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="FIND">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">world</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_charAt" id="texts_charAt">' +
-      '<value name="WHERE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="VALUE">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_getSubstring" id="texts_getSubstring">' +
-      '<value name="STRING">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="AT1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="AT2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_changeCase" id="texts_changeCase">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_trim" id="texts_trim">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"> hello, world!  </field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_println" id="texts_println">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_print" id="texts_print">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    /*
+  '<block type="texts_length" id="texts_length">' +
+  '<value name="VALUE">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_isEmpty" id="texts_isEmpty">' +
+  '<value name="VALUE">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_indexOf" id="texts_indexOf">' +
+  '<value name="VALUE">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="FIND">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">world</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_charAt" id="texts_charAt">' +
+  '<value name="WHERE">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">0</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="VALUE">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_getSubstring" id="texts_getSubstring">' +
+  '<value name="STRING">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="AT1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">0</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="AT2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">0</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_changeCase" id="texts_changeCase">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_trim" id="texts_trim">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"> hello, world!  </field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_println" id="texts_println">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_print" id="texts_print">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  /*
     '<block type="texts_prompt" id="texts_prompt">' +
       '<value name="TEXT">' +
         '<shadow type="text">' +
@@ -415,43 +416,43 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     */
-    '<block type="texts_count" id="texts_count">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="SUB">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">world</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_replace" id="texts_replace">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="FROM">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="TO">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">world</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="texts_reverse" id="texts_reverse">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-  '</category>' +
+  '<block type="texts_count" id="texts_count">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="SUB">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">world</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_replace" id="texts_replace">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="FROM">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="TO">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">world</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="texts_reverse" id="texts_reverse">' +
+  '<value name="TEXT">' +
+  '<shadow type="text">' +
+  '<field name="TEXT">hello, world!</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  "</category>" +
   /*
   '<category name="%{BKY_CATEGORY_SENSING}" id="sensing" colour="#4CBFE6" secondaryColour="#2E8EB8">' +
     '<block type="sensing_touchingobject" id="sensing_touchingobject">' +
@@ -498,155 +499,155 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="sensing_dayssince2000" id="sensing_dayssince2000"></block>' +
   '</category>' +
   */
-  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#40BF4A" secondaryColour="#389438">' +
-    '<block type="operator_add" id="operator_add">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_subtract" id="operator_subtract">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_multiply" id="operator_multiply">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_divide" id="operator_divide">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_random" id="operator_random">' +
-      '<value name="FROM">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="TO">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_lt" id="operator_lt">' +
-      '<value name="OPERAND1">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="OPERAND2">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_equals" id="operator_equals">' +
-      '<value name="OPERAND1">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="OPERAND2">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_gt" id="operator_gt">' +
-      '<value name="OPERAND1">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="OPERAND2">' +
-        '<shadow type="text">' +
-          '<field name="TEXT"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_and" id="operator_and"></block>' +
-    '<block type="operator_or" id="operator_or"></block>' +
-    '<block type="operator_not" id="operator_not">' +
-      '<value name="OPERAND">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_mod" id="operator_mod">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_round" id="operator_round">' +
-      '<value name="NUM">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_mathop" id="operator_mathop">' +
-      '<value name="NUM">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="operator_pow" id="operator_pow">' +
-      '<value name="NUM1">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="NUM2">' +
-        '<shadow type="math_integer">' +
-          '<field name="NUM"></field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
-  '</category>' +
+  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#b17aff" secondaryColour="#b17aff">' +
+  '<block type="operator_add" id="operator_add">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_subtract" id="operator_subtract">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_multiply" id="operator_multiply">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_divide" id="operator_divide">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_random" id="operator_random">' +
+  '<value name="FROM">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">1</field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="TO">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM">10</field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_lt" id="operator_lt">' +
+  '<value name="OPERAND1">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="OPERAND2">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_equals" id="operator_equals">' +
+  '<value name="OPERAND1">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="OPERAND2">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_gt" id="operator_gt">' +
+  '<value name="OPERAND1">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="OPERAND2">' +
+  '<shadow type="text">' +
+  '<field name="TEXT"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_and" id="operator_and"></block>' +
+  '<block type="operator_or" id="operator_or"></block>' +
+  '<block type="operator_not" id="operator_not">' +
+  '<value name="OPERAND">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_mod" id="operator_mod">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_round" id="operator_round">' +
+  '<value name="NUM">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_mathop" id="operator_mathop">' +
+  '<value name="NUM">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  '<block type="operator_pow" id="operator_pow">' +
+  '<value name="NUM1">' +
+  '<shadow type="math_number">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  '<value name="NUM2">' +
+  '<shadow type="math_integer">' +
+  '<field name="NUM"></field>' +
+  "</shadow>" +
+  "</value>" +
+  "</block>" +
+  "</category>" +
+  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#a6b6fe" secondaryColour="#a6b6fe" custom="VARIABLE">' +
+  "</category>" +
+  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#5eacff" secondaryColour="#5eacff" custom="PROCEDURE">' +
+  "</category>" +
   /*
   '<category name="Extensions" id="extensions" colour="#FF6680" secondaryColour="#FF4D6A" ' +
     'iconURI="../media/extensions/wedo2-block-icon.svg" showStatusButton="true">' +
@@ -669,4 +670,4 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="extension_music_reporter" id="extension_music_reporter"></block>' +
   '</category>' +
   */
-  '</xml>';
+  "</xml>";
