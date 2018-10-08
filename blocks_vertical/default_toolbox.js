@@ -278,7 +278,7 @@ Blockly.Blocks.defaultToolbox =
     '</block>' +
   '</category>' +
   */
-  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#ffcafd" secondaryColour="#ffcafd">' +
+  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#98AFC9" secondaryColour="#5D6C7A">' +
   '<block type="control_wait" id="control_wait">' +
   '<value name="DURATION">' +
   '<shadow type="math_positive_number">' +
@@ -307,7 +307,7 @@ Blockly.Blocks.defaultToolbox =
   // '</block>' +
   // '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
   "</category>" +
-  '<category name="Texts" id="texts_extensions" colour="#e196e3" secondaryColour="#e196e3">' +
+  '<category name="Texts" id="texts_extensions" colour="#00316B" secondaryColour="#001B35">' +
   '<block type="texts_text" id="texts_text">' +
   '<value name="VAR">' +
   '<shadow type="math_number">' +
@@ -499,7 +499,7 @@ Blockly.Blocks.defaultToolbox =
     '<block type="sensing_dayssince2000" id="sensing_dayssince2000"></block>' +
   '</category>' +
   */
-  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#b17aff" secondaryColour="#b17aff">' +
+  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#7C6AC0" secondaryColour="#544C84">' +
   '<block type="operator_add" id="operator_add">' +
   '<value name="NUM1">' +
   '<shadow type="math_number">' +
@@ -644,9 +644,9 @@ Blockly.Blocks.defaultToolbox =
   "</value>" +
   "</block>" +
   "</category>" +
-  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#a6b6fe" secondaryColour="#a6b6fe" custom="VARIABLE">' +
+  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#a6b6fe" secondaryColour="#8E9BD9" custom="VARIABLE">' +
   "</category>" +
-  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#5eacff" secondaryColour="#5eacff" custom="PROCEDURE">' +
+  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#3194FF" secondaryColour="#226CAF" custom="PROCEDURE">' +
   "</category>" +
   /*
   '<category name="Extensions" id="extensions" colour="#FF6680" secondaryColour="#FF4D6A" ' +

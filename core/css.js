@@ -131,6 +131,7 @@ Blockly.Css.CONTENT = [
   "overflow: hidden;" /* IE overflows by default. */,
   "position: absolute;",
   "display: block;",
+  "border-radius: 50px;",
   "}",
 
   /* Necessary to position the drag surface */
@@ -457,7 +458,7 @@ Blockly.Css.CONTENT = [
   "}",
 
   ".blocklyText {",
-  "fill: #000;",
+  "fill: #fff;",
   'font-family: "Youth", Helvetica, sans-serif;',
   "font-size: 12pt;",
   "font-weight: 500;",
@@ -717,7 +718,6 @@ Blockly.Css.CONTENT = [
 
   ".blocklyMainBackground {",
   "stroke-width: 1;",
-  "stroke: #c6c6c6;" /* Equates to #ddd due to border being off-pixel. */,
   "}",
 
   ".blocklyMutatorBackground {",

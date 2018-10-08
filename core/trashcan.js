@@ -22,14 +22,13 @@
  * @fileoverview Object representing a trash can icon.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+"use strict";
 
-goog.provide('Blockly.Trashcan');
+goog.provide("Blockly.Trashcan");
 
-goog.require('goog.dom');
-goog.require('goog.math');
-goog.require('goog.math.Rect');
-
+goog.require("goog.dom");
+goog.require("goog.math");
+goog.require("goog.math.Rect");
 
 /**
  * Class for a trash can.
@@ -163,50 +162,56 @@ Blockly.Trashcan.prototype.createDom = function() {
         clip-path="url(#blocklyTrashLidClipPath837493)"></image>
   </g>
   */
-  this.svgGroup_ = Blockly.utils.createSvgElement('g',
-      {'class': 'blocklyTrash'}, null);
+  this.svgGroup_ = Blockly.utils.createSvgElement("g", { class: "blocklyTrash" }, null);
   var clip;
   var rnd = String(Math.random()).substring(2);
-  clip = Blockly.utils.createSvgElement('clipPath',
-      {'id': 'blocklyTrashBodyClipPath' + rnd},
-      this.svgGroup_);
-  Blockly.utils.createSvgElement('rect',
+  clip = Blockly.utils.createSvgElement("clipPath", { id: "blocklyTrashBodyClipPath" + rnd }, this.svgGroup_);
+  Blockly.utils.createSvgElement(
+      "rect",
       {
-        'width': this.WIDTH_,
-        'height': this.BODY_HEIGHT_,
-        'y': this.LID_HEIGHT_
+        width: this.WIDTH_,
+        height: this.BODY_HEIGHT_,
+        y: this.LID_HEIGHT_
       },
-      clip);
-  var body = Blockly.utils.createSvgElement('image',
+      clip
+  );
+  var body = Blockly.utils.createSvgElement(
+      "image",
       {
-        'width': Blockly.SPRITE.width,
-        'x': -this.SPRITE_LEFT_,
-        'height': Blockly.SPRITE.height,
-        'y': -this.SPRITE_TOP_,
-        'clip-path': 'url(#blocklyTrashBodyClipPath' + rnd + ')'
+        width: Blockly.SPRITE.width,
+        x: -this.SPRITE_LEFT_,
+        height: Blockly.SPRITE.height,
+        y: -this.SPRITE_TOP_,
+        "clip-path": "url(#blocklyTrashBodyClipPath" + rnd + ")"
       },
-      this.svgGroup_);
-  body.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
-      this.workspace_.options.pathToMedia + Blockly.SPRITE.url);
+      this.svgGroup_
+  );
+  body.setAttributeNS(
+      "http://www.w3.org/1999/xlink",
+      "xlink:href",
+      this.workspace_.options.pathToMedia + Blockly.SPRITE.url
+  );
 
-  clip = Blockly.utils.createSvgElement('clipPath',
-      {'id': 'blocklyTrashLidClipPath' + rnd},
-      this.svgGroup_);
-  Blockly.utils.createSvgElement('rect',
-      {'width': this.WIDTH_, 'height': this.LID_HEIGHT_}, clip);
-  this.svgLid_ = Blockly.utils.createSvgElement('image',
+  clip = Blockly.utils.createSvgElement("clipPath", { id: "blocklyTrashLidClipPath" + rnd }, this.svgGroup_);
+  Blockly.utils.createSvgElement("rect", { width: this.WIDTH_, height: this.LID_HEIGHT_ }, clip);
+  this.svgLid_ = Blockly.utils.createSvgElement(
+      "image",
       {
-        'width': Blockly.SPRITE.width,
-        'x': -this.SPRITE_LEFT_,
-        'height': Blockly.SPRITE.height,
-        'y': -this.SPRITE_TOP_,
-        'clip-path': 'url(#blocklyTrashLidClipPath' + rnd + ')'
+        width: Blockly.SPRITE.width,
+        x: -this.SPRITE_LEFT_,
+        height: Blockly.SPRITE.height,
+        y: -this.SPRITE_TOP_,
+        "clip-path": "url(#blocklyTrashLidClipPath" + rnd + ")"
       },
-      this.svgGroup_);
-  this.svgLid_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
-      this.workspace_.options.pathToMedia + Blockly.SPRITE.url);
+      this.svgGroup_
+  );
+  this.svgLid_.setAttributeNS(
+      "http://www.w3.org/1999/xlink",
+      "xlink:href",
+      this.workspace_.options.pathToMedia + Blockly.SPRITE.url
+  );
 
-  Blockly.bindEventWithChecks_(this.svgGroup_, 'mouseup', this, this.click);
+  Blockly.bindEventWithChecks_(this.svgGroup_, "mouseup", this, this.click);
   this.animateLid_();
   return this.svgGroup_;
 };
@@ -254,21 +259,22 @@ Blockly.Trashcan.prototype.position = function() {
       }
     }
   } else {
-    this.left_ = metrics.viewWidth + metrics.absoluteLeft -
-        this.WIDTH_ - this.MARGIN_SIDE_ - Blockly.Scrollbar.scrollbarThickness;
+    this.left_ =
+      metrics.viewWidth + metrics.absoluteLeft - this.WIDTH_ - this.MARGIN_SIDE_ - Blockly.Scrollbar.scrollbarThickness;
 
     if (metrics.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT) {
       this.left_ -= metrics.flyoutWidth;
     }
   }
-  this.top_ = metrics.viewHeight + metrics.absoluteTop -
-      (this.BODY_HEIGHT_ + this.LID_HEIGHT_) - this.bottom_;
+  this.top_ = metrics.viewHeight + metrics.absoluteTop - (this.BODY_HEIGHT_ + this.LID_HEIGHT_) - this.bottom_;
 
   if (metrics.toolboxPosition == Blockly.TOOLBOX_AT_BOTTOM) {
     this.top_ -= metrics.flyoutHeight;
   }
-  this.svgGroup_.setAttribute('transform',
-      'translate(' + this.left_ + ',' + this.top_ + ')');
+  this.svgGroup_.setAttribute(
+      "transform",
+      "translate(" + (metrics.viewWidth + metrics.absoluteLeft) / 2 + "," + this.top_ + ")"
+  );
 };
 
 /**
@@ -286,7 +292,6 @@ Blockly.Trashcan.prototype.getClientRect = function() {
   var width = this.WIDTH_ + 2 * this.MARGIN_HOTSPOT_;
   var height = this.LID_HEIGHT_ + this.BODY_HEIGHT_ + 2 * this.MARGIN_HOTSPOT_;
   return new goog.math.Rect(left, top, width, height);
-
 };
 
 /**
@@ -311,10 +316,16 @@ Blockly.Trashcan.prototype.animateLid_ = function() {
   this.lidOpen_ += this.isOpen ? 0.2 : -0.2;
   this.lidOpen_ = goog.math.clamp(this.lidOpen_, 0, 1);
   var lidAngle = this.lidOpen_ * 45;
-  this.svgLid_.setAttribute('transform', 'rotate(' +
-      (this.workspace_.RTL ? -lidAngle : lidAngle) + ',' +
-      (this.workspace_.RTL ? 4 : this.WIDTH_ - 4) + ',' +
-      (this.LID_HEIGHT_ - 2) + ')');
+  this.svgLid_.setAttribute(
+      "transform",
+      "rotate(" +
+      (this.workspace_.RTL ? -lidAngle : lidAngle) +
+      "," +
+      (this.workspace_.RTL ? 4 : this.WIDTH_ - 4) +
+      "," +
+      (this.LID_HEIGHT_ - 2) +
+      ")"
+  );
   var opacity = goog.math.lerp(0.4, 0.8, this.lidOpen_);
   this.svgGroup_.style.opacity = opacity;
   if (this.lidOpen_ > 0 && this.lidOpen_ < 1) {
@@ -339,5 +350,5 @@ Blockly.Trashcan.prototype.click = function() {
   if (Math.sqrt(dx * dx + dy * dy) > Blockly.DRAG_RADIUS) {
     return;
   }
-  console.log('TODO: Inspect trash.');
+  console.log("TODO: Inspect trash.");
 };
