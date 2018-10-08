@@ -29,254 +29,6 @@ goog.require('Blockly.Blocks');
  */
 
 Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: none">' +
-  /*
-  '<category name="%{BKY_CATEGORY_MOTION}" id="motion" colour="#4C97FF" secondaryColour="#3373CC">' +
-    '<block type="motion_movesteps" id="motion_movesteps">' +
-      '<value name="STEPS">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_turnright" id="motion_turnright">' +
-      '<value name="DEGREES">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">15</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_turnleft" id="motion_turnleft">' +
-      '<value name="DEGREES">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">15</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_pointindirection" id="motion_pointindirection">' +
-      '<value name="DIRECTION">' +
-        '<shadow type="math_angle">' +
-          '<field name="NUM">90</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_pointtowards" id="motion_pointtowards">' +
-      '<value name="TOWARDS">' +
-        '<shadow type="motion_pointtowards_menu">' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_gotoxy" id="motion_gotoxy">' +
-      '<value name="X">' +
-        '<shadow id="movex" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="Y">' +
-        '<shadow id="movey" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_goto" id="motion_goto">' +
-      '<value name="TO">' +
-        '<shadow type="motion_goto_menu">' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_glidesecstoxy" id="motion_glidesecstoxy">' +
-      '<value name="SECS">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="X">' +
-        '<shadow id="glidex" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="Y">' +
-        '<shadow id="glidey" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_glideto" id="motion_glideto">' +
-      '<value name="SECS">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="TO">' +
-        '<shadow type="motion_glideto_menu">' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_changexby" id="motion_changexby">' +
-      '<value name="DX">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_setx" id="motion_setx">' +
-      '<value name="X">' +
-        '<shadow id="setx" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_changeyby" id="motion_changeyby">' +
-      '<value name="DY">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_sety" id="motion_sety">' +
-      '<value name="Y">' +
-        '<shadow id="sety" type="math_number">' +
-          '<field name="NUM">0</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="motion_ifonedgebounce" id="motion_ifonedgebounce"></block>' +
-    '<block type="motion_setrotationstyle" id="motion_setrotationstyle"></block>' +
-    '<block type="motion_xposition" id="motion_xposition"></block>' +
-    '<block type="motion_yposition" id="motion_yposition"></block>' +
-    '<block type="motion_direction" id="motion_direction"></block>' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_LOOKS}" id="looks" colour="#9966FF" secondaryColour="#774DCB">' +
-    '<block type="looks_show" id="looks_show"></block>' +
-    '<block type="looks_hide" id="looks_hide"></block>' +
-    '<block type="looks_switchcostumeto" id="looks_switchcostumeto">' +
-      '<value name="COSTUME">' +
-        '<shadow type="looks_costume"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_nextcostume" id="looks_nextcostume"></block>' +
-    '<block type="looks_nextbackdrop" id="looks_nextbackdrop"></block>' +
-    '<block type="looks_switchbackdropto" id="looks_switchbackdropto">' +
-      '<value name="BACKDROP">' +
-        '<shadow type="looks_backdrops"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_switchbackdroptoandwait" id="looks_switchbackdroptoandwait">' +
-      '<value name="BACKDROP">' +
-        '<shadow type="looks_backdrops"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_changeeffectby" id="looks_changeeffectby">' +
-      '<value name="CHANGE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_seteffectto" id="looks_seteffectto">' +
-      '<value name="VALUE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_cleargraphiceffects" id="looks_cleargraphiceffects"></block>' +
-    '<block type="looks_changesizeby" id="looks_changesizeby">' +
-      '<value name="CHANGE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_setsizeto" id="looks_setsizeto">' +
-      '<value name="SIZE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">100</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_gotofrontback" id="looks_gotofrontback"></block>' +
-    '<block type="looks_goforwardbackwardlayers" id="looks_goforwardbackwardlayers">' +
-      '<value name="NUM">' +
-        '<shadow type="math_integer">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="looks_costumenumbername" id="looks_costumenumbername"></block>' +
-    '<block type="looks_backdropnumbername" id="looks_backdropnumbername"></block>' +
-    '<block type="looks_size" id="looks_size"></block>' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_SOUND}" id="sound" colour="#D65CD6" secondaryColour="#BD42BD">' +
-    '<block type="sound_play" id="sound_play">' +
-      '<value name="SOUND_MENU">' +
-        '<shadow type="sound_sounds_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_playuntildone" id="sound_playuntildone">' +
-      '<value name="SOUND_MENU">' +
-        '<shadow type="sound_sounds_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_stopallsounds" id="sound_stopallsounds"></block>' +
-    '<block type="sound_changeeffectby" id="sound_changeeffectby">' +
-      '<value name="VALUE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_seteffectto" id="sound_seteffectto">' +
-      '<value name="VALUE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">100</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_cleareffects" id="sound_cleareffects"></block>' +
-    '<block type="sound_changevolumeby" id="sound_changevolumeby">' +
-      '<value name="VOLUME">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">-10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_setvolumeto" id="sound_setvolumeto">' +
-      '<value name="VOLUME">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">100</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="sound_volume" id="sound_volume"></block>' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="#FFD500" secondaryColour="#CC9900">' +
-    '<block type="event_whenflagclicked" id="event_whenflagclicked"></block>' +
-    '<block type="event_whenkeypressed" id="event_whenkeypressed">' +
-    '</block>' +
-    '<block type="event_whenthisspriteclicked" id="event_whenthisspriteclicked"></block>' +
-    '<block type="event_whenbackdropswitchesto" id="event_whenbackdropswitchesto">' +
-    '</block>' +
-    '<block type="event_whengreaterthan" id="event_whengreaterthan">' +
-      '<value name="VALUE">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="event_whenbroadcastreceived" id="event_whenbroadcastreceived">' +
-    '</block>' +
-    '<block type="event_broadcast" id="event_broadcast">' +
-      '<value name="BROADCAST_INPUT">' +
-        '<shadow type="event_broadcast_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="event_broadcastandwait" id="event_broadcastandwait">' +
-      '<value name="BROADCAST_INPUT">' +
-        '<shadow type="event_broadcast_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-  '</category>' +
-  */
   '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#FFAB19" secondaryColour="#CF8B17">' +
     '<block type="control_wait" id="control_wait">' +
       '<value name="DURATION">' +
@@ -298,19 +50,19 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="control_wait_until" id="control_wait_until"></block>' +
     '<block type="control_repeat_until" id="control_repeat_until"></block>' +
     '<block type="control_stop" id="control_stop"></block>' +
-    // '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
-    // '<block type="control_create_clone_of" id="control_create_clone_of">' +
-    //   '<value name="CLONE_OPTION">' +
-    //     '<shadow type="control_create_clone_of_menu"></shadow>' +
-    //   '</value>' +
-    // '</block>' +
-    // '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
   '</category>' +
   '<category name="Texts" id="texts_extensions" colour="#ABABAB" secondaryColour="#8B8B8B">' +
     '<block type="texts_text" id="texts_text">' +
       '<value name="VAR">' +
         '<shadow type="math_number">' +
           '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="texts_int" id="texts_int">' +
+      '<value name="VAR">' +
+        '<shadow type="text">' +
+          '<field name="TEXT">0</field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
@@ -410,15 +162,6 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
-    /*
-    '<block type="texts_prompt" id="texts_prompt">' +
-      '<value name="TEXT">' +
-        '<shadow type="text">' +
-          '<field name="TEXT">hello, world!</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    */
     '<block type="texts_count" id="texts_count">' +
       '<value name="TEXT">' +
         '<shadow type="text">' +
@@ -621,26 +364,4 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
   '</category>' +
   '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
   '</category>' +
-  /*
-  '<category name="Extensions" id="extensions" colour="#FF6680" secondaryColour="#FF4D6A" ' +
-    'iconURI="../media/extensions/wedo2-block-icon.svg" showStatusButton="true">' +
-    '<block type="extension_pen_down" id="extension_pen_down"></block>' +
-    '<block type="extension_music_drum" id="extension_music_drum">' +
-      '<value name="NUMBER">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-      '</block>' +
-    '<block type="extension_wedo_motor" id="extension_wedo_motor"></block>' +
-    '<block type="extension_wedo_hat" id="extension_wedo_hat"></block>' +
-    '<block type="extension_wedo_boolean" id="extension_wedo_boolean"></block>' +
-    '<block type="extension_wedo_tilt_reporter" id="extension_wedo_reporter">' +
-      '<value name="TILT">' +
-        '<shadow type="extension_wedo_tilt_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="extension_music_reporter" id="extension_music_reporter"></block>' +
-  '</category>' +
-  */
   '</xml>';

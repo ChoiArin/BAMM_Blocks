@@ -27,6 +27,22 @@ Blockly.Blocks['texts_text'] = {
     });
   }
 };
+Blockly.Blocks['texts_int'] = {
+  init: function() {
+    this.jsonInit({
+      "type": "texts_int",
+      "message0": '%1 to inteager',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "VAR"
+        }
+      ],
+      category: Blockly.Categories.texts_extensions,
+      extensions: ["colours_texts_extensions", "output_number"]
+    });
+  }
+};
 
 Blockly.Blocks["texts_append"] = {
   /**
