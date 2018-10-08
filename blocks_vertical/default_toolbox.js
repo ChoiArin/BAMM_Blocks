@@ -587,6 +587,18 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    '<block type="operator_unequals" id="operator_unequals">' +
+      '<value name="OPERAND1">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"></field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="OPERAND2">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
     '<block type="operator_gt" id="operator_gt">' +
       '<value name="OPERAND1">' +
         '<shadow type="text">' +

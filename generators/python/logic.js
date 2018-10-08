@@ -145,6 +145,15 @@ Blockly.Python['operator_equals'] = function(block) {
   return [code, order];
 };
 
+Blockly.Python['operator_unequals'] = function(block) {
+  // Comparison operator.
+  var order = Blockly.Python.ORDER_RELATIONAL;
+  var argument0 = Blockly.Python.valueToCode(block, 'OPERAND1', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'OPERAND2', order) || '0';
+  var code = argument0 + ' ' + '!=' + ' ' + argument1;
+  return [code, order];
+};
+
 Blockly.Python['operator_gt'] = function(block) {
   // Comparison operator.
   var order = Blockly.Python.ORDER_RELATIONAL;

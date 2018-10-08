@@ -196,6 +196,30 @@ Blockly.Blocks['operator_equals'] = {
   }
 };
 
+Blockly.Blocks['operator_unequals'] = {
+  /**
+   * Block for unequals comparator.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": '%1 != %2',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "OPERAND1"
+        },
+        {
+          "type": "input_value",
+          "name": "OPERAND2"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
+
 Blockly.Blocks['operator_gt'] = {
   /**
    * Block for greater than comparator.
