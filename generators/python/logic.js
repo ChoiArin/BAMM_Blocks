@@ -127,6 +127,16 @@ Blockly.Python['logic_ternary'] = function(block) {
   return [code, Blockly.Python.ORDER_CONDITIONAL];
 };
 
+Blockly.Python['operator_true'] = function(block) {
+  var code = 'True';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python['operator_false'] = function(block) {
+  var code = 'False';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
 Blockly.Python['operator_lt'] = function(block) {
   // Comparison operator.
   var order = Blockly.Python.ORDER_RELATIONAL;
