@@ -241,6 +241,27 @@ Blockly.Blocks["texts_trim"] = {
   }
 };
 
+Blockly.Blocks["texts_input"] = {
+  /**
+   * Block for input.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      type: "texts_input",
+      message0: "input to %1",
+      args0: [
+        {
+          type: "input_value",
+          name: "TEXT"
+        }
+      ],
+      category: Blockly.Categories.texts_extensions,
+      extensions: ["colours_texts_extensions", "shape_statement"]
+    });
+  }
+};
+
 Blockly.Blocks["texts_println"] = {
   /**
    * Block for texts print.

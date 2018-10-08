@@ -196,6 +196,13 @@ Blockly.Python['texts_trim'] = function(block) {
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Python['texts_input'] = function(block) {
+  // Input statement.
+  var val = Blockly.Python.valueToCode(block, 'TEXT',
+      Blockly.Python.ORDER_NONE) || '\'\'';
+  return val + ' = input()\n';
+};
+
 Blockly.Python['texts_println'] = function(block) {
   // Print statement.
   var msg = Blockly.Python.valueToCode(block, 'TEXT',

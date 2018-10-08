@@ -66,7 +66,7 @@ Blockly.DataCategory = function(workspace) {
   // Now add list variables to the flyout
   Blockly.DataCategory.addCreateButton(xmlList, workspace, 'LIST');
   
-  Blockly.DataCategory.addRange(xmlList);
+  //Blockly.DataCategory.addRange(xmlList);
 
   variableModelList = workspace.getVariablesOfType(Blockly.LIST_VARIABLE_TYPE);
   variableModelList.sort(Blockly.VariableModel.compareByName);

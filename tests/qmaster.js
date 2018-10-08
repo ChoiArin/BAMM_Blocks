@@ -313,7 +313,6 @@ flour['연산자'] = {
     {
       isNum: true,
       prNum: 2,
-      isFunc: true,
       outer: "두 수의 합, 차, 곱, 몫, 나머지를 구하고",
       inside: ''
     }
