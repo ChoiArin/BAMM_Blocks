@@ -808,7 +808,10 @@ Blockly.Flyout.prototype.createBlock = function(originalBlock) {
   this.targetWorkspace_.setResizesEnabled(false);
   try {
     newBlock = this.placeNewBlock_(originalBlock);
-    if(funcVar !== null) {
+    if(funcVar !== null && newBlock.category_ === 'func') {
+      console.log(blockName);
+      console.log(newBlock.id);
+      console.log(newBlock);
       Blockly.Blocks.setFuncUniqueId(blockName, newBlock.id);
       Blockly.Blocks.updateFuncUniqueDef(newBlock.id, Blockly.Python.PASS);
     }
