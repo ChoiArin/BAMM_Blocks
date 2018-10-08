@@ -29,7 +29,7 @@ goog.require("Blockly.Blocks");
  */
 
 Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: none">' +
-  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#FFAB19" secondaryColour="#CF8B17">' +
+  '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#FFCAFD" secondaryColour="#FFCAFD">' +
     '<block type="control_wait" id="control_wait">' +
       '<value name="DURATION">' +
         '<shadow type="math_positive_number">' +
@@ -51,7 +51,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="control_repeat_until" id="control_repeat_until"></block>' +
     '<block type="control_stop" id="control_stop"></block>' +
   '</category>' +
-  '<category name="Texts" id="texts_extensions" colour="#ABABAB" secondaryColour="#8B8B8B">' +
+  '<category name="Texts" id="texts_extensions" colour="#E196E3" secondaryColour="#E196E3">' +
     '<block type="texts_text" id="texts_text">' +
       '<value name="VAR">' +
         '<shadow type="math_number">' +
@@ -199,7 +199,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
   '</category>' +
-  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#40BF4A" secondaryColour="#389438">' +
+  '<category name="%{BKY_CATEGORY_OPERATORS}" id="operators" colour="#B17AFF" secondaryColour="#B17AFF">' +
     '<block type="operator_true" id="operator_true">' +
     '</block>' +
     '<block type="operator_false" id="operator_false">' +
@@ -360,8 +360,8 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
   '</category>' +
-  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
+  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#A6B6FE" secondaryColour="#A6B6FE" custom="VARIABLE">' +
   '</category>' +
-  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
+  '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#5EACFF" secondaryColour="#5EACFF" custom="PROCEDURE">' +
   '</category>' +
   '</xml>';
