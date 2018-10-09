@@ -27,6 +27,25 @@ goog.require('Blockly.Colours');
 goog.require('Blockly.constants');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 
+Blockly.Blocks['operator_true'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": 'True',
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
+
+Blockly.Blocks['operator_false'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": 'False',
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
 
 Blockly.Blocks['operator_add'] = {
   /**
@@ -180,6 +199,30 @@ Blockly.Blocks['operator_equals'] = {
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.OPERATORS_EQUALS,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "OPERAND1"
+        },
+        {
+          "type": "input_value",
+          "name": "OPERAND2"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
+
+Blockly.Blocks['operator_unequals'] = {
+  /**
+   * Block for unequals comparator.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": '%1 != %2',
       "args0": [
         {
           "type": "input_value",
