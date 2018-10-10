@@ -1,7 +1,12 @@
+'use strict';
+goog.provide('Blockly.Python.revert');
+
+goog.require('Blockly.Python');
+
 var input, inputLen, nc;
 var runtimeParamName = "__pythonRuntime";
 
-function code2XML(inpt) {
+Blockly.Python['revert'] = function code2XML(inpt) {
   var AST = code2AST(String(inpt));
   var code = codeAnalyze(AST);
 
