@@ -207,13 +207,19 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'Literal':
-      code.head += '<shadow type="';
-      code.head += elem.shadowType ? elem.shadowType : 'text';
-      code.head += '"><field name="';
-      code.head += elem.fieldName ? elem.fieldName : 'TEXT';
-      code.head += '">';
-      code.head += elem.value === null ? '' : elem.value;
-      code.head += '</field></shadow>';
+      if(elem.value === true) {
+        code.head += '<block type="operator_true"></block>';
+      } else if(elem.value === false) {
+        code.head += '<block type="operator_false"></block>';
+      } else {
+        code.head += '<shadow type="';
+        code.head += elem.shadowType ? elem.shadowType : 'text';
+        code.head += '"><field name="';
+        code.head += elem.fieldName ? elem.fieldName : 'TEXT';
+        code.head += '">';
+        code.head += elem.value === null ? '' : elem.value;
+        code.head += '</field></shadow>';
+      }
       break;
 
     case 'LogicalExpression':

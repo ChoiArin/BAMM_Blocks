@@ -31,7 +31,9 @@ goog.require('Blockly.Python');
 
 Blockly.Python['text'] = function(block) {
   // Text value.
-  var code = Blockly.Python.quote_(block.getFieldValue('TEXT'));
+  var code = block.getFieldValue('TEXT');
+  if(isNaN(parseFloat(code)) || !isFinite(code))
+    code = Blockly.Python.quote_(code);
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
@@ -39,6 +41,13 @@ Blockly.Python['texts_text'] = function(block) {
   var element0 = Blockly.Python.valueToCode(block, 'VAR',
           Blockly.Python.ORDER_NONE) || '\'\'';
   var code = 'str(' + element0 + ')';
+  return [code, Blockly.Python.ORDER_ADDITIVE];
+};
+
+Blockly.Python['texts_int'] = function(block) {
+  var element0 = Blockly.Python.valueToCode(block, 'VAR',
+          Blockly.Python.ORDER_NONE) || '\'\'';
+  var code = 'int(' + element0 + ')';
   return [code, Blockly.Python.ORDER_ADDITIVE];
 };
 
@@ -194,6 +203,13 @@ Blockly.Python['texts_trim'] = function(block) {
       Blockly.Python.ORDER_MEMBER) || '\'\'';
   var code = text + operator;
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Python['texts_input'] = function(block) {
+  // Input statement.
+  var val = Blockly.Python.valueToCode(block, 'TEXT',
+      Blockly.Python.ORDER_NONE) || '\'\'';
+  return val + ' = input()\n';
 };
 
 Blockly.Python['texts_println'] = function(block) {
