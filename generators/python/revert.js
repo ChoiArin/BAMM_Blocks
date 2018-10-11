@@ -329,7 +329,7 @@ function codeBlockAnalyze(varList, code, elem) {
   }
 }
 
-revertFunc = {};
+let revertFunc = {};
 
 revertFunc['_pySlice'] = function(varList, code, object, args) {
   if(args.length === 3) {
@@ -676,7 +676,7 @@ var _posNegNot = { prec: 11, prefix: true, beforeExpr: true };
 var _bitwiseNOT = { prec: 11, prefix: true, beforeExpr: true };
 var _exponentiation = { prec: 12, beforeExpr: true };
 
-tokTypes = {bracketL: _bracketL, bracketR: _bracketR, braceL: _braceL, braceR: _braceR,
+let tokTypes = {bracketL: _bracketL, bracketR: _bracketR, braceL: _braceL, braceR: _braceR,
                     parenL: _parenL, parenR: _parenR, comma: _comma, semi: _semi, colon: _colon,
                     dot: _dot, question: _question, slash: _slash, eq: _eq, name: _name, eof: _eof,
                     num: _num, regexp: _regexp, string: _string,
