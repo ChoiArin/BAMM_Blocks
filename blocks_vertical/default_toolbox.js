@@ -30,6 +30,7 @@ goog.require("Blockly.Blocks");
 
 Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: none">' +
   '<category name="%{BKY_CATEGORY_CONTROL}" id="control" colour="#98AFC9" secondaryColour="#5D6C7A">' +
+    /*
     '<block type="control_wait" id="control_wait">' +
       '<value name="DURATION">' +
         '<shadow type="math_positive_number">' +
@@ -37,6 +38,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    */
     '<block type="control_repeat" id="control_repeat">' +
       '<value name="TIMES">' +
         '<shadow type="math_whole_number">' +
