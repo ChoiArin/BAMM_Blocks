@@ -61,6 +61,7 @@ function codeBlockAnalyze(varList, code, elem) {
 
     case 'BinaryExpression':
       var type = false;
+      let logical = false;
       code.head += '<block type="'
       if(elem.operator === '+') {
         code.head += 'operator_add';
