@@ -556,6 +556,7 @@ Blockly.Python['math_random_float'] = function(block) {
 };
 
 Blockly.Python['operator_pow'] = function(block) {
+  Blockly.Python.definitions_['import_math'] = 'import math';
   var argument0 = Blockly.Python.valueToCode(block, 'NUM1',
       Blockly.Python.ORDER_NONE) || '0';
   var argument1 = Blockly.Python.valueToCode(block, 'NUM2',
