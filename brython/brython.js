@@ -4487,7 +4487,7 @@ if($B.debug >=2){if(module==locals_id){console.log('module ' + module + ' transl
 $B.compile_time +=t1 - t0
 return root}
 var brython;
-Blockly.Brython['brython']=$B.parser.brython=function(options){
+Blockly.Brython['brython']=brython=$B.parser.brython=function(options){
 if($B.meta_path===undefined){$B.meta_path=[]}
 $B.$options={}
 if(options===undefined){options={'debug': 0}}

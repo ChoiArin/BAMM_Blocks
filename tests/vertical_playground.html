@@ -49,7 +49,7 @@
 
     function startAll() {
       start();
-      brython();
+      //brython();
     }
 
     function start() {
@@ -605,27 +605,18 @@
     <br>
     <input type="button" value="Run Python" id="runPython">
     <!-- PSB_TEST_CODE -->
-    <script type="text/python">
-      import sys
+    <script>
+      function callBrython(cbCode) {
+        eval(__BRYTHON__.py2js(cbCode,'__main__', '__main__').to_js())
+      }
 
-      from browser import document as doc, window, alert
+      let code = "\
+a = 2\n\
+b = 3\n\
+print(a + b)\
+";
 
-      class cOutput:
-        def write(self, data):
-            doc["console"].value += str(data)
-        def flush(self):
-            pass
-            
-      sys.stdout = cOutput()
-      sys.stderr = cOutput()
-
-      def run(*args):
-        doc["console"].value = ''
-        src = doc["importExport"].value
-        ns = {'__name__':'__main__'}
-        exec(src, ns)
-
-      doc["runPython"].bind("click", run)
+      callBrython(code);
     </script>
 
     <!-- <textarea id="zone"></textarea><button id="mybutton">click !</button> -->
