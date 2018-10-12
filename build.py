@@ -234,6 +234,7 @@ class Gen_compressed(threading.Thread):
     self.gen_generator("php")
     self.gen_generator("dart")
     self.gen_generator("lua")
+    self.gen_brython()
 
   def gen_core(self, vertical):
     if vertical:
@@ -319,6 +320,22 @@ class Gen_compressed(threading.Thread):
 
     # Remove Blockly.Generator to be compatible with Blockly.
     remove = "var Blockly={Generator:{}};"
+    self.do_compile(params, target_filename, filenames, remove)
+
+  def gen_brython(self):
+    target_filename = "brython_compressed.js"
+
+    params = [
+      ("compilation_level", "SIMPLE"),
+    ]
+
+    params.append(("js_file", os.path.join("build", "gen_generator.js")))
+    filenames = glob.glob(os.path.join("brython", "**", "*.js"))
+    filenames.sort()
+    for filename in filenames:
+      params.append(("js_file", filename))
+
+    remove = "var Blockly={Brython:{}};"
     self.do_compile(params, target_filename, filenames, remove)
 
   def do_compile(self, params, target_filename, filenames, remove):
