@@ -24,7 +24,9 @@
   },
   "dependencies": {
     "brython": "^3.6.2",
+    "cryptiles": "^4.1.2",
     "exports-loader": "0.6.3",
+    "express": "^4.16.3",
     "hoek": "^5.0.3",
     "imports-loader": "0.6.5"
   },
