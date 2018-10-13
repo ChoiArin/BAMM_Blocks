@@ -605,6 +605,27 @@
     <input type="button" value="Run Python" id="runPython" onclick="callBrythonWrapper()">
     <!-- PSB_TEST_CODE -->
     <script>
+      function callBrython(cbCode, cbTimeout) {
+        isDone = false;
+
+        let cc = __BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js();
+        let ccArr = cc.split("\n");
+        cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
+        cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
+        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return; isDone=true;}());';
+        cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
+        eval(cc);
+        
+        if(!isDone)
+          return false;
+          
+        return true;
+      }
+
+      function callBrythonWrapper() {
+        let code = document.getElementById("importExport").value;
+        callBrython(code, 2000);
+      }
     </script>
 
     <!-- <textarea id="zone"></textarea><button id="mybutton">click !</button> -->
