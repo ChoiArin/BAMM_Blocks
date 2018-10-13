@@ -402,7 +402,7 @@ revertFunc['rfind'] = function(varList, code, object, args) {
 };
 
 revertFunc['print'] = function(varList, code, args) {
-  if(args.length > 2 && args[1].name === "endl" && args[2].value === "")
+  if(args.length > 2 && args[1].name === "end" && args[2].value === "")
     code.head += '<block type="texts_print">';
   else
     code.head += '<block type="texts_println">';
