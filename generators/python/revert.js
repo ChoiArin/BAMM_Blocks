@@ -54,7 +54,6 @@ function codeBlockAnalyze(varList, code, elem) {
         if(elem.right.type === 'CallExpression' && elem.right.callee.name === 'input') {
           code.head += '<block type="texts_input">';
           elem.left.valueName = 'TEXT';
-          elem.left.isMoveable = true;
           codeBlockAnalyze(varList, code, elem.left);
         } else {
           code.head += '<block type="data_setvariableto">'
@@ -177,8 +176,7 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'Identifier':
-    if(elem.isMoveable)
-      code.head += '<block type="data_variable">';
+      code.head += elem.isStatic ? '' : '<block type="data_variable">';
       code.head += '<field name="';
       if(varList[elem.name] == 'var')
         code.head += 'VARIABLE';
@@ -189,8 +187,7 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '">';
       code.head += elem.name;
       code.head += '</field>';
-      if(elem.isMoveable)
-        code.head += '</block>';
+      code.head += elem.isStatic ? '' : '</block>';
       break;
 
     case 'IfStatement':
@@ -314,10 +311,10 @@ function codeBlockAnalyze(varList, code, elem) {
         if(elem.init.type === 'CallExpression' && elem.init.callee.name === 'input') {
           code.head += '<block type="texts_input">';
           elem.id.valueName = 'TEXT';
-          elem.id.isMoveable = true;
           codeBlockAnalyze(varList, code, elem.id);
         } else {
           code.head += '<block type="data_setvariableto">';
+          elem.id.isStatic = true;
           codeBlockAnalyze(varList, code, elem.id);
           elem.init.valueName = 'VALUE';
           codeBlockAnalyze(varList, code, elem.init);
