@@ -172,7 +172,6 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '<statement name="SUBSTACK">';
       codeBlockAnalyze(varList, code, elem.body);
       code.head += '</statement></block>';
-      //code.tail[code.tail.length - 1] = '</statement></block>' + code.tail[code.tail.length - 1];
       break;
 
     case 'Identifier':
