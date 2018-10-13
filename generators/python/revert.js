@@ -50,10 +50,18 @@ function codeBlockAnalyze(varList, code, elem) {
           code.head += '</block>';
         }
       } else { //Variable
-        code.head += '<block type="data_setvariableto">'
-        elem.right.valueName = 'VALUE';
-        codeBlockAnalyze(varList, code, elem.left);
-        codeBlockAnalyze(varList, code, elem.right);
+        varList[elem.left.name] = 'var';
+        if(elem.right.type === 'CallExpression' && elem.right.callee.name === 'input') {
+          code.head += '<block type="texts_input">';
+          elem.left.valueName = 'TEXT';
+          elem.left.isMoveable = true;
+          codeBlockAnalyze(varList, code, elem.left);
+        } else {
+          code.head += '<block type="data_setvariableto">'
+          codeBlockAnalyze(varList, code, elem.left);
+          elem.right.valueName = 'VALUE';
+          codeBlockAnalyze(varList, code, elem.right);
+        }
       }
       code.head += '<next>';
       code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
@@ -169,6 +177,8 @@ function codeBlockAnalyze(varList, code, elem) {
       break;
 
     case 'Identifier':
+    if(elem.isMoveable)
+      code.head += '<block type="data_variable">';
       code.head += '<field name="';
       if(varList[elem.name] == 'var')
         code.head += 'VARIABLE';
@@ -179,6 +189,8 @@ function codeBlockAnalyze(varList, code, elem) {
       code.head += '">';
       code.head += elem.name;
       code.head += '</field>';
+      if(elem.isMoveable)
+        code.head += '</block>';
       break;
 
     case 'IfStatement':
@@ -294,15 +306,22 @@ function codeBlockAnalyze(varList, code, elem) {
 
     case 'VariableDeclarator':
       if(elem.init.type === 'NewExpression') { //List
-        varList[elem.id] = 'list';
+        varList[elem.id.name] = 'list';
         code.head += '<block type="data_clearlist">';
         codeBlockAnalyze(varList, code, elem.id);
-      } else if(elem.init.type == 'Identifier') { //Variable
-        varList[elem.id] = 'var';
-        code.head += '<block type="data_setvariableto">';
-        elem.init.valueName = 'VALUE';
-        codeBlockAnalyze(varList, code, elem.id);
-        codeBlockAnalyze(varList, code, elem.init);
+      } else if(elem.id.type === 'Identifier') { //Variable
+        varList[elem.id.name] = 'var';
+        if(elem.init.type === 'CallExpression' && elem.init.callee.name === 'input') {
+          code.head += '<block type="texts_input">';
+          elem.id.valueName = 'TEXT';
+          elem.id.isMoveable = true;
+          codeBlockAnalyze(varList, code, elem.id);
+        } else {
+          code.head += '<block type="data_setvariableto">';
+          codeBlockAnalyze(varList, code, elem.id);
+          elem.init.valueName = 'VALUE';
+          codeBlockAnalyze(varList, code, elem.init);
+        }
       }
       code.head += '<next>';
       code.tail[code.tail.length - 1] = '</next></block>' + code.tail[code.tail.length - 1];
@@ -399,6 +418,10 @@ revertFunc['rfind'] = function(varList, code, object, args) {
   object.fieldName = 'TEXT';
   codeBlockAnalyze(varList, code, object);
   code.head += '</block>';
+};
+
+revertFunc['input'] = function(varList, code, args) {
+  console.log(code);
 };
 
 revertFunc['print'] = function(varList, code, args) {

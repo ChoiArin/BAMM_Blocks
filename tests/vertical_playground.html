@@ -162,7 +162,6 @@
       var t0 = performance.now();
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       var t1 = performance.now();
-      console.log("code2block: " + (t1 - t0) + "ms.")
       taChange();
     }
     // PSB_Brython을 사용하여 결과 코드를 변환
@@ -603,20 +602,9 @@
     <input type="button" value="To Python" onclick="toCode('Python')"> &nbsp;
     <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
     <br>
-    <input type="button" value="Run Python" id="runPython">
+    <input type="button" value="Run Python" id="runPython" onclick="callBrythonWrapper()">
     <!-- PSB_TEST_CODE -->
     <script>
-      function callBrython(cbCode) {
-        eval(__BRYTHON__.py2js(cbCode,'__main__', '__main__').to_js())
-      }
-
-      let code = "\
-a = 2\n\
-b = 3\n\
-print(a + b)\
-";
-
-      callBrython(code);
     </script>
 
     <!-- <textarea id="zone"></textarea><button id="mybutton">click !</button> -->
