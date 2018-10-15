@@ -128,7 +128,7 @@
         logFlyoutEvents(Boolean(state));
       }
     }
-    
+
     function getToolboxElement() {
       var match = location.search.match(/toolbox=([^&]+)/);
       return document.getElementById('toolbox-' + (match ? match[1] : 'categories'));
@@ -182,7 +182,7 @@
     //     var textNode_t = document.createTextNode(`from browser import document, alert
     //     def echo(event):
     //       alert(document["zone"].value)
-  
+
     //     document["mybutton"].bind("click", echo)`);
     //     textToPython_t.type = "text/python";
     //     console.log(textToPython_t);
@@ -607,7 +607,7 @@
     <!-- PSB_TEST_CODE -->
     <script>
       function callBrython(cbCode) {
-        eval(__BRYTHON__.py2js(cbCode,'__main__', '__main__').to_js())
+        eval(__BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js())
       }
 
       let code = "\
