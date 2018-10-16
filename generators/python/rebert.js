@@ -1,12 +1,12 @@
 'use strict';
-goog.provide('Blockly.Python.revert');
+goog.provide('Blockly.Python.rebert');
 
 goog.require('Blockly.Python');
 
 var input, inputLen, nc;
 var runtimeParamName = "__pythonRuntime";
 
-Blockly.Python['revert'] = function code2XML(inpt) {
+Blockly.Python['rebert'] = function code2XML(inpt) {
   var AST = code2AST(String(inpt));
   var code = codeAnalyze(AST);
 
@@ -110,14 +110,22 @@ function codeBlockAnalyze(varList, code, elem) {
         && elem.body[1].consequent.type === 'BlockStatement'
         && elem.body[1].consequent.body[0].type === 'ForStatement') {
         code.head += '<block type="control_repeat">';
-        code.head += '<value name="TIMES"><shadow type="math_whole_number"><field name="NUM">';
-        var repeatNum = 0;
-        if(elem.body[0].declarations[0].init.arguments.length == 1)
-          repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
-        else
-          repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
-        code.head += repeatNum;
-        code.head += '</field></shadow></value>';
+        code.head += '<value name="TIMES">';
+        code.head += '<shadow type="math_whole_number"><field name="NUM">';
+        if(elem.body[0].declarations[0].init.arguments[0].arguments[0].type === 'Identifier'){
+          elem.body[0].declarations[0].init.arguments[0].arguments[0].isStatic = true;
+          codeBlockAnalyze(varList, code, elem.body[0].declarations[0].init.arguments[0].arguments[0]);
+        } else {
+          var repeatNum = 0;
+          if(elem.body[0].declarations[0].init.arguments.length == 1)
+            repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
+          else
+            repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
+          code.head += repeatNum;
+        }
+        
+        code.head += '</field></shadow>';
+        code.head += '</value>';
         code.head += '<statement name="SUBSTACK">';
         elem.body[1].consequent.body[0].body.body.splice(0, 1);
         elem.body[1].consequent.body[0].body.body.splice(elem.body[1].consequent.body[0].body.body.length, 1);
@@ -312,6 +320,8 @@ function codeBlockAnalyze(varList, code, elem) {
           elem.id.valueName = 'TEXT';
           codeBlockAnalyze(varList, code, elem.id);
         } else {
+          if(elem.init.value === null)
+            break;
           code.head += '<block type="data_setvariableto">';
           elem.id.isStatic = true;
           codeBlockAnalyze(varList, code, elem.id);
