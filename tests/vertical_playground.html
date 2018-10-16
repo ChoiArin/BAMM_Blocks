@@ -584,11 +584,10 @@
         isDone = false;
 
         let cc = __BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js();
-        let ccArr = cc.split("\n");
         cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
         cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
-        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > '+cbTimeout+') return; isDone=true;}());';
         cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
+        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > '+cbTimeout+') return; isDone=true;}());';
         brython();
         eval(cc);
         

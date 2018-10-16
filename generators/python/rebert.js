@@ -53,8 +53,10 @@ function codeBlockAnalyze(varList, code, elem) {
         varList[elem.left.name] = 'var';
         if(elem.right.type === 'CallExpression' && elem.right.callee.name === 'input') {
           code.head += '<block type="texts_input">';
-          elem.left.valueName = 'TEXT';
-          codeBlockAnalyze(varList, code, elem.left);
+          if(elem.left) {
+            elem.left.valueName = 'TEXT';
+            codeBlockAnalyze(varList, code, elem.left);
+          }
         } else {
           code.head += '<block type="data_setvariableto">'
           codeBlockAnalyze(varList, code, elem.left);
@@ -426,10 +428,6 @@ revertFunc['rfind'] = function(varList, code, object, args) {
   code.head += '</block>';
 };
 
-revertFunc['input'] = function(varList, code, args) {
-  console.log(code);
-};
-
 revertFunc['print'] = function(varList, code, args) {
   if(args.length > 2 && args[1].name === "end" && args[2].value === "")
     code.head += '<block type="texts_print">';
@@ -479,6 +477,59 @@ revertFunc['round'] = function(varList, code, args) {
   args[0].fieldName = 'NUM';
   codeBlockAnalyze(varList, code, args[0]);
   code.head += '</block>';
+};
+
+function mathOperate(operator, varList, code, args) {
+  var type = false;
+  let logical = false;
+  code.head += '<block type="'
+  if(operator === '+') {
+    code.head += 'operator_add';
+  } else if(operator === '-') {
+    code.head += 'operator_subtract';
+  } else if(operator === '*') {
+    code.head += 'operator_multiply';
+  } else if(operator === '/') {
+    code.head += 'operator_divide';
+  } else if(operator === '%') {
+    code.head += 'operator_mod';
+  } else if(operator === '==') {
+    code.head += 'operator_equals';
+    logical = true;
+  } else if(operator === '>') {
+    code.head += 'operator_gt';
+    logical = true;
+  } else if(operator === '<') {
+    code.head += 'operator_lt';
+    logical = true;
+  }
+  code.head += '">';
+  if(logical) {
+    args[0].valueName = 'OPERAND1';
+    args[1].valueName = 'OPERAND2';
+  } else {
+    args[0].valueName = 'NUM1';
+    args[1].valueName = 'NUM2';
+  }
+  codeBlockAnalyze(varList, code, args[0]);
+  codeBlockAnalyze(varList, code, args[1]);
+  code.head += '</block>';
+}
+
+revertFunc['add'] = function(varList, code, args) {
+  mathOperate('+', varList, code, args);
+};
+
+revertFunc['subtract'] = function(varList, code, args) {
+  mathOperate('-', varList, code, args);
+};
+
+revertFunc['multiply'] = function(varList, code, args) {
+  mathOperate('*', varList, code, args);
+};
+
+revertFunc['divide'] = function(varList, code, args) {
+  mathOperate('/', varList, code, args);
 };
 
 function mathop(operator, varList, code, args) {
