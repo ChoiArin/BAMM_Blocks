@@ -589,6 +589,7 @@
         cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
         cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > '+cbTimeout+') return; isDone=true;}());';
         cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
+        brython();
         eval(cc);
         
         if(!isDone)
