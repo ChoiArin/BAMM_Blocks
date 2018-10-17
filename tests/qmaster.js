@@ -1,21 +1,20 @@
-let qTypes = ['입출력', '연산자', '조건문', '반복문'];
+let MAX_LEVEL = 10; //각 분야별 최대 레벨
+let qTypes = ['입출력', '연산자', '조건문', '반복문']; //분야, html 출력용
 
+//분야별 입력부 생성
 function buildPlz() {
   let htmlStr = '<div>';
-  htmlStr += '<select id="type">';
   let subHtmlStr = '';
   qTypes.forEach((e, i) => {
-    htmlStr += '<option value="' + i + '">' + e + '</option>';
     subHtmlStr += e + '<select name="level">';
-    for(let j = 0; j < 3; j++)
-      subHtmlStr += '<option value="' + j + '">' + (['下', '中', '上'])[j] + '</option>';
+    for(let j = 0; j < MAX_LEVEL; j++)
+      subHtmlStr += '<option value="' + j + '">' + j + '</option>';
     subHtmlStr += '</select>';
   });
-  htmlStr += '</select>';
   htmlStr += subHtmlStr;
   htmlStr += '<button onclick="getQuiz()">문제 문제</button>';
   htmlStr += '</div>';
-  htmlStr += '<p id="quiz"></p>'
+  htmlStr += '<div id="quiz"></div>'
 
   let div = document.createElement("div");
   div.innerHTML = htmlStr;
@@ -23,623 +22,563 @@ function buildPlz() {
     document.body.insertBefore(div.children[0], document.getElementById("quiz"));
   
   level = document.getElementsByName("level");
-  for(let i = 0; i < 3; i++)
-    level[i].selectedIndex = getRndNUM(3);
+  for(let i = 0; i < qTypes.length; i++)
+    level[i].selectedIndex = getRndNUM(MAX_LEVEL);
 
   getQuiz();
 }
 
+//분야별 레벨 가져와서 퀴즈 생성 및 출력
 function getQuiz() {
-  let type = document.getElementById("type").value;
   let level = document.getElementsByName("level");
 
   let levels = [];
   for(let i = 0; i < level.length; i++)
     levels.push(level[i].value);
-  let quiz = makeQuiz(type, levels);
+  let quiz = makeQuiz(levels);
 
-  document.getElementById("quiz").innerHTML = quiz;
+  document.getElementById("quiz").innerText = quiz.desc.replace(/\n  /g, "\n　　") + "\n" + quiz.code.replace(/\n  /g, "\n　　");
 }
 
-function getRndStr(usedStr) {
-  let RND_STR = ['hello', 'world', 'bbam', 'software maestro swm', 'You will never know until you try', 'There is no royal road to learning', 'If you do not walk today, you will have to run tomorrow', 'coding', 'program', 'programing', 'apple', '김영하', '박성범', '한호민', '홍길동', '도롱뇽', '고질라', '원숭이'];
-  if(usedStr !== undefined) {
-    if(typeof(usedStr) === Array) {
-      usedStr.forEach(e => {
-        let idx = usedStr.indexOf(e);
-        if(idx)
-          RND_STR.splice(idx, 1);
-      });
-    } else {
-      let idx = usedStr.indexOf(usedStr);
-      if(idx)
-        RND_STR.splice(idx, 1);
-    }
-  }
-  return RND_STR[Math.floor(Math.random() * RND_STR.length)];
-}
-
-function getRndFormat() {
-  let RND_FORMAT = [
-    {
-      format: 'hh:mm:ss',
-      sep: ':'
-    },
-    {
-      format: 'xxxxxx-xxxxxxx',
-      sep: '-'
-    },
-    {
-      format: 'yyyy.mm.dd',
-      sep: '.'
-    },
-    {
-      format: 'dd-mm-yyyy',
-      sep: '-'
-    }
-  ];
-  return RND_FORMAT[Math.floor(Math.random() * RND_FORMAT.length)];
-}
-
-function getRndNUM(max, min) {
-  if(min === undefined)
-    min = 0;
+//랜덤 숫자
+function getRndNUM(max, min = 0) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function getRndBool(opt) {
-  if(opt === undefined || opt === 1)
-    opt = 2;
-  if(opt < 1)
-    return false;
-  return Math.floor(Math.random() * opt) === 0 ? false : true;
+//랜덤 이름
+function getRndName(usedName) {
+  return getRndStr(['철수', '영희', '민수', '호민이', '성범이', '영하'], usedName);
 }
 
-function makeQuiz(type, levels) {
-  //dog foot bird foot
-  return baguette[qTypes[type]](levels);
+//랜덤 문자열
+function getRndResult(usedResult) {
+  return getRndStr(['Berry', 'Banana', 'Monkey', 'Dog', 'Sky', 'Box', 'Can', 'Summer', 'Winter'], usedResult);
 }
 
-function isSame(arr, arr2) {
-  if(arr.length !== arr.length)
-    return false;
-
-  for(let i = 0; i < arr.length; i++)
-    if(arr[i] !== arr2[i])
-      return false;
-  
-  return true;
+//랜덤 문자열
+function getRndStr(rndStr, usedStr) {
+  let RND_STR = rndStr;
+  if(usedStr !== undefined) {
+    if(typeof usedStr === 'array') {
+      for(let i = 0; i < usedStr.length; i++) {
+        var usedIdx = RND_STR.indexOf(usedStr[i]);
+        if (usedIdx > -1)
+          RND_STR.splice(usedIdx, 1);
+      }
+    } else {
+      var usedIdx = RND_STR.indexOf(usedStr);
+      if (usedIdx > -1)
+        RND_STR.splice(usedIdx, 1);
+    }
+  }
+  return RND_STR[getRndNUM(RND_STR.length - 1)];
 }
 
-function shuffle(arr) {
-  if(typeof(arr) !== Array || arr.length <= 1)
-    return arr;
-
-  let tmpArr = [];
-  for(let i = 0; i < arr.length; i++)
-    tmpArr.push(arr[i]);
-
-  let t, x;
-  do {
-    for(let i = 0; i < arr.length; i++) {
-        x = arr[i];
-        arr[i] = arr[t];
-        arr[t] = x;
-    }
-  } while(isSame(tmpArr, arr));
-  return arr;
+//임계값 형식
+function convertBin(inputLevel, threshold) {
+  return inputLevel < threshold ? 0 : 1;
 }
 
-//#region flour
-let flour = {};
+//가파른 경사
+function convertPow(inputLevel, maxOutput) {
+  let ratio = maxOutput / Math.pow(MAX_LEVEL, 2);
+  return Math.round(Math.pow(inputLevel, 2) * ratio);
+}
 
-flour['입출력'] = {
-  0: [
-    {
-      outer: '그대로 출력해보자',
-      inside: ''
-    }
-  ],
-  1: [
-    {
-      isPlural: true,
-      outer: '한 줄에 하나씩',
-      inside: ''
-    },
-    {
-      isStr: true,
-      outer: '영문 소문자를 대문자로 바꾸어',
-      inside: ''
-    },
-    {
-      isStr: true,
-      outer: '영문 대문자를 소문자로 바꾸어',
-      inside: ''
-    },
-    {
-      outer: '작은 따옴표로 감싸서',
-      inside: ''
-    },
-    {
-      outer: '큰 따옴표로 감싸서',
-      inside: ''
-    }
-  ],
-  2: [
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let formatSet = getRndFormat();
-        let formatSetArr = formatSet.format.split(formatSet.sep);
-        return '"' + formatSet.format + '" 형태라고 가정하고 ' + formatSetArr[getRndNUM(formatSetArr.length)] + ' 부분만'
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let formatSet = getRndFormat();
-        return '"' + formatSet.format + '" 형태라고 가정하고 ' + formatSet.sep + '를 빼고'
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let formatSet = getRndFormat();
-        let formatSetArr = formatSet.format.split(formatSet.sep);
-        return '"' + formatSet.format + '" 형태라고 가정하고 "' + shuffle(formatSetArr).join(formatSet.sep) + '" 형태로 바꾸어'
-      },
-      inside: ''
-    }
-  ]
-};
+//완만한 경사
+function convertHill(inputLevel, maxOutput) {
+  let ratio = maxOutput / Math.log(MAX_LEVEL);
+  return Math.round(Math.log(inputLevel) * ratio);
+}
 
-flour['연산자'] = {
-  0: [
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "을 더하고";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "을 빼고";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "을 곱하고";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "으로 나누고";
-      },
-      inside: ''
-    }
-  ],
-  1: [
-    {
-      isNum: true,
-      isPlural: true,
-      outer: '모두 더하고',
-      inside: ''
-    },
-    {
-      isNum: true,
-      isPlural: true,
-      outer: '평균을 구하고',
-      inside: ''
-    },
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "으로 나눈 나머지를 구하고";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "으로 나눈 몫을 구하고";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "두 수의 합을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "두 수의 곱을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "첫번째 수에서 두번째 수를 뺀 값을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "두번째 수에서 첫번째 수를 뺀 값을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "첫번째 수를 두번째 수로 나눈 값을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "두번째 수를 첫번째 수로 나눈 값을 구하고",
-      inside: ''
-    },
-    {
-      isNum: true,
-      outer: '부호를 바꾸고',
-      inside: ''
-    }
-  ],
-  2: [
-    {
-      isNum: true,
-      outer: '그만큼 2를 거듭제곱한 값을 구하고',
-      inside: ''
-    },
-    {
-      isNum: true,
-      prNum: 2,
-      outer: "두 수의 합, 차, 곱, 몫, 나머지를 구하고",
-      inside: ''
-    }
-  ]
-};
+//퀴즈를 만들자
+function makeQuiz(levels) {
+  let quiz = { //퀴즈 객체
+    code: '', desc: '', pre: '',
+    addCode: function(nCode){ this.code += this.pre + nCode + "\n"},
+    addDesc: function(nDesc, noNewLine = false){ this.desc += this.pre + nDesc + (noNewLine ? '' : "\n")},
+    addPre: function(mult = 1){for(let i = 0; i < mult; i++) this.pre += '  ';},
+    subPre: function(mult = 1){this.pre = this.pre.substring(2 * mult);}
+  };
 
-flour['조건문'] = {
-  0: [
-    {
-      isNum: true,
-      outer: '짝수만',
-      inside: ''
-    },
-    {
-      isNum: true,
-      outer: '홀수만',
-      inside: ''
-    },
-    {
-      isNum: true,
-      isOtho: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "보다 크면";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isOtho: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "보다 크면";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isPlural: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "보다 큰 값만";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isPlural: true,
-      isFunc: true,
-      outer: function() {
-        return getRndNUM(26) + "보다 작은 값만";
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        return "길이가 " + getRndNUM(6, 2) + "보다 긴 경우에만";
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        return "길이가 " + getRndNUM(6, 2) + "보다 짧은 경우에만";
-      },
-      inside: ''
-    }
-  ],
-  1: [
-    {
-      isNum: true,
-      isOtho: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(26 / 2);
-        let m = getRndNUM(n + 26, n + 1);
-        return n + "과 " + m + "사이면";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isOtho: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(26 / 2);
-        let m = getRndNUM(n + 26, n + 1);
-        return n + "과 " + m + "사이가 아니면";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isPlural: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(26 / 2);
-        let m = getRndNUM(n + 26, n + 1);
-        return n + "과 " + m + "사이인 것만";
-      },
-      inside: ''
-    },
-    {
-      isNum: true,
-      isPlural: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(26 / 2);
-        let m = getRndNUM(n + 26, n + 1);
-        return n + "과 " + m + "사이가 아닌 것만";
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(6, 2);
-        let m = getRndNUM(n + 6, n + 1);
-        return "길이가 " + n + "과 " + m + " 사이인 경우에만";
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let n = getRndNUM(6);
-        let m = getRndNUM(n + 6, n + 1);
-        return "길이가 " + n + "과 " + m + " 사이가 아닌 경우에만";
-      },
-      inside: ''
-    }
-  ],
-  2: [
-    {
-      isNum: true,
-      isFunc: true,
-      outer: function() {
-        let n = (getRndNUM(6, 1)) * 60;
-        let c = getRndNUM(6, 2);
-        let ret = '';
-        for(let i = 0; i < c; i++)
-          ret += (i * n / c) + "과 " + ((i + 1) * n / c) + "사이이면... ";
-        return ret;
-      },
-      inside: ''
-    },
-    {
-      isStr: true,
-      isFunc: true,
-      outer: function() {
-        let n = (getRndNUM(6, 1)) * 6;
-        let c = 3;
-        let ret = '길이가 ';
-        for(let i = 0; i < c; i++)
-          ret += (i * n / c) + "과 " + ((i + 1) * n / c) + "사이이면... ";
-        return ret;
-      },
-      inside: ''
-    }
-  ]
-};
+  //각 분야 별 레벨을 적당히 매핑
+  let ioLevel = convertBin(levels[0], 1);
+  let opLevel = convertHill(levels[1], 6);
+  let ifLevel = convertPow(levels[2], 3);
+  let frLevel = convertPow(levels[3], 2);
 
-flour['반복문'] = {
-  0: [
-    {
-      outer: '계속 반복해서',
-      inside: ''
-    }
-  ],
-  1: [
-    {
-      isFunc: true,
-      outer: function(){
-        return getRndNUM(11, 1) + "번 반복해서";
-      },
-      inside: ''
-    }
-  ],
-  2: [
-    {
-      isFunc: true,
-      outer: function(){
-        return getRndNUM(11, 1) + "번 반복해서";
-      },
-      inside: ''
-    }
-  ]
-};
+  let inVar = []; //입력 변수
+  if(frLevel === 2 && getRndNUM(3)) { //중첩 반복문을 사용할 수 있는 경우
+    let tName = getRndName();
+    switch (getRndNUM(2)) {
+      case 0:
+        quiz.addDesc(tName + '는 구구단을 공부하고 있습니다.');
+        quiz.addDesc(tName + '가 잘 공부할 수 있도록 구구단을 출력하는 프로그램을 만들어보세요.');
 
-function yeast(flourStr, level, inputParam, inputCount) {
-  let sacks = [];
-  for(let i = Math.max(level - 1, 0); i <= level; i++)
-    sacks = sacks.concat(flour[flourStr][i]);
-  
-  let sack = sacks.filter(function(e){
-    if((!e.isStr && !e.isNum) || (inputParam === 's' && e.isStr) || (inputParam === 'i' && e.isNum)) {
-      if(inputCount === 1)
-        return (!e.isOtho && !e.isPlural && !e.prNum) || e.isOtho || !e.isPlural || e.prNum === 1;
-      else if(inputCount === -1)
-        return (!e.isOtho && !e.isPlural && !e.prNum) || e.isPlural;
+        quiz.addCode('for x in range(9):');
+        quiz.addPre();
+        quiz.addCode('for y in range(9):');
+        quiz.addPre();
+        quiz.addCode('print(x + " * " + y + " = " + (x * y))');
+        quiz.subPre(2);
+
+        if(ioLevel) {
+          inVar.push('INVAR1');
+          quiz.addDesc('구구단을 모두 출력한 다음에는, 정수를 하나 입력받아 그 단만 출력하세요.');
+
+          quiz.addCode('for y in range(9):');
+          quiz.addPre();
+          quiz.addCode('print(INVAR1 + " * " + y + " = " + (INVAR1 * y))');
+        }
+        break;
+
+      case 1:
+        quiz.addDesc(tName + '는 오랜 수련 끝에 369 게임을 마스터했습니다.');
+        quiz.addDesc('주어진 조건에 따라 코딩해서 ' + tName + '에게 더 어려운 게임을 만들어주세요.');
+        quiz.addPre();
+        
+        if(ifLevel) {
+          quiz.addDesc('조건 1. ', true);
+          if(ioLevel) {
+            inVar.push('INVAR1');
+            quiz.addCode('for x in range(INVAR1):');
+            quiz.addDesc('정수를 하나 입력받고, 1부터 그 수까지 한 줄에 하나씩 출력하세요.');
+          } else {
+            quiz.addCode('for x in range(100):');
+            quiz.addDesc('1부터 100까지 수를 한 줄에 하나씩 출력하세요.');
+          }
+
+          let num1 = getRndNUM(9, 2);
+          let num2 = getRndNUM(9, 2);
+          quiz.addDesc('조건 2. 만약 출력할 수가 ' + num1 + '의 배수라면 그 줄에는 1부터 그 숫자 사이에 있는 ' + num2 + '의 배수들을 출력하세요.');
+          quiz.addDesc('예를 들어 ' + ((num2 * 5) + (num1 - (num2 * 5) % num1)) + '는 ' + num1 + '의 배수이므로, 그 줄에는 ', true);
+          for(let i = num2; i <= (num2 * 5) + (num1 - (num2 * 5) % num1); i += num2) {
+            if(i != num2)
+              quiz.addDesc(' ', true);
+            quiz.addDesc(i, true);
+          }
+          quiz.addDesc('를 출력해야합니다.');
+          quiz.addPre();
+          quiz.addCode('if x % ' + num1 + ' == 0:');
+          quiz.addPre();
+          quiz.addCode('for y in range(x):');
+          quiz.addPre();
+          quiz.addCode('if y % ' + num2 + ' == 0:');
+          quiz.addPre();
+          quiz.addCode('if y / num2 >= 2: print(" ", end="")');
+          quiz.addCode('print(y, end="")');
+          quiz.subPre(2);
+          quiz.addCode('print("")');
+        } else {
+          quiz.addDesc('조건: ', true);
+          if(ioLevel) {
+            inVar.push('INVAR1');
+            quiz.addCode('for x in range(INVAR1):');
+            quiz.addDesc('정수를 하나 입력받고, 1부터 그 수까지 순서대로 출력합니다.');
+          } else {
+            quiz.addCode('for x in range(10):');
+            quiz.addDesc('1부터 10까지 순서대로 출력합니다.');
+          }
+          quiz.addDesc('단, 각 줄에는 숫자 하나만 출력하는 것이 아니라, 그 수부터 1까지 거꾸로 한 줄에 출력해야 합니다.');
+          quiz.addDesc('예를 들어 두번째 줄이라면 2 1을, 다섯번째 줄이라면 5 4 3 2 1을 출력해야 합니다.');
+          quiz.addPre();
+          quiz.addCode('for y in range(x): print(y)');
+        }
+        break;
+
+      case 2:
+        quiz.addDesc(tName + '는 독특하게 생긴 주사위를 몇 개 가지고 있습니다.');
+        for(let i = 0; i < getRndNUM(3, 2); i++) {
+          inVar.push(getRndNUM(12, 4));
+          if(i > 0)
+            quiz.addDesc(', ', true);
+          quiz.addDesc((['첫번째', '두번째', '세번째'])[i] + ' 주사위는 1부터' + inVar[inVar.length - 1] + '까지', true);
+        }
+        quiz.addDesc('의 숫자가 나올 수 있습니다.');
+        
+        let bbb = [];
+        bbb.push('df');
+        if(opLevel)
+          bbb.push('op');
+        if(ifLevel)
+          bbb.push('if');
+
+        quiz.addCode('for x in range(' + inVar[0] + '):');
+        quiz.addCode('  for y in range(' + inVar[1] + '):');
+        if(inVar.length > 2)
+          quiz.addCode('    for z in range(' + inVar[2] + '):');
+
+        quiz.addDesc('이 주사위들을 던졌을 때 총 경우의 수는 ' + (inVar[0] * inVar[1] * (inVar.length > 2 ? inVar[2] : 1)) + '가지입니다.');
+        switch (bbb[getRndNUM(bbb.length - 1)]) {
+          case 'op':
+            quiz.addDesc('이 중 다음 조건을 만족하는 경우만 출력해보세요.');
+            quiz.addCode('조건: ');
+            break;
+
+          case 'if':
+            quiz.addDesc('이 중 다음 조건을 만족하는 경우만 출력해보세요.');
+            quiz.addDesc('조건 1. 첫번째 주사위의 숫자가 두번째 주사위의 숫자보다 ', true);
+            let cond = '';
+            if(getRndNUM(1)) {
+              quiz.addDesc('큽니다.');
+              cond += 'x > y';
+            } else {
+              quiz.addDesc('작습니다.');
+              cond += 'x < y';
+            }
+            cond += ' && ';
+            if(inVar.length > 2) {
+              quiz.addDesc('조건 2. 두번째 주사위의 숫자가 세번째 주사위의 숫자보다 ', true); 
+              if(getRndNUM(1)) {
+                quiz.addDesc('큽니다.');
+                cond += 'y > z';
+              } else {
+                quiz.addDesc('작습니다.');
+                cond += 'y < z';
+              }
+            } else {
+              quiz.addDesc('조건 2. 두번째 주사위의 숫자가 ', true); 
+              if(getRndNUM(1)) {
+                quiz.addDesc('짝수입니다.');
+                cond += 'y % 2 == 0';
+              } else {
+                quiz.addDesc('홀수입니다.');
+                cond += 'y % 2 == 1';
+              }
+            }
+            quiz.addPre(inVar.length);
+            quiz.addCode('if ' + cond + ':');
+            quiz.addPre();
+            quiz.addCode('print(x + " " + y' + (inVar.length > 2 ? '+ " " + z' : '') + ')');
+            break;
+          
+          default:
+            quiz.addDesc('주사위의 순서에 주의하여 모든 경우를 출력해보세요.');
+            quiz.addPre(inVar.length);
+            quiz.addCode('print(x + " " + y' + (inVar.length > 2 ? '+ " " + z' : '') + ')');
+            break;
+        }
+        break;
+    }
+  } else {
+    if(frLevel && getRndNUM(3)) { //반복문을 사용할 수 있는 경우
+      if(ioLevel) {
+        inVar.push('INVAR1');
+        quiz.addDesc('먼저 정수를 하나 입력 받으세요.');
+        quiz.addCode('for x in range(INVAR1):');
+        quiz.addDesc('입력된 수만큼 다음 과정을 반복하세요:');
+      } else {
+        inVar.push(getRndNUM(10, 1) * 10);
+        quiz.addCode('for x in range('+inVar[inVar.length - 1]+'):');
+        quiz.addDesc(inVar[inVar.length - 1] + '번 다음 과정을 반복하세요:');
+      }
+      quiz.addPre();
+    }
+
+    if(ifLevel >= 3 && getRndNUM(1)) { //중첩 조건문을 사용할 수 있는 경우
+      if(opLevel && getRndNUM(1)) {
+        inVar.push('INVAR2');
+        if(getRndNUM(1)) {
+          inVar.push('INVAR3');
+          quiz.addDesc('정수를 두 개 입력 받으세요.');
+        } else {
+          inVar.push(getRndNUM(9, 1));
+          quiz.addDesc('정수를 한 개 입력 받으세요.');
+        }
+        quiz.addDesc('입력된 정수' + (inVar.indexOf('INVAR3') >= 0 ? '들' : '') + '에 대해, 아래 조건에 따라 값을 출력하세요.');
+
+        let namedVar1 = inVar.indexOf('INVAR3') >= 0 ? '첫번째 수' : '그 수';
+        let namedVar2 = inVar.indexOf('INVAR3') >= 0 ? '두번째 수' : inVar[inVar.length - 1];
+
+        let usedOp = [];
+        let rndResult = [];
+        for(let i = 0; i < opLevel; i++) {
+          let rndOp;
+          do {
+            rndOp = getRndNUM(op_Baguette.length - 1);
+          } while (usedOp.indexOf(rndOp) >= 0);
+
+          rndResult.push(getRndResult(rndResult));
+          let rndCond = getRndNUM(condition_Baguette.length - 1);
+          quiz.addDesc('  ' + condition_Baguette[rndCond].descFunc(op_Baguette[rndOp].descFunc(namedVar1, namedVar2), getRndNUM(5)) + josa('"' + rndResult[i] + '"', '을', '를') + ' 출력하세요.');
+          quiz.addCode('if ' + sprintf(condition_Baguette[rndCond].line, 'INVAR2', inVar.indexOf('INVAR3') >= 0 ? 'INVAR3' : inVar[inVar.length - 1]) + 'print("' + rndResult[i] + '")');
+
+          usedOp.push(rndOp);
+        }
+      } else {
+        inVar.push('INVAR2');
+        quiz.addDesc('정수를 하나 입력 받으세요.');
+        quiz.addDesc('입력된 정수에 대해, 아래 조건에 따라 값을 출력해보세요.');
+
+        let rng = getRndNUM(5, 2) * 5;
+        let rndResult = [];
+        for(let i = 0; i < getRndNUM(5, 3); i++) {
+          rndResult.push(getRndResult(rndResult));
+          quiz.addDesc('  값이 ' + (i * rng) + '에서 ' + ((i + 1) * rng - 1) + '까지의 수 중 하나라면 ' + rndResult[i] + '을 출력합니다.');
+          quiz.addCode((i > 0 ? 'el' : '') + 'if INVAR2 >= ' + (i * rng) + ' && INVAR2 <= ' + ((i + 1) * rng - 1) + ': print("' + rndResult[i] + '")');
+        }
+        quiz.addDesc('만약 해당하는 경우가 없다면 "Out of Range"를 출력합니다.');
+        quiz.addCode('else: print("Out of Range")');
+      }
+    } else if(ifLevel) {
+      if(ioLevel) {
+        inVar.push('INVAR2');
+        if(getRndNUM(1)) {
+          inVar.push('INVAR3');
+          quiz.addDesc('정수를 두 개 입력 받으세요.');
+        } else {
+          inVar.push(getRndNUM(9, 1));
+          quiz.addDesc('정수를 한 개 입력 받으세요.');
+        }
+      } else {
+        inVar.push(getRndNUM(9, 1));
+        inVar.push(getRndNUM(9, 1));
+      }
+
+      let namedVar1 = inVar.indexOf('INVAR3') >= 0 ? '첫번째 수' : (inVar.indexOf('INVAR2') >= 0 ? '그 수' : inVar[inVar.length - 2]);
+      let namedVar2 = inVar.indexOf('INVAR3') >= 0 ? '두번째 수' : inVar[inVar.length - 1];
+
+      if(inVar.indexOf('INVAR2') >= 0)
+        quiz.addDesc('입력된 정수' + (inVar.indexOf('INVAR3') >= 0 ? '들' : '') + '에 대해, 아래 조건에 따라 값을 출력해보세요.');
       else
-        return (!e.isOtho && !e.isPlural && !e.prNum) || e.isPlural || e.prNum === inputCount;
-    }
-    return false;
-  });
+        quiz.addDesc(josa(namedVar1, '과', '와') + ' ' + josa(namedVar2, '을', '를') + '이용하여 주어진 조건에 따라 값을 출력해보세요.');
 
-  let sackChoice = sack[getRndNUM(sack.length)];
-  if(!sackChoice)
+      let usedOp = [];
+      let rndResult = [];
+      for(let i = 0; i < Math.max(opLevel, 1); i++) {
+        let rndOp;
+        do {
+          rndOp = getRndNUM(op_Baguette.length - 1);
+        } while (usedOp.indexOf(rndOp) >= 0);
+
+        rndResult.push(getRndResult(rndResult));
+        let rndCond = getRndNUM(condition_Baguette.length - 1);
+        if(inVar.indexOf('INVAR3') < 0 && inVar.indexOf('INVAR2') >= 0) {
+          inVar[inVar.length - 1] = getRndNUM(9, 1);
+          namedVar2 = inVar[inVar.length - 1];
+        }
+        let newCheckVal = getRndNUM(5);
+        quiz.addDesc('  ' + condition_Baguette[rndCond].descFunc(op_Baguette[rndOp].descFunc(namedVar1, namedVar2), newCheckVal), true);
+        quiz.addDesc(' ' + josa('"' + rndResult[i] + '"', '을', '를') + ' 출력하세요.');
+        quiz.addCode(
+          'if ' +
+          sprintf(
+            condition_Baguette[rndCond].line, 
+            sprintf(
+              op_Baguette[rndOp].line,
+              inVar.indexOf('INVAR2') >= 0 ? 'INVAR2' : namedVar1,
+              inVar.indexOf('INVAR3') >= 0 ? 'INVAR3' : namedVar2
+            ),
+            newCheckVal
+          ) +
+          'print("' + rndResult[i] + '")'
+        );
+
+        usedOp.push(rndOp);
+      }
+    } else {
+      if(ioLevel) {
+        inVar.push('INVAR2');
+        if(getRndNUM(1)) {
+          inVar.push('INVAR3');
+          quiz.addDesc('정수를 두 개 입력 받으세요.');
+        } else {
+          inVar.push(getRndNUM(9, 1));
+          quiz.addDesc('정수를 한 개 입력 받으세요.');
+        }
+      } else {
+        inVar.push(getRndNUM(9, 1));
+        inVar.push(getRndNUM(9, 1));
+      }
+
+      let namedVar1 = inVar.indexOf('INVAR3') >= 0 ? '첫번째 수' : (inVar.indexOf('INVAR2') >= 0 ? '그 수' : inVar[inVar.length - 2]);
+      let namedVar2 = inVar.indexOf('INVAR3') >= 0 ? '두번째 수' : inVar[inVar.length - 1];
+
+      if(inVar.indexOf('INVAR2') >= 0)
+        quiz.addDesc('입력된 정수' + (inVar.indexOf('INVAR3') >= 0 ? '들' : '') + '에 대해, ', true);
+      else
+        quiz.addDesc(josa(namedVar1, '과', '와') + ' ' + josa(namedVar2, '을', '를') + '이용하여 ', true);
+
+      let opCompressLevel = Math.round(opLevel / 2);
+      if(!opCompressLevel)
+        opCompressLevel = 1;
+
+      if(opCompressLevel == 1) {
+        let rndOp1 = getRndNUM(op_Baguette.length - 1);
+        quiz.addDesc(op_Baguette[rndOp1].descFunc(namedVar1, namedVar2) + '을 출력해보세요.');
+        quiz.addCode('print(' + sprintf(op_Baguette[rndOp1].line, inVar[inVar.length - 2], inVar[inVar.length - 1]) + ')');
+      } else if(opCompressLevel == 2) {
+        let rndOp1 = getRndNUM(op_Baguette.length - 1);
+        let rndOp2 = getRndNUM(op_Baguette.length - 1);
+        let rndNewVal = getRndNUM(2, 1) * 5;
+        quiz.addDesc(op_Baguette[rndOp2].descFunc(op_Baguette[rndOp1].descFunc(namedVar1, namedVar2), rndNewVal) + '을 출력해보세요.');
+        quiz.addCode('print(' + sprintf(op_Baguette[rndOp2].line, sprintf(op_Baguette[rndOp1].line, inVar[inVar.length - 2], inVar[inVar.length - 1]), rndNewVal) + ')');
+      } else {
+        let rndOp1 = getRndNUM(op_Baguette.length - 1);
+        let rndOp2 = getRndNUM(op_Baguette.length - 1);
+        let rndOp3 = getRndNUM(op_Baguette.length - 1);
+        quiz.addDesc(op_Baguette[rndOp3].descFunc2(op_Baguette[rndOp1].descFunc(namedVar1, namedVar2), op_Baguette[rndOp2].descFunc(namedVar1, namedVar2)) + ' 출력해보세요.');
+        quiz.addCode('print(' + sprintf(op_Baguette[rndOp3].line, sprintf(op_Baguette[rndOp1].line, inVar[inVar.length - 2], inVar[inVar.length - 1]), sprintf(op_Baguette[rndOp2].line, inVar[inVar.length - 2], inVar[inVar.length - 1])) + ')');
+      }
+    }
+  }
+
+  for(let i = inVar.length; i >= 0; i--)
+    if(typeof inVar[i] === 'string' || inVar[i] instanceof String)
+      quiz.code = inVar[i] + " = input()\n" + quiz.code;
+
+  return quiz;
+}
+
+//문자열 포맷 처리
+let sprintf = function(format) {
+  let args = Array.prototype.slice.call(arguments, 1);
+  return format.replace(/{(\d+)}/g, function(match, number) { 
+    return typeof args[number] != 'undefined' ? args[number] : match;
+  });
+};
+
+//조사를 붙여요
+function josa(inputString, josa1, josa2) {
+  if(inputString === '')
     return '';
 
-  let ret = '';
-  if(sackChoice.isFunc)
-    ret = sackChoice.outer();
-  else
-    ret = sackChoice.outer;
-
-  return ret;
-}
-//#endregion
-
-//#region baguette
-let baguette = {};
-
-baguette['입력'] = function(level, inputType) {
-  if(level === 0) {
-    switch (inputType) {
-      case 's':
-        return '주어진 문자열을 이용해';
-        break;
-
-      case 'i':
-        return '주어진 숫자를 이용해';
-        break;
-
-      case 'ss':
-        return '다음의 문자열들을 이용해';
-        break;
-
-      case 'is':
-        return '다음의 숫자들을 이용해';
-        break;
-
-      default:
-        if(inputType.length > 1)
-          return '다음 ' + inputType.substring(1) + '개의 ' + (inputType.substring(0, 1) === 's' ? '문자열을' : '숫자를') + " 이용해";
-        break;
-    }
-  } else {
-    switch (inputType) {
-      case 's':
-        return '문자열을 하나 입력 받아';
-        break;
-
-      case 'i':
-        return '숫자를 하나 입력 받아';
-        break;
-
-      case 'ss':
-        return '문자열들을 입력 받아';
-        break;
-
-      case 'is':
-        return '숫자들을 입력 받아';
-        break;
-
-      default:
-        if(inputType.length > 1)
-          return inputType.substring(1) + '개의 ' + (inputType.substring(0, 1) === 's' ? '문자열을' : '숫자를') + " 입력 받아";
-        break;
+  let tailString = '';
+  if(!(typeof inputString === 'number' && inputString % 1 === 0)) {
+    if(inputString[inputString.length - 1] === '"') {
+      tailString = '"';
+      inputString = inputString.substring(0, inputString.length - 1);
     }
   }
-}
 
-baguette['입출력'] = function(levels) {
-  let level_io = parseInt(levels[(qTypes.indexOf('입출력'))]);
-  let level_op = parseInt(levels[(qTypes.indexOf('연산자'))]);
-  let level_if = parseInt(levels[(qTypes.indexOf('조건문'))]);
-  let level_rp = parseInt(levels[(qTypes.indexOf('반복문'))]);
-  let ret = '';
-  let param = [];
-
-  let inputParam = 's';
-  let inputCount = getRndNUM(3, 1);
-  if(getRndBool())
-    inputParam = 'i';
-
-  if(getRndBool(level_rp)) {
-    if(getRndBool())
-      inputCount = getRndNUM(11, 1) * 10;
+  var code = 0;
+  if(typeof inputString === 'number' && inputString % 1 === 0) {
+    if(josa1 === '으')
+      code = ((['영', '으', '이', '삼', '사', '오', '육', '으', '으', '구', '십'])[inputString % 10]).charCodeAt(0) - 44032;
     else
-      inputCount = -1;
-  }
-
-  ret += baguette['입력'](level_io, inputParam + (inputCount === 1 ? '' : (inputCount < 0 ? 's' : Math.max(inputCount, 10)))) + " ";
-  
-  //for(let i = 0; i < (inputCount < 0 ? 5 : inputCount); i++)
-  //  param.push(inputParam === 's' ? getRndStr(param) : getRndNUM(100, -100));
-
-  if(level_io === 0) {
-    ret += yeast('입출력', level_io, inputParam, inputCount);
-    return ret + "<br><br>[주어진 입력]<br>" + param.join("<br>") + "<br><br>[출력 예제]<br>";
+      code = ((['영', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십'])[inputString % 10]).charCodeAt(0) - 44032;
+  } else if(inputString[inputString.length - 1].toLowerCase() >= 'a' && inputString[inputString.length - 1].toLowerCase() <= 'z') {
+    let snip = inputString[inputString.length - 1].toLowerCase();
+    if(snip === 'l' || snip === 'm' || snip === 'n' || snip === 'r')
+      code = 28;
   } else {
-    let cnType = getRndNUM(10);
-    if(cnType === 0)
-      ret += yeast('조건문', level_io, inputParam, inputCount) + ' ';
-    else if(cnType === 1)
-      ret += yeast('연산자', level_io, inputParam, inputCount) + ' ';
-    ret += yeast('입출력', level_io, inputParam, inputCount) + ' 출력해보자.';
+    code = inputString.charCodeAt(inputString.length - 1) - 44032;
   }
 
-  return ret + "<br><br>[입력 예제]<br>" + param.join("<br>") + "<br><br>[출력 예제]<br>";
+  inputString += tailString;
+  if (code >= 0 && code <= 11171)
+      inputString += code % 28 ? josa1 : josa2;
+
+  return inputString;
 }
 
-baguette['연산자'] = function(levels) {
-  return "Not yet.";
-}
+let op_Baguette = [
+  {
+    line: 'math.pow({0}, {1})',
+    desc: '{0} {1}만큼 제곱한 값',
+    desc2: '{0} {1}만큼 제곱해서',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '을', '를'), inArg2);
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, josa(inArg1, '을', '를'), inArg2);
+    }
+  },
+  {
+    line: '({0} + {1})',
+    desc: '{0}에 {1} 더한 값',
+    desc2: '{0}에 {1} 더해서',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, inArg1, josa(inArg2, '을', '를'));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, inArg1, josa(inArg2, '을', '를'));
+    },
+  },
+  {
+    line: '({0} - {1})',
+    desc: '{0}에서 {1} 뺀 값',
+    desc2: '{0}에서 {1} 빼서',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, inArg1, josa(inArg2, '을', '를'));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, inArg1, josa(inArg2, '을', '를'));
+    }
+  },
+  {
+    line: '({0} * {1})',
+    desc: '{0}에 {1} 곱한 값',
+    desc2: '{0}에 {1} 곱해서',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, inArg1, josa(inArg2, '을', '를'));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, inArg1, josa(inArg2, '을', '를'));
+    }
+  },
+  {
+    line: '({0} / {1})',
+    desc: '{0} {1}로 나눈 값',
+    desc2: '{0} {1}로 나눠서',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    }
+  },
+  {
+    line: 'math.floor({0} / {1})',
+    desc: '{0} {1}로 나눈 몫',
+    desc2: '{0} {1}로 나눠서 몫만',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    }
+  },
+  {
+    line: '{0} % {1}',
+    desc: '{0} {1}로 나눈 나머지 값',
+    desc2: '{0} {1}로 나눠서 나머지만',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    },
+    descFunc2: function(inArg1, inArg2) {
+      return sprintf(this.desc2, josa(inArg1, '을', '를'), josa(inArg2, '으', ''));
+    }
+  }
+];
 
-baguette['조건문'] = function(levels) {
-  return "Not yet.";
-}
-
-baguette['반복문'] = function(levels) {
-  return "Not yet.";
-}
-//#endregion
+let condition_Baguette = [
+  {
+    line: '{0} < {1}:',
+    desc: '{0} {1}보다 작다면',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '이', '가'), inArg2);
+    }
+  },
+  {
+    line: '{0} > {1}:',
+    desc: '{0} {1}보다 크다면',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '이', '가'), inArg2);
+    }
+  },
+  {
+    line: '{0} == {1}:',
+    desc: '{0} {1}면',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '이', '가'), josa(inArg2, '이', '라'));
+    }
+  },
+  {
+    line: '{0} != {1}:',
+    desc: '{0} {1} 아니라면',
+    descFunc: function(inArg1, inArg2) {
+      return sprintf(this.desc, josa(inArg1, '이', '가'), josa(inArg2, '이', '가'));
+    }
+  }
+];
