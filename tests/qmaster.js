@@ -3,7 +3,7 @@ let qTypes = ['입출력', '연산자', '조건문', '반복문']; //분야, htm
 
 //분야별 입력부 생성
 function buildPlz() {
-  let htmlStr = '<div>';
+  let htmlStr = '<div style="margin-bottom: 10px;">';
   let subHtmlStr = '';
   qTypes.forEach((e, i) => {
     subHtmlStr += e + '<select name="level">';
@@ -270,7 +270,7 @@ function makeQuiz(levels) {
       } else {
         inVar.push(getRndNUM(10, 1) * 10);
         quiz.addCode('for x in range('+inVar[inVar.length - 1]+'):');
-        quiz.addDesc(inVar[inVar.length - 1] + '번 다음 과정을 반복하세요:');
+        quiz.addDesc('다음 과정을 ' + inVar[inVar.length - 1] + '번 반복하세요:');
       }
       quiz.addPre();
     }
@@ -341,7 +341,7 @@ function makeQuiz(levels) {
       if(inVar.indexOf('INVAR2') >= 0)
         quiz.addDesc('입력된 정수' + (inVar.indexOf('INVAR3') >= 0 ? '들' : '') + '에 대해, 아래 조건에 따라 값을 출력해보세요.');
       else
-        quiz.addDesc(josa(namedVar1, '과', '와') + ' ' + josa(namedVar2, '을', '를') + '이용하여 주어진 조건에 따라 값을 출력해보세요.');
+        quiz.addDesc('주어진 조건에 따라 값을 출력해보세요.');
 
       let usedOp = [];
       let rndResult = [];
@@ -396,8 +396,8 @@ function makeQuiz(levels) {
 
       if(inVar.indexOf('INVAR2') >= 0)
         quiz.addDesc('입력된 정수' + (inVar.indexOf('INVAR3') >= 0 ? '들' : '') + '에 대해, ', true);
-      else
-        quiz.addDesc(josa(namedVar1, '과', '와') + ' ' + josa(namedVar2, '을', '를') + '이용하여 ', true);
+      //else
+      //  quiz.addDesc(josa(namedVar1, '과', '와') + ' ' + josa(namedVar2, '을', '를') + ' 이용하여 ', true);
 
       let opCompressLevel = Math.round(opLevel / 2);
       if(!opCompressLevel)
@@ -475,8 +475,8 @@ function josa(inputString, josa1, josa2) {
 let op_Baguette = [
   {
     line: 'math.pow({0}, {1})',
-    desc: '{0} {1}만큼 제곱한 값',
-    desc2: '{0} {1}만큼 제곱해서',
+    desc: '{0} {1}만큼 거듭제곱한 값',
+    desc2: '{0} {1}만큼 거듭제곱해서',
     descFunc: function(inArg1, inArg2) {
       return sprintf(this.desc, josa(inArg1, '을', '를'), inArg2);
     },
