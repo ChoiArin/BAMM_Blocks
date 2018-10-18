@@ -162,7 +162,6 @@
       var t0 = performance.now();
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       var t1 = performance.now();
-      console.log("code2block: " + (t1 - t0) + "ms.")
       taChange();
     }
     // PSB_Brython을 사용하여 결과 코드를 변환
@@ -603,23 +602,44 @@
     <input type="button" value="To Python" onclick="toCode('Python')"> &nbsp;
     <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
     <br>
-    <input type="button" value="Run Python" id="runPython">
-    <!-- PSB_TEST_CODE -->
+    <input type="button" value="Run Python" id="runPython" onclick="callBrythonWrapper()">
     <script>
-      function callBrython(cbCode) {
-        eval(__BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js())
+      let passConsole = '';
+      console.bndlog = console.log.bind(console);
+      console.log = function (e) {
+        if (passConsole)
+          passConsole += "\n";
+        passConsole += e;
+        console.bndlog.apply(console, arguments);
       }
 
-      let code = "\
-a = 2\n\
-b = 3\n\
-print(a + b)\
-";
+      function callBrython(cbCode, cbTimeout) {
+        isDone = false;
 
-      callBrython(code);
+        let cc = __BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js();
+        let ccArr = cc.split("\n");
+        cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
+        cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
+        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > ' + cbTimeout + ') return; isDone=true;}());';
+        cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
+        eval(cc);
+
+        if (!isDone)
+          return false;
+
+        return true;
+      }
+
+      function callBrythonWrapper() {
+        passConsole = '';
+        let code = document.getElementById("importExport").value;
+        if (callBrython(code, 2000))
+          document.getElementById("console").value = passConsole;
+        else
+          document.getElementById("console").value = 'Timeout!';
+      }
     </script>
 
-    <!-- <textarea id="zone"></textarea><button id="mybutton">click !</button> -->
     <textarea id="importExport" style="width: 26%; height: 12em" onchange="taChange();" onkeyup="taChange()"></textarea>
     <textarea id="console" style="width: 26%; height: 12em"></textarea>
   </p>
