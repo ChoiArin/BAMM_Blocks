@@ -1,12 +1,12 @@
 'use strict';
-goog.provide('Blockly.Python.revert');
+goog.provide('Blockly.Python.rebert');
 
 goog.require('Blockly.Python');
 
 var input, inputLen, nc;
 var runtimeParamName = "__pythonRuntime";
 
-Blockly.Python['revert'] = function code2XML(inpt) {
+Blockly.Python['rebert'] = function code2XML(inpt) {
   var AST = code2AST(String(inpt));
   var code = codeAnalyze(AST);
 
@@ -53,8 +53,10 @@ function codeBlockAnalyze(varList, code, elem) {
         varList[elem.left.name] = 'var';
         if(elem.right.type === 'CallExpression' && elem.right.callee.name === 'input') {
           code.head += '<block type="texts_input">';
-          elem.left.valueName = 'TEXT';
-          codeBlockAnalyze(varList, code, elem.left);
+          if(elem.left) {
+            elem.left.valueName = 'TEXT';
+            codeBlockAnalyze(varList, code, elem.left);
+          }
         } else {
           code.head += '<block type="data_setvariableto">'
           codeBlockAnalyze(varList, code, elem.left);
@@ -110,14 +112,22 @@ function codeBlockAnalyze(varList, code, elem) {
         && elem.body[1].consequent.type === 'BlockStatement'
         && elem.body[1].consequent.body[0].type === 'ForStatement') {
         code.head += '<block type="control_repeat">';
-        code.head += '<value name="TIMES"><shadow type="math_whole_number"><field name="NUM">';
-        var repeatNum = 0;
-        if(elem.body[0].declarations[0].init.arguments.length == 1)
-          repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
-        else
-          repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
-        code.head += repeatNum;
-        code.head += '</field></shadow></value>';
+        code.head += '<value name="TIMES">';
+        code.head += '<shadow type="math_whole_number"><field name="NUM">';
+        if(elem.body[0].declarations[0].init.arguments[0].arguments[0].type === 'Identifier'){
+          elem.body[0].declarations[0].init.arguments[0].arguments[0].isStatic = true;
+          codeBlockAnalyze(varList, code, elem.body[0].declarations[0].init.arguments[0].arguments[0]);
+        } else {
+          var repeatNum = 0;
+          if(elem.body[0].declarations[0].init.arguments.length == 1)
+            repeatNum = elem.body[0].declarations[0].init.arguments[0].value;
+          else
+            repeatNum = elem.body[0].declarations[0].init.arguments[1].value;
+          code.head += repeatNum;
+        }
+        
+        code.head += '</field></shadow>';
+        code.head += '</value>';
         code.head += '<statement name="SUBSTACK">';
         elem.body[1].consequent.body[0].body.body.splice(0, 1);
         elem.body[1].consequent.body[0].body.body.splice(elem.body[1].consequent.body[0].body.body.length, 1);
@@ -312,6 +322,8 @@ function codeBlockAnalyze(varList, code, elem) {
           elem.id.valueName = 'TEXT';
           codeBlockAnalyze(varList, code, elem.id);
         } else {
+          if(elem.init.value === null)
+            break;
           code.head += '<block type="data_setvariableto">';
           elem.id.isStatic = true;
           codeBlockAnalyze(varList, code, elem.id);
@@ -416,10 +428,6 @@ revertFunc['rfind'] = function(varList, code, object, args) {
   code.head += '</block>';
 };
 
-revertFunc['input'] = function(varList, code, args) {
-  console.log(code);
-};
-
 revertFunc['print'] = function(varList, code, args) {
   if(args.length > 2 && args[1].name === "end" && args[2].value === "")
     code.head += '<block type="texts_print">';
@@ -469,6 +477,59 @@ revertFunc['round'] = function(varList, code, args) {
   args[0].fieldName = 'NUM';
   codeBlockAnalyze(varList, code, args[0]);
   code.head += '</block>';
+};
+
+function mathOperate(operator, varList, code, args) {
+  var type = false;
+  let logical = false;
+  code.head += '<block type="'
+  if(operator === '+') {
+    code.head += 'operator_add';
+  } else if(operator === '-') {
+    code.head += 'operator_subtract';
+  } else if(operator === '*') {
+    code.head += 'operator_multiply';
+  } else if(operator === '/') {
+    code.head += 'operator_divide';
+  } else if(operator === '%') {
+    code.head += 'operator_mod';
+  } else if(operator === '==') {
+    code.head += 'operator_equals';
+    logical = true;
+  } else if(operator === '>') {
+    code.head += 'operator_gt';
+    logical = true;
+  } else if(operator === '<') {
+    code.head += 'operator_lt';
+    logical = true;
+  }
+  code.head += '">';
+  if(logical) {
+    args[0].valueName = 'OPERAND1';
+    args[1].valueName = 'OPERAND2';
+  } else {
+    args[0].valueName = 'NUM1';
+    args[1].valueName = 'NUM2';
+  }
+  codeBlockAnalyze(varList, code, args[0]);
+  codeBlockAnalyze(varList, code, args[1]);
+  code.head += '</block>';
+}
+
+revertFunc['add'] = function(varList, code, args) {
+  mathOperate('+', varList, code, args);
+};
+
+revertFunc['subtract'] = function(varList, code, args) {
+  mathOperate('-', varList, code, args);
+};
+
+revertFunc['multiply'] = function(varList, code, args) {
+  mathOperate('*', varList, code, args);
+};
+
+revertFunc['divide'] = function(varList, code, args) {
+  mathOperate('/', varList, code, args);
 };
 
 function mathop(operator, varList, code, args) {

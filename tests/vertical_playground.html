@@ -28,7 +28,7 @@
   <script src="../blocks_vertical/extensions.js"></script>
   <script src="../blocks_vertical/default_toolbox.js"></script>
   <script src="../generators/python.js"></script>
-  <script src="../generators/python/revert.js"></script>
+  <script src="../generators/python/rebert.js"></script>
   <script src="../generators/python/logic.js"></script>
   <script src="../generators/python/loops.js"></script>
   <script src="../generators/python/math.js"></script>
@@ -158,12 +158,13 @@
 
     function fromCode(lang) {
       var input = document.getElementById('importExport');
-      var xml = Blockly.Python['revert'](input.value);
+      var xml = Blockly.Python['rebert'](input.value);
       var t0 = performance.now();
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       var t1 = performance.now();
       taChange();
     }
+<<<<<<< HEAD
     // PSB_Brython을 사용하여 결과 코드를 변환
     // function ShowResult() {
     //   var textarea = document.getElementById('importExport');
@@ -198,6 +199,9 @@
     // }
     // Disable the "Import from XML" button if the XML is invalid.
     // Preserve text between page reloads.
+=======
+    
+>>>>>>> 8235d55cda26dbcef8a3d5fc3a62da00ae38edd0
     function taChange() {
       var textarea = document.getElementById('importExport');
       if (sessionStorage) {
@@ -617,11 +621,18 @@
         isDone = false;
 
         let cc = __BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js();
+<<<<<<< HEAD
         let ccArr = cc.split("\n");
         cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
         cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
         cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > ' + cbTimeout + ') return; isDone=true;}());';
+=======
+        cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
+        cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
+>>>>>>> 8235d55cda26dbcef8a3d5fc3a62da00ae38edd0
         cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
+        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > '+cbTimeout+') return; isDone=true;}());';
+        brython();
         eval(cc);
 
         if (!isDone)
