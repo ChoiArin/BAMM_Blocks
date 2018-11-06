@@ -164,44 +164,7 @@
       var t1 = performance.now();
       taChange();
     }
-<<<<<<< HEAD
-    // PSB_Brython을 사용하여 결과 코드를 변환
-    // function ShowResult() {
-    //   var textarea = document.getElementById('importExport');
-    //   var pythonCode = '\n' + textarea.value;
-    //   var textToPython = document.createElement('script');
-    //   var textNode = document.createTextNode(pythonCode);
-    //   textToPython.type = "text/python";
-    //   //textToPython.src = "../node_modules/brython/brython.js"; // 테스트, .py로 변경해보기
-    //   textToPython.appendChild(textNode);
-    //   console.log(textToPython);
-    //   // console.log(document.getElementById('importExport'));
-    //   /*
-    //     // 위의 방식으로 기존 예제를 만들어보기
-    //     var textToPython_t = document.createElement('script');
-    //     var textNode_t = document.createTextNode(`from browser import document, alert
-    //     def echo(event):
-    //       alert(document["zone"].value)
-
-    //     document["mybutton"].bind("click", echo)`);
-    //     textToPython_t.type = "text/python";
-    //     console.log(textToPython_t);
-    //     console.log(textNode_t);
-    //     textToPython_t.appendChild(textNode_t);
-    //     var input_t = document.createElement('input');
-    //     var button_t = document.createElement('button');
-    //     button_t.value = "Click";
-    //     */
-    //   // PSB_brython.js의 run 함수의 리턴값을 대입! -> 실패
-    //   //document.getElementById('importExport').value;
-    //   //document.getElementById('importExport').value = textToPython.value;
-    //   // return textarea.value;
-    // }
-    // Disable the "Import from XML" button if the XML is invalid.
-    // Preserve text between page reloads.
-=======
     
->>>>>>> 8235d55cda26dbcef8a3d5fc3a62da00ae38edd0
     function taChange() {
       var textarea = document.getElementById('importExport');
       if (sessionStorage) {
@@ -621,15 +584,8 @@
         isDone = false;
 
         let cc = __BRYTHON__.py2js(cbCode, '__main__', '__main__').to_js();
-<<<<<<< HEAD
-        let ccArr = cc.split("\n");
-        cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
-        cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > " + cbTimeout + ") return;\n");
-        cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > ' + cbTimeout + ') return; isDone=true;}());';
-=======
         cc = cc.replace(/;[\s]*\n/g, ";\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
         cc = cc.replace(/{[\s]*\n/g, "{\nif(performance.now() - SUPER_MEGA_TICK_TIMER > "+cbTimeout+") return;\n");
->>>>>>> 8235d55cda26dbcef8a3d5fc3a62da00ae38edd0
         cc = 'let SUPER_MEGA_TICK_TIMER = performance.now();' + cc;
         cc = '(function(){' + cc + 'if(performance.now() - SUPER_MEGA_TICK_TIMER > '+cbTimeout+') return; isDone=true;}());';
         brython();
