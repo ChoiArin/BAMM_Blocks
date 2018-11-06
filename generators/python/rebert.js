@@ -58,7 +58,8 @@ function codeBlockAnalyze(varList, code, elem) {
             codeBlockAnalyze(varList, code, elem.left);
           }
         } else {
-          code.head += '<block type="data_setvariableto">'
+          code.head += '<block type="data_setvariableto">';
+          elem.left.isStatic = true;
           codeBlockAnalyze(varList, code, elem.left);
           elem.right.valueName = 'VALUE';
           codeBlockAnalyze(varList, code, elem.right);
