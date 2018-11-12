@@ -712,9 +712,12 @@ function letsGoQMaster() {
                 quizSQL += quizSQLTemp;
               }
 						} else {
-							quizSQL += 'Insert Into ATP_TABLE (ATP_PID, ATP_TID) Values ('
+							quizSQL += 'Insert Into ATP_TABLE (ATP_PID, ATP_TID, ATP_IN, ATP_OUT) Values ('
 							+ quizList.length + ','
-							+ 1 + ');\n';
+              + 1 + ','
+              + '""' + ','
+              + '""'
+              + ');\n';
 						}
 					} 
 				}
