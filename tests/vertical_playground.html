@@ -42,6 +42,7 @@
   <script type="text/javascript" src="../brython/brython.js"></script>
   <script type="text/javascript" src="../brython/brython_stdlib.js"></script>
 
+  <script src="./qmaster.js"></script>
 
   <script>
     'use strict';
@@ -571,6 +572,7 @@
     <br>
     <input type="button" value="Run Python" id="runPython" onclick="callBrythonWrapper()">
     <script>
+      /*
       let passConsole = '';
       console.bndlog = console.log.bind(console);
       console.log = function (e) {
@@ -605,6 +607,7 @@
         else
           document.getElementById("console").value = 'Timeout!';
       }
+      */
     </script>
 
     <textarea id="importExport" style="width: 26%; height: 12em" onchange="taChange();" onkeyup="taChange()"></textarea>
