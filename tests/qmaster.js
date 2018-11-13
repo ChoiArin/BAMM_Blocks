@@ -583,11 +583,14 @@ let condition_Baguette = [
 ];
 
 function papapa(paCode, paInput) {
-  let ret = paCode;
-  let paInputArr = paInput.split(/\s/gm);
-  for(let i = 0; i < paInputArr.length; i++)
-    ret = ret.replace(/input\(\)/, paInputArr[i]);
-  return ret;
+	let ret = paCode;
+	let paInputArr = paInput.split(/\s/gm);
+	for(let i = 0; i < paInputArr.length; i++)
+	if(typeof paInputArr[i] === 'string' || paInputArr[i] instanceof String)
+		ret = ret.replace(/input\(\)/, '"' + paInputArr[i] + '"');
+	else
+		ret = ret.replace(/input\(\)/, paInputArr[i]);
+	return ret;
 }
 
 function callBrython(cbCode, cbInput) {
