@@ -15,7 +15,7 @@ function getRndResult(usedResult) {
 
 function getRndStr(rndStr, usedStr) {
 	let RND_STR = rndStr;
-	if(usedStr !== undefined) {
+	if(usedStr) {
 		if(typeof usedStr === 'array') {
 			for(let i = 0; i < usedStr.length; i++) {
 				var usedIdx = RND_STR.indexOf(usedStr[i]);
@@ -53,9 +53,9 @@ function makeQuiz(levels) {
 			quiz.addDesc(tName + '는 구구단을 공부하고 있습니다.');
 			quiz.addDesc(tName + '가 잘 공부할 수 있도록 구구단을 출력하는 프로그램을 만들어보세요.');
 			
-			quiz.addCode('for x in range(9):');
+			quiz.addCode('for x in range(1, 10):');
 			quiz.addPre();
-			quiz.addCode('for y in range(9):');
+			quiz.addCode('for y in range(1, 10):');
 			quiz.addPre();
 			quiz.addCode('print(str(x) + " * " + str(y) + " = " + str(x * y))');
 			quiz.subPre(2);
@@ -65,7 +65,7 @@ function makeQuiz(levels) {
 				quiz.test += 'i';
 				quiz.addDesc('구구단을 모두 출력한 다음에는, 정수를 하나 입력받아 그 단을 출력해보세요.');
 				
-				quiz.addCode('for y in range(9):');
+				quiz.addCode('for y in range(1, 10):');
 				quiz.addPre();
 				quiz.addCode('print(str(INVAR1) + " * " + str(y) + " = " + str(INVAR1 * y))');
 			}
@@ -85,11 +85,11 @@ function makeQuiz(levels) {
 					inVar.push('INVAR1');
 					quiz.test += 'i';
 					quiz.subPre();
-					quiz.addCode('for x in range(INVAR1):');
+					quiz.addCode('for x in range(1, INVAR1 + 1):');
 				} else {
 					quiz.addDesc('1부터 100까지 수를 한 줄에 하나씩 출력하세요.');
 					quiz.subPre();
-					quiz.addCode('for x in range(100):');
+					quiz.addCode('for x in range(1, 101):');
 				}
 				quiz.addPre();
 				
@@ -106,14 +106,18 @@ function makeQuiz(levels) {
 				quiz.addDesc('를 출력해야합니다.');
 				quiz.addCode('if x % ' + num1 + ' == 0:');
 				quiz.addPre();
-				quiz.addCode('for y in range(x):');
+				quiz.addCode('for y in range(1, x + 1):');
 				quiz.addPre();
 				quiz.addCode('if y % ' + num2 + ' == 0:');
 				quiz.addPre();
-				quiz.addCode('if y / ' + num2 + ' >= 2: print(" ", end="")');
+				quiz.addCode('if y / ' + num2 + ' > 1: print(" ", end="")');
 				quiz.addCode('print(y, end="")');
 				quiz.subPre(2);
 				quiz.addCode('print("")');
+				quiz.subPre();
+        quiz.addCode('else:');
+				quiz.addPre();
+        quiz.addCode('print(x)');
 			} else {
 				quiz.addDesc('조건: ', true);
 				if(ioLevel) {
@@ -121,16 +125,16 @@ function makeQuiz(levels) {
 					quiz.test += 'i';
 					quiz.addDesc('정수를 하나 입력받고, 1부터 그 수까지 순서대로 출력합니다.');
 					quiz.subPre();
-					quiz.addCode('for x in range(INVAR1):');
+					quiz.addCode('for x in range(1, INVAR1 + 1):');
 				} else {
 					quiz.addDesc('1부터 10까지 순서대로 출력합니다.');
 					quiz.subPre();
-					quiz.addCode('for x in range(10):');
+					quiz.addCode('for x in range(1, 11):');
 				}
 				quiz.addPre();
 				quiz.addDesc('단, 각 줄에는 숫자 하나만 출력하는 것이 아니라, 그 수부터 1까지 거꾸로 한 줄에 출력해야 합니다.');
 				quiz.addDesc('예를 들어 두번째 줄이라면 2 1을, 다섯번째 줄이라면 5 4 3 2 1을 출력해야 합니다.');
-				quiz.addCode('for y in range(x, 0, -1): print(y)');
+				quiz.addCode('for y in range(x + 1, 0, -1): print(y)');
 			}
 			
 			quiz.hint = '조건문 안에서 반복문을 이용하여 출력하는 문제입니다. 주어진 조건은 여러 블록으로 표현할 필요가 있습니다. 부분부분 나누어 생각해보세요.';
@@ -153,10 +157,10 @@ function makeQuiz(levels) {
         bbb.push('if');
       }
 			
-			quiz.addCode('for x in range(' + inVar[0] + '):');
-			quiz.addCode('  for y in range(' + inVar[1] + '):');
+			quiz.addCode('for x in range(1, ' + inVar[0] + ' + 1):');
+			quiz.addCode('  for y in range(1, ' + inVar[1] + ' + 1):');
 			if(inVar.length > 2) {
-        quiz.addCode('    for z in range(' + inVar[2] + '):');
+        quiz.addCode('    for z in range(1, ' + inVar[2] + ' + 1):');
       }
 			
 			quiz.addDesc('이 주사위들을 던졌을 때 총 경우의 수는 ' + inVar[0] + " * " + inVar[1] + (inVar.length > 2 ? " * " + inVar[2] : '') + " = " + (inVar[0] * inVar[1] * (inVar.length > 2 ? inVar[2] : 1)) + '가지입니다.');
@@ -219,6 +223,7 @@ function makeQuiz(levels) {
 				quiz.addDesc('입력된 수만큼 다음 과정을 반복하세요:');
 			} else {
 				inVar.push(getRndNUM(10, 1) * 10);
+				quiz.test += inVar[inVar.length - 1];
 				quiz.addCode('for x in range('+inVar[inVar.length - 1]+'):');
 				quiz.addDesc('다음 과정을 ' + inVar[inVar.length - 1] + '번 반복하세요:');
 			}
@@ -256,9 +261,13 @@ function makeQuiz(levels) {
 					let rndCond = getRndNUM(condition_Baguette.length - 1);
 					quiz.addDesc((i > 0 ? '  위의 조건에는 해당하지 않고, ' : '  ') + condition_Baguette[rndCond].descFunc(op_Baguette[rndOp].descFunc(namedVar1, namedVar2), getRndNUM(5)) + josa('"' + rndResult[i] + '"', '을', '를') + ' 출력하세요.');
 					quiz.addCode((i > 0 ? 'el' : '') + 'if ' + sprintf(condition_Baguette[rndCond].line, 'INVAR2', inVar.indexOf('INVAR3') >= 0 ? 'INVAR3' : inVar[inVar.length - 1]) + 'print("' + rndResult[i] + '")');
-					
-					usedOp.push(rndOp);
+          
+          usedOp.push(rndOp);
+          inVar[inVar.length - 1] = getRndNUM(9, 1);
+          namedVar2 = inVar.indexOf('INVAR3') >= 0 ? '두번째 수' : inVar[inVar.length - 1];
 				}
+        quiz.addDesc('해당하는 경우가 하나도 없다면 "Fail"을 출력하세요.');
+        quiz.addCode('else: print("Fail")');
 				
 				quiz.hint = '서로 독립적인 조건을 검사할 때에는 조건문도 분리하여 사용해야합니다. 반대로 연관된 조건을 검사할 때에는 조건문을 중첩해야 할 필요도 있습니다.';
 			} else {
@@ -581,11 +590,11 @@ let condition_Baguette = [
   }
 ];
 
-function papapa(paCode, paInput) {
+function papaCascade(paCode, paInput) {
   let ret = paCode;
   let paInputArr = paInput.split(/\s/gm);
   for(let i = 0; i < paInputArr.length; i++) {
-    if(!isNaN(parseFloat(n)) && isFinite(n)) {
+    if(!isNaN(parseFloat(paInputArr[i])) && isFinite(paInputArr[i])) {
       ret = ret.replace(/input\(\)/, paInputArr[i]);
     } else {
       ret = ret.replace(/input\(\)/, '"' + paInputArr[i] + '"');
@@ -594,10 +603,23 @@ function papapa(paCode, paInput) {
   return ret;
 }
 
-function callBrython(cbCode, cbInput) {
+function papaArray(paCode, paLoop, paArray) {
+  let ret = paCode;
+  ret = ret.replace(/input\(\)/, paLoop);
+  ret = ret.replace(/input\(\)/, '([' + paArray.join(', ') + '])[x]');
+  return ret;
+}
+
+function callBrython(cbCode, cbInput, cbArray) {
   try {
-    let cc = __BRYTHON__.py2js(papapa(cbCode, cbInput), '__main__', '__main__').to_js();
-    eval(cc);
+    let papaCode;
+    if(cbArray) {
+      papaCode = papaArray(cbCode, cbInput, cbArray);
+    } else {
+      papaCode = papaCascade(cbCode, cbInput);
+    }
+    let brythonJS = __BRYTHON__.py2js(papaCode, '__main__', '__main__').to_js();
+    eval(brythonJS);
   } catch (error) {
     return false;
   }
@@ -607,6 +629,8 @@ function callBrython(cbCode, cbInput) {
 function letsGoQMaster() {
   brython();
   
+  console.log('console log is hooked.');
+
   let passConsole = '';
   console.bndlog = console.log.bind(console);
   console.log = function (e) {
@@ -634,26 +658,29 @@ function letsGoQMaster() {
             let quiz = makeQuiz(levels);
             
             let flag = false;
-            for(let chk = 0; chk < quizList.length; chk++)
-            if(quizList[chk].code === quiz.code) {
-              flag = true;
-              break;
+            for(let chk = 0; chk < quizList.length; chk++) {
+              if(quizList[chk].code === quiz.code) {
+                flag = true;
+                break;
+              }
             }
             
-            if(flag)
-            break;
+            if(flag) {
+              break;
+            }
             
             quizList.push(quiz);
             
             let diff = Math.min(3, Math.max(ioLevel, opLevel, ifLevel, frLevel) + 1);
             
             let cls = 'IO';
-            if(frLevel)
-            cls = 'FOR';
-            else if(ifLevel)
-            cls = 'IF';
-            else if(opLevel)
-            cls = 'CAL';
+            if(frLevel) {
+              cls = 'FOR';
+            } else if(ifLevel) {
+              cls = 'IF';
+            } else if(opLevel) {
+              cls = 'CAL';
+            }
             
             quizCounter[cls]++;
             let quizSQLTemp = 'Insert Into PRB_TABLE (PRB_ID, PRB_NM, PRB_DIFF, PRB_CLS, PRB_CNT, PRB_HNT, PRB_RTN, PRB_CD) Values ('
@@ -671,33 +698,49 @@ function letsGoQMaster() {
               let tcFailCounter = 0;
               let tcFlag = false;
               for(let tc = 0; tc < 3; tc++) {
-                if(tcFailCounter > 3)
-                break;
+                if(tcFailCounter > 3) {
+                  break;
+                }
                 
                 let conCase = quiz.test;
                 let testCase = '';
+                let testArray = [];
                 
-                if(conCase[0] === 'l') {
+                if((conCase[0] === 'l' && conCase.length > 1) || (conCase.length > 2 && conCase[1] === '0')) {
                   let ccv = getRndNUM(10, 1);
+                  if(conCase[1] === '0') {
+                    ccv = parseInt(conCase[0]) * 10; 
+                  }
                   testCase += ccv + '\n';
                   
                   for(let cci = 0; cci < ccv; cci++) {
-                    if(conCase.length > 0)
-                    testCase += getRndNUM(10, 1) + '\n';
-                    if(conCase.length > 1)
+                    if(conCase.length > 1) {
+                      let tmpNum = getRndNUM(10, 1);
+                      testCase += tmpNum + '\n';
+                      testArray.push(tmpNum);
+                    }
+
+                    if(conCase.length > 2) {
+                      let tmpNum = getRndNUM(10, 1);
+                      testCase += tmpNum + '\n';
+                      testArray.push(tmpNum);
+                    }
+                  }
+                } else if(conCase[0] === 'i') {
+                  for(let cl = 0; cl < conCase.length; cl++) {
                     testCase += getRndNUM(10, 1) + '\n';
                   }
-                } else {
-                  if(conCase.length > 0)
-                  testCase += getRndNUM(10, 1) + '\n';
-                  if(conCase.length > 1)
-                  testCase += getRndNUM(10, 1) + '\n';
-                  if(conCase.length > 2)
-                  testCase += getRndNUM(10, 1) + '\n';
                 }
                 
                 passConsole = '';
-                if(!callBrython(quiz.code, testCase)) {
+                let retBrython;
+                if(testArray.length) {
+                  retBrython = callBrython(quiz.code, testCase.split(/\s/gm)[0], testArray);
+                } else {
+                  retBrython = callBrython(quiz.code, testCase);
+                }
+
+                if(!retBrython) {
                   tcFailCounter++;
                   tc--;
                   continue;
@@ -707,16 +750,21 @@ function letsGoQMaster() {
                 + quizList.length + ','
                 + (tc + 1) + ','
                 + '"' + testCase.trimEnd().replace(/\\([\s\S])|(")/g,"\\$1$2") + '"' + ','
-                + '"' + passConsole + '"'
+                + '"' + passConsole.replace(/\\([\s\S])|(")/g,"\\$1$2") + '"'
                 + ');\n';
                 
                 tcFlag = true;
+
+                if(testCase === '') {
+                  break;
+                }
               }
               
               if(tcFlag) {
                 quizSQL += quizSQLTemp;
               }
             } else {
+              quizSQL += quizSQLTemp;
               quizSQL += 'Insert Into ATP_TABLE (ATP_PID, ATP_TID, ATP_OUT) Values ('
               + quizList.length + ','
               + 1 + ','
