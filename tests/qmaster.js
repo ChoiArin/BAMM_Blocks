@@ -634,9 +634,6 @@ function letsGoQMaster() {
   let passConsole = '';
   console.bndlog = console.log.bind(console);
   console.log = function (e) {
-    if (passConsole) {
-      passConsole += "\n";
-    }
     passConsole += e;
     console.bndlog.apply(console, arguments);
   }
@@ -683,7 +680,7 @@ function letsGoQMaster() {
             }
             
             quizCounter[cls]++;
-            let quizSQLTemp = 'Insert Into PRB_TABLE (PRB_ID, PRB_NM, PRB_DIFF, PRB_CLS, PRB_CNT, PRB_HNT, PRB_RTN, PRB_CD) Values ('
+            let quizSQLTemp = 'Insert Into PRB (PRB_ID, PRB_NM, PRB_DIFF, PRB_CLS, PRB_CNT, PRB_HNT, PRB_RTN, PRB_CD) Values ('
             + quizList.length + ','
             + '"' + ('[' + (['초급', '중급', '고급'])[diff - 1] + '-' + cls + ']' + ({IO:'입출력', FOR:'반복문', IF:'조건문', CAL:'연산자'})[cls]) + quizCounter[cls] + '"' + ','
             + diff + ','
@@ -694,82 +691,73 @@ function letsGoQMaster() {
             + '"' + quiz.code.trimEnd().replace(/\\([\s\S])|(")/g,"\\$1$2") + '"'
             + ');\n';
             
-            if(quiz.test !== '') {
-              let tcFailCounter = 0;
-              let tcFlag = false;
-              for(let tc = 0; tc < 3; tc++) {
-                if(tcFailCounter > 3) {
-                  break;
+            let tcFailCounter = 0;
+            let tcFlag = false;
+            for(let tc = 0; tc < 3; tc++) {
+              if(tcFailCounter > 3) {
+                break;
+              }
+              
+              let conCase = quiz.test;
+              let testCase = '';
+              let testArray = [];
+              
+              if((conCase[0] === 'l' && conCase.length > 1) || (conCase.length > 2 && conCase[1] === '0')) {
+                let ccv = getRndNUM(10, 1);
+                if(conCase[1] === '0') {
+                  ccv = parseInt(conCase[0]) * 10; 
                 }
+                testCase += ccv + '\n';
                 
-                let conCase = quiz.test;
-                let testCase = '';
-                let testArray = [];
-                
-                if((conCase[0] === 'l' && conCase.length > 1) || (conCase.length > 2 && conCase[1] === '0')) {
-                  let ccv = getRndNUM(10, 1);
-                  if(conCase[1] === '0') {
-                    ccv = parseInt(conCase[0]) * 10; 
+                for(let cci = 0; cci < ccv; cci++) {
+                  if(conCase.length > 1) {
+                    let tmpNum = getRndNUM(10, 1);
+                    testCase += tmpNum + '\n';
+                    testArray.push(tmpNum);
                   }
-                  testCase += ccv + '\n';
-                  
-                  for(let cci = 0; cci < ccv; cci++) {
-                    if(conCase.length > 1) {
-                      let tmpNum = getRndNUM(10, 1);
-                      testCase += tmpNum + '\n';
-                      testArray.push(tmpNum);
-                    }
 
-                    if(conCase.length > 2) {
-                      let tmpNum = getRndNUM(10, 1);
-                      testCase += tmpNum + '\n';
-                      testArray.push(tmpNum);
-                    }
-                  }
-                } else if(conCase[0] === 'i') {
-                  for(let cl = 0; cl < conCase.length; cl++) {
-                    testCase += getRndNUM(10, 1) + '\n';
+                  if(conCase.length > 2) {
+                    let tmpNum = getRndNUM(10, 1);
+                    testCase += tmpNum + '\n';
+                    testArray.push(tmpNum);
                   }
                 }
-                
-                passConsole = '';
-                let retBrython;
-                if(testArray.length) {
-                  retBrython = callBrython(quiz.code, testCase.split(/\s/gm)[0], testArray);
-                } else {
-                  retBrython = callBrython(quiz.code, testCase);
-                }
-
-                if(!retBrython) {
-                  tcFailCounter++;
-                  tc--;
-                  continue;
-                }
-                
-                quizSQLTemp += 'Insert Into ATP_TABLE (ATP_PID, ATP_TID, ATP_IN, ATP_OUT) Values ('
-                + quizList.length + ','
-                + (tc + 1) + ','
-                + '"' + testCase.trimEnd().replace(/\\([\s\S])|(")/g,"\\$1$2") + '"' + ','
-                + '"' + passConsole.replace(/\\([\s\S])|(")/g,"\\$1$2") + '"'
-                + ');\n';
-                
-                tcFlag = true;
-
-                if(testCase === '') {
-                  break;
+              } else if(conCase[0] === 'i') {
+                for(let cl = 0; cl < conCase.length; cl++) {
+                  testCase += getRndNUM(10, 1) + '\n';
                 }
               }
               
-              if(tcFlag) {
-                quizSQL += quizSQLTemp;
+              passConsole = '';
+              let retBrython;
+              if(testArray.length) {
+                retBrython = callBrython(quiz.code, testCase.split(/\s/gm)[0], testArray);
+              } else {
+                retBrython = callBrython(quiz.code, testCase);
               }
-            } else {
-              quizSQL += quizSQLTemp;
-              quizSQL += 'Insert Into ATP_TABLE (ATP_PID, ATP_TID, ATP_OUT) Values ('
+
+              if(!retBrython) {
+                tcFailCounter++;
+                tc--;
+                continue;
+              }
+              
+              quizSQLTemp += 'Insert Into ATP (ATP_PID, ATP_TID, ATP_IN, ATP_OUT) Values ('
               + quizList.length + ','
-              + 1 + ','
-              + '""'
+              + (tc + 1) + ','
+              + '"' + testCase.trimEnd().replace(/\\([\s\S])|(")/g,"\\$1$2") + '"' + ','
+              + '"' + passConsole.replace(/\\([\s\S])|(")/g,"\\$1$2") + '"'
               + ');\n';
+              
+              tcFlag = true;
+
+              if(testCase === '') {
+                break;
+              }
+            }
+            
+            if(tcFlag) {
+              quizSQL += quizSQLTemp;
             }
           } 
         }
