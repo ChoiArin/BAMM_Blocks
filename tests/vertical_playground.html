@@ -43,6 +43,8 @@
   <script type="text/javascript" src="../brython/brython_stdlib.js"></script>
 
   <script src="./qmaster.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.18/peer.min.js"></script>
+  <script src="./bbam_admin.js"></script>
 
   <script>
     'use strict';
@@ -164,6 +166,10 @@
       Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
       var t1 = performance.now();
       taChange();
+    }
+
+    function joinWrapper(nick) {
+      join(workspace, nick);
     }
     
     function taChange() {
@@ -571,6 +577,8 @@
     <input type="button" value="Import from Python" onclick="fromCode('Python')" id="importPython">
     <br>
     <input type="button" value="Run Python" id="runPython" onclick="callBrythonWrapper()">
+    <input type="button" value="Join" id="joinRoom" onclick="joinWrapper(document.getElementById('joinNick').value)">
+    <input type="text" value="Nick" id="joinNick">
     <script>
       /*
       let passConsole = '';
